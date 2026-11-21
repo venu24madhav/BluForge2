@@ -74,7 +74,7 @@ You do not need to memorise these. Come back here when a word is unfamiliar. Eac
 | |  ONE of five <section>s is visible at a time                   | |  content pane  .lf-pane
 | |  (Radios | Interference | Advertise | BLE Sniff | Classic)      | |
 | +----------------------------------------------------------------+ |
-| Logged in to: <host>   N job(s) running            BE200 BLE Lab v1|  status bar    .lf-status
+| Logged in to: <host>   N job(s) running            BluForge v1|  status bar    .lf-status
 +--------------------------------------------------------------------+
 ```
 
