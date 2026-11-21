@@ -1,0 +1,22 @@
+[Unit]
+Description=Ericsson BLE demo web service (BE200 interference + ADV lab)
+After=network-online.target bluetooth.service
+Wants=network-online.target bluetooth.service
+# Deliberately NO Requires=/PartOf= on lanforge.service or bluetooth.service:
+# a LANforge restart must never stop us, and our failures must never affect
+# LANforge or the system Bluetooth stack. See docs/INSTALL_LOG.md for why
+# (this project uses HCI_CHANNEL_USER to borrow one controller at a time,
+# returning it to bluetoothd automatically; it never disables bluetoothd).
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=__INSTALL_DIR__
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 __INSTALL_DIR__/src/server.py --host __GUI_HOST__ --port __GUI_PORT__
+Restart=on-failure
+RestartSec=3
+# journalctl -u ericsson-bluforge -f for live logs
+
+[Install]
+WantedBy=multi-user.target

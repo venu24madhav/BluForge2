@@ -1,0 +1,375 @@
+# LookAndFeel: Metal / javax.swing.plaf.metal.MetalLookAndFeel
+# java.version=17.0.13
+# Loaded font file=century-gothic-sans-bold.ttf getName=Century Gothic Bold family=Century Gothic fontName=Century Gothic Bold
+# Loaded font file=century-gothic-sans.ttf getName=Century Gothic family=Century Gothic fontName=Century Gothic
+# Loaded font file=LucidaBrightDemiBold.ttf getName=Lucida Bright Demibold family=Lucida Bright fontName=Lucida Bright Demibold
+# Loaded font file=LucidaBrightDemiItalic.ttf getName=Lucida Bright Demibold Italic family=Lucida Bright fontName=Lucida Bright Demibold Italic
+# Loaded font file=LucidaBrightItalic.ttf getName=Lucida Bright Italic family=Lucida Bright fontName=Lucida Bright Italic
+# Loaded font file=LucidaBrightRegular.ttf getName=Lucida Bright Regular family=Lucida Bright fontName=Lucida Bright Regular
+# Loaded font file=LucidaSansDemiBold.ttf getName=Lucida Sans Demibold family=Lucida Sans fontName=Lucida Sans Demibold
+# Loaded font file=LucidaSansDemiOblique.ttf getName=Lucida Sans Demibold Oblique family=Lucida Sans fontName=Lucida Sans Demibold Oblique
+# Loaded font file=LucidaSansOblique.ttf getName=Lucida Sans Oblique family=Lucida Sans fontName=Lucida Sans Oblique
+# Loaded font file=LucidaSansRegular.ttf getName=Lucida Sans Regular family=Lucida Sans fontName=Lucida Sans Regular
+# Loaded font file=LucidaTypewriterBoldOblique.ttf getName=Lucida Sans Typewriter Bold Oblique family=Lucida Sans Typewriter fontName=Lucida Sans Typewriter Bold Oblique
+# Loaded font file=LucidaTypewriterBold.ttf getName=Lucida Sans Typewriter Bold family=Lucida Sans Typewriter fontName=Lucida Sans Typewriter Bold
+# Loaded font file=LucidaTypewriterOblique.ttf getName=Lucida Sans Typewriter Oblique family=Lucida Sans Typewriter fontName=Lucida Sans Typewriter Oblique
+# Loaded font file=LucidaTypewriterRegular.ttf getName=Lucida Sans Typewriter Regular family=Lucida Sans Typewriter fontName=Lucida Sans Typewriter Regular
+# font_map has LucidaBrightRegular: false
+# new Font("LucidaBrightRegular",PLAIN,12) -> family=Dialog fontName=Dialog.plain
+# FontUIResource(LucidaBrightRegular,-2,12) -> family=Dialog style=0
+Button.background = #eeeeee
+Button.darkShadow = #7a8a99
+Button.disabledText = #999999
+Button.disabledToolBarBorderBackground = #cccccc
+Button.focus = #a3b8cc
+Button.font = FONT Dialog 0 12
+Button.foreground = #333333
+Button.gradient = GRADIENT 0.3 0.0 #dde8f3 #ffffff #b8cfe5
+Button.highlight = #ffffff
+Button.light = #ffffff
+Button.margin = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=14,bottom=2,right=14]
+Button.select = #b8cfe5
+Button.shadow = #b8cfe5
+Button.toolBarBorderBackground = #999999
+CheckBox.background = #eeeeee
+CheckBox.disabledText = #999999
+CheckBox.focus = #a3b8cc
+CheckBox.font = FONT Dialog 0 12
+CheckBox.foreground = #333333
+CheckBox.gradient = GRADIENT 0.3 0.0 #dde8f3 #ffffff #b8cfe5
+CheckBox.margin = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=2,bottom=2,right=2]
+CheckBox.totalInsets = INSETS java.awt.Insets[top=4,left=4,bottom=4,right=4]
+CheckBoxMenuItem.acceleratorFont = FONT Dialog 0 12
+CheckBoxMenuItem.acceleratorForeground = #6382bf
+CheckBoxMenuItem.acceleratorSelectionForeground = #333333
+CheckBoxMenuItem.background = #eeeeee
+CheckBoxMenuItem.disabledForeground = #999999
+CheckBoxMenuItem.font = FONT Dialog 0 12
+CheckBoxMenuItem.foreground = #333333
+CheckBoxMenuItem.gradient = GRADIENT 0.3 0.0 #dde8f3 #ffffff #b8cfe5
+CheckBoxMenuItem.margin = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=2,bottom=2,right=2]
+CheckBoxMenuItem.selectionBackground = #b4dcff
+CheckBoxMenuItem.selectionForeground = #000500
+Checkbox.select = #b8cfe5
+ColorChooser.background = #eeeeee
+ColorChooser.font = FONT Dialog 0 12
+ColorChooser.foreground = #333333
+ColorChooser.swatchesDefaultRecentColor = #eeeeee
+ComboBox.background = #eeeeee
+ComboBox.buttonBackground = #eeeeee
+ComboBox.buttonDarkShadow = #7a8a99
+ComboBox.buttonHighlight = #ffffff
+ComboBox.buttonShadow = #b8cfe5
+ComboBox.disabledBackground = #eeeeee
+ComboBox.disabledForeground = #b8cfe5
+ComboBox.font = FONT Dialog 0 12
+ComboBox.foreground = #333333
+ComboBox.selectionBackground = #b4dcff
+ComboBox.selectionForeground = #000500
+Desktop.background = #ffffff
+Desktop.minOnScreenInsets = INSETS javax.swing.plaf.InsetsUIResource[top=3,left=3,bottom=3,right=3]
+DesktopIcon.background = #eeeeee
+DesktopIcon.font = FONT Dialog 0 12
+DesktopIcon.foreground = #333333
+EditorPane.background = #ffffff
+EditorPane.caretForeground = #333333
+EditorPane.font = FONT Monospaced 0 11
+EditorPane.foreground = #333333
+EditorPane.inactiveForeground = #b8cfe5
+EditorPane.margin = INSETS javax.swing.plaf.InsetsUIResource[top=3,left=3,bottom=3,right=3]
+EditorPane.selectionBackground = #b4dcff
+EditorPane.selectionForeground = #000500
+FormattedTextField.background = #ffffff
+FormattedTextField.caretForeground = #333333
+FormattedTextField.font = FONT Dialog 0 12
+FormattedTextField.foreground = #333333
+FormattedTextField.inactiveBackground = #eeeeee
+FormattedTextField.inactiveForeground = #b8cfe5
+FormattedTextField.margin = INSETS javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0]
+FormattedTextField.selectionBackground = #b4dcff
+FormattedTextField.selectionForeground = #000500
+InternalFrame.activeTitleBackground = #b8cfe5
+InternalFrame.activeTitleForeground = #333333
+InternalFrame.borderColor = #eeeeee
+InternalFrame.borderDarkShadow = #7a8a99
+InternalFrame.borderHighlight = #ffffff
+InternalFrame.borderLight = #ffffff
+InternalFrame.borderShadow = #b8cfe5
+InternalFrame.inactiveTitleBackground = #eeeeee
+InternalFrame.inactiveTitleForeground = #333333
+InternalFrame.titleFont = FONT Dialog 0 12
+Label.background = #eeeeee
+Label.disabledForeground = #999999
+Label.disabledShadow = #b8cfe5
+Label.font = FONT Dialog 0 12
+Label.foreground = #333333
+List.background = #ffffff
+List.dropCellBackground = #d2e9ff
+List.dropLineColor = #6382bf
+List.font = FONT Dialog 0 12
+List.foreground = #333333
+List.selectionBackground = #b4dcff
+List.selectionForeground = #000500
+Menu.acceleratorFont = FONT Dialog 0 12
+Menu.acceleratorForeground = #6382bf
+Menu.acceleratorSelectionForeground = #333333
+Menu.background = #eeeeee
+Menu.disabledForeground = #999999
+Menu.font = FONT Dialog 0 12
+Menu.foreground = #333333
+Menu.margin = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=2,bottom=2,right=2]
+Menu.selectionBackground = #a3b8cc
+Menu.selectionForeground = #333333
+MenuBar.background = #eeeeee
+MenuBar.borderColor = #cccccc
+MenuBar.font = FONT Dialog 0 12
+MenuBar.foreground = #333333
+MenuBar.gradient = GRADIENT 1.0 0.0 #ffffff #dadada #dadada
+MenuBar.highlight = #ffffff
+MenuBar.shadow = #b8cfe5
+MenuItem.acceleratorFont = FONT Dialog 0 12
+MenuItem.acceleratorForeground = #6382bf
+MenuItem.acceleratorSelectionForeground = #333333
+MenuItem.background = #eeeeee
+MenuItem.disabledForeground = #999999
+MenuItem.font = FONT Dialog 0 12
+MenuItem.foreground = #333333
+MenuItem.margin = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=2,bottom=2,right=2]
+MenuItem.selectionBackground = #b4dcff
+MenuItem.selectionForeground = #000500
+OptionPane.background = #eeeeee
+OptionPane.errorDialog.border.background = #993333
+OptionPane.errorDialog.titlePane.background = #ff9999
+OptionPane.errorDialog.titlePane.foreground = #330000
+OptionPane.errorDialog.titlePane.shadow = #cc6666
+OptionPane.font = FONT Dialog 0 12
+OptionPane.foreground = #333333
+OptionPane.messageForeground = #333333
+OptionPane.questionDialog.border.background = #336633
+OptionPane.questionDialog.titlePane.background = #99cc99
+OptionPane.questionDialog.titlePane.foreground = #003300
+OptionPane.questionDialog.titlePane.shadow = #669966
+OptionPane.warningDialog.border.background = #996633
+OptionPane.warningDialog.titlePane.background = #ffcc99
+OptionPane.warningDialog.titlePane.foreground = #663300
+OptionPane.warningDialog.titlePane.shadow = #cc9966
+Panel.background = #eeeeee
+Panel.font = FONT Dialog 0 12
+Panel.foreground = #333333
+PasswordField.background = #ffffff
+PasswordField.caretForeground = #333333
+PasswordField.font = FONT Dialog 0 12
+PasswordField.foreground = #333333
+PasswordField.inactiveBackground = #eeeeee
+PasswordField.inactiveForeground = #b8cfe5
+PasswordField.margin = INSETS javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0]
+PasswordField.selectionBackground = #b4dcff
+PasswordField.selectionForeground = #000500
+PopupMenu.background = #eeeeee
+PopupMenu.font = FONT Dialog 0 12
+PopupMenu.foreground = #333333
+PopupMenu.selectionBackground = #b4dcff
+PopupMenu.selectionForeground = #000500
+ProgressBar.background = #eeeeee
+ProgressBar.font = FONT Dialog 0 12
+ProgressBar.foreground = #a3b8cc
+ProgressBar.selectionBackground = #6382bf
+ProgressBar.selectionForeground = #eeeeee
+RadioButton.background = #eeeeee
+RadioButton.darkShadow = #7a8a99
+RadioButton.disabledText = #999999
+RadioButton.focus = #a3b8cc
+RadioButton.font = FONT Dialog 0 12
+RadioButton.foreground = #333333
+RadioButton.gradient = GRADIENT 0.3 0.0 #dde8f3 #ffffff #b8cfe5
+RadioButton.highlight = #ffffff
+RadioButton.light = #ffffff
+RadioButton.margin = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=2,bottom=2,right=2]
+RadioButton.select = #b4dcff
+RadioButton.shadow = #b8cfe5
+RadioButton.totalInsets = INSETS java.awt.Insets[top=4,left=4,bottom=4,right=4]
+RadioButtonMenuItem.acceleratorFont = FONT Dialog 0 12
+RadioButtonMenuItem.acceleratorForeground = #6382bf
+RadioButtonMenuItem.acceleratorSelectionForeground = #333333
+RadioButtonMenuItem.background = #eeeeee
+RadioButtonMenuItem.disabledForeground = #999999
+RadioButtonMenuItem.font = FONT Dialog 0 12
+RadioButtonMenuItem.foreground = #333333
+RadioButtonMenuItem.gradient = GRADIENT 0.3 0.0 #dde8f3 #ffffff #b8cfe5
+RadioButtonMenuItem.margin = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=2,bottom=2,right=2]
+RadioButtonMenuItem.selectionBackground = #b4dcff
+RadioButtonMenuItem.selectionForeground = #000500
+ScrollBar.background = #eeeeee
+ScrollBar.darkShadow = #7a8a99
+ScrollBar.foreground = #eeeeee
+ScrollBar.gradient = GRADIENT 0.3 0.0 #dde8f3 #ffffff #b8cfe5
+ScrollBar.highlight = #ffffff
+ScrollBar.shadow = #b8cfe5
+ScrollBar.thumb = #a3b8cc
+ScrollBar.thumbDarkShadow = #7a8a99
+ScrollBar.thumbHighlight = #b8cfe5
+ScrollBar.thumbShadow = #6382bf
+ScrollBar.track = #eeeeee
+ScrollBar.trackHighlight = #7a8a99
+ScrollPane.background = #eeeeee
+ScrollPane.font = FONT Dialog 0 12
+ScrollPane.foreground = #333333
+Separator.background = #ffffff
+Separator.foreground = #6382bf
+Separator.highlight = #ffffff
+Separator.shadow = #b8cfe5
+Slider.altTrackColor = #d2e2ef
+Slider.background = #eeeeee
+Slider.focus = #a3b8cc
+Slider.focusInsets = INSETS javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0]
+Slider.font = FONT Dialog 0 12
+Slider.foreground = #a3b8cc
+Slider.gradient = GRADIENT 0.3 0.2 #c8ddf2 #ffffff #b8cfe5
+Slider.highlight = #ffffff
+Slider.shadow = #b8cfe5
+Slider.tickColor = #000000
+Spinner.arrowButtonInsets = INSETS javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0]
+Spinner.background = #eeeeee
+Spinner.font = FONT Dialog 0 12
+Spinner.foreground = #eeeeee
+SplitPane.background = #eeeeee
+SplitPane.darkShadow = #7a8a99
+SplitPane.dividerFocusColor = #c8ddf2
+SplitPane.highlight = #ffffff
+SplitPane.shadow = #b8cfe5
+SplitPaneDivider.draggingColor = #404040
+TabbedPane.background = #b8cfe5
+TabbedPane.borderHightlightColor = #6382bf
+TabbedPane.contentAreaColor = #c8ddf2
+TabbedPane.contentBorderInsets = INSETS java.awt.Insets[top=4,left=2,bottom=3,right=3]
+TabbedPane.darkShadow = #7a8a99
+TabbedPane.focus = #6382bf
+TabbedPane.font = FONT Dialog 0 12
+TabbedPane.foreground = #333333
+TabbedPane.highlight = #ffffff
+TabbedPane.light = #eeeeee
+TabbedPane.selectHighlight = #ffffff
+TabbedPane.selected = #c8ddf2
+TabbedPane.selectedTabPadInsets = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=2,bottom=2,right=1]
+TabbedPane.shadow = #b8cfe5
+TabbedPane.tabAreaBackground = #dadada
+TabbedPane.tabAreaInsets = INSETS java.awt.Insets[top=2,left=2,bottom=0,right=6]
+TabbedPane.tabInsets = INSETS javax.swing.plaf.InsetsUIResource[top=0,left=9,bottom=1,right=9]
+TabbedPane.unselectedBackground = #eeeeee
+Table.background = #ffffff
+Table.dropCellBackground = #d2e9ff
+Table.dropLineColor = #6382bf
+Table.dropLineShortColor = #333333
+Table.focusCellBackground = #ffffff
+Table.focusCellForeground = #333333
+Table.font = FONT Dialog 0 12
+Table.foreground = #333333
+Table.gridColor = #bebec8
+Table.selectionBackground = #b4dcff
+Table.selectionForeground = #000500
+Table.sortIconColor = #b8cfe5
+TableHeader.background = #eeeeee
+TableHeader.focusCellBackground = #c8ddf2
+TableHeader.font = FONT Dialog 0 12
+TableHeader.foreground = #333333
+TextArea.background = #ffffff
+TextArea.caretForeground = #333333
+TextArea.font = FONT Dialog 0 9
+TextArea.foreground = #333333
+TextArea.inactiveForeground = #b8cfe5
+TextArea.margin = INSETS javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0]
+TextArea.selectionBackground = #b4dcff
+TextArea.selectionForeground = #000500
+TextField.background = #ffffff
+TextField.caretForeground = #333333
+TextField.darkShadow = #7a8a99
+TextField.font = FONT Dialog 0 12
+TextField.foreground = #333333
+TextField.highlight = #ffffff
+TextField.inactiveBackground = #eeeeee
+TextField.inactiveForeground = #b8cfe5
+TextField.light = #ffffff
+TextField.margin = INSETS javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0]
+TextField.selectionBackground = #b4dcff
+TextField.selectionForeground = #000500
+TextField.shadow = #b8cfe5
+TextPane.background = #ffffff
+TextPane.caretForeground = #333333
+TextPane.font = FONT Monospaced 0 11
+TextPane.foreground = #333333
+TextPane.inactiveForeground = #b8cfe5
+TextPane.margin = INSETS javax.swing.plaf.InsetsUIResource[top=3,left=3,bottom=3,right=3]
+TextPane.selectionBackground = #b4dcff
+TextPane.selectionForeground = #000500
+TitledBorder.font = FONT Dialog 0 12
+TitledBorder.titleColor = #333333
+ToggleButton.background = #eeeeee
+ToggleButton.darkShadow = #7a8a99
+ToggleButton.disabledText = #999999
+ToggleButton.focus = #a3b8cc
+ToggleButton.font = FONT Dialog 0 12
+ToggleButton.foreground = #333333
+ToggleButton.gradient = GRADIENT 0.3 0.0 #dde8f3 #ffffff #b8cfe5
+ToggleButton.highlight = #ffffff
+ToggleButton.light = #ffffff
+ToggleButton.margin = INSETS javax.swing.plaf.InsetsUIResource[top=2,left=14,bottom=2,right=14]
+ToggleButton.select = #b8cfe5
+ToggleButton.shadow = #b8cfe5
+ToolBar.background = #eeeeee
+ToolBar.borderColor = #cccccc
+ToolBar.darkShadow = #7a8a99
+ToolBar.dockingBackground = #eeeeee
+ToolBar.dockingForeground = #6382bf
+ToolBar.floatingBackground = #eeeeee
+ToolBar.floatingForeground = #b8cfe5
+ToolBar.font = FONT Dialog 0 12
+ToolBar.foreground = #333333
+ToolBar.highlight = #ffffff
+ToolBar.light = #ffffff
+ToolBar.shadow = #b8cfe5
+ToolTip.background = #b8cfe5
+ToolTip.backgroundInactive = #eeeeee
+ToolTip.font = FONT Dialog 0 12
+ToolTip.foreground = #333333
+ToolTip.foregroundInactive = #7a8a99
+Tree.background = #ffffff
+Tree.dropCellBackground = #d2e9ff
+Tree.dropLineColor = #6382bf
+Tree.font = FONT Dialog 0 12
+Tree.foreground = #333333
+Tree.hash = #b8cfe5
+Tree.line = #b8cfe5
+Tree.selectionBackground = #b4dcff
+Tree.selectionBorderColor = #6382bf
+Tree.selectionForeground = #000500
+Tree.textBackground = #ffffff
+Tree.textForeground = #333333
+Viewport.background = #eeeeee
+Viewport.font = FONT Dialog 0 12
+Viewport.foreground = #333333
+activeCaption = #b8cfe5
+activeCaptionBorder = #a3b8cc
+activeCaptionText = #333333
+control = #eeeeee
+controlDkShadow = #7a8a99
+controlHighlight = #ffffff
+controlLtHighlight = #ffffff
+controlShadow = #b8cfe5
+controlText = #333333
+desktop = #ffffff
+inactiveCaption = #eeeeee
+inactiveCaptionBorder = #b8cfe5
+inactiveCaptionText = #333333
+info = #b8cfe5
+infoText = #333333
+menu = #eeeeee
+menuText = #333333
+scrollbar = #eeeeee
+text = #ffffff
+textHighlight = #b8cfe5
+textHighlightText = #333333
+textInactiveText = #b8cfe5
+textText = #333333
+window = #ffffff
+windowBorder = #eeeeee
+windowText = #333333

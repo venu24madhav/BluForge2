@@ -1,0 +1,15 @@
+1.1.00	eth0	10.28.3.73	False	False	445212275	4174384	53	61830	1304043270	3605033	64	391843		00:60:e0:84:cc:b8	Ethernet		[channel: 0]
+1.1.01	eth1	10.28.3.132	False	False	447100607	6006182	7	5756	25147905	63637	0	381		00:60:e0:84:cc:b9	Ethernet		[channel: 1]
+1.1.02	eth2	172.16.0.1	False	False	37912373	132359	0	331	52010375709	34364188	0	89		9c:69:b4:61:c7:14	Ethernet		[channel: 2]
+1.1.03	eth3	0.0.0.0	True	False	26734	147	0	0	2526	24	0	0		9c:69:b4:61:c7:15	Ethernet		[channel: 3]
+1.1.04	wiphy0	0.0.0.0	False	False	0	0	0	0	0	0	0	0		04:f0:21:85:63:ea	WIFI-Radio	802.11an-AC	-1
+1.1.05	wiphy1	0.0.0.0	False	False	7453448	108	0	0	0	0	0	0		04:f0:21:66:90:68	WIFI-Radio	802.11bgn-AC	-1
+1.1.06	wiphy2	0.0.0.0	False	False	16058223417	3241580	0	0	10047967	116547	0	0		04:f0:21:85:64:a6	WIFI-Radio	802.11an-AC	-1
+1.1.07	wiphy4	0.0.0.0	False	False	1292454088	856502	0	0	1017474	6842	0	0		80:84:89:00:81:e2	WIFI-Radio	802.11abgn-BE	-1
+1.1.08	wiphy5	0.0.0.0	False	False	19098	61	0	0	5926	35	0	0		80:84:89:08:e2:74	WIFI-Radio	802.11abgn-BE	-1
+1.1.09	wiphy6	0.0.0.0	False	False	4186	15	0	0	1978	13	0	0		80:84:89:00:90:51	WIFI-Radio	802.11abgn-BE	-1
+1.1.10	wiphy7	0.0.0.0	False	False	7714487047	4984127	0	0	1293678	7306	0	0		80:84:89:00:90:92	WIFI-Radio	802.11abgn-BE	-1
+1.1.11	wiphy8	0.0.0.0	False	False	9437594057	6092718	0	0	1004298	6831	0	0		80:84:89:08:e4:40	WIFI-Radio	802.11abgn-BE	-1
+1.1.12	wiphy9	0.0.0.0	False	False	8609201997	5564116	0	0	927776	6657	0	0		bc:cd:99:f8:01:a6	WIFI-Radio	802.11abgn-BE	-1
+1.1.13	wiphy10	0.0.0.0	False	False	0	0	0	0	0	0	0	0		bc:cd:99:f8:7f:00	WIFI-Radio	802.11abgn-BE	-1
+1.1.14	wiphy11	0.0.0.0	False	False	0	0	0	0	0	0	0	0		80:84:89:00:90:5b	WIFI-Radio	802.11abgn-BE	-1

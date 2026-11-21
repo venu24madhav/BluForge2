@@ -1,0 +1,335 @@
+##### set_rfgen
+                       bb_gain: str = None,                      # RX Gain, 0 - 62 in 2dB steps
+                       burst_offset: str = None,                 # FCC5B burst offset in usec. Blank-time for W53-Chirp.
+                       chirp_width_khz: str = None,              # W53 Chirp width in khz.
+                       display: str = None,                      # Display to use when launching pulse-detect GUI.
+                       freq_khz: str = None,                     # Center frequency in Khz
+                       freq_modulation: str = None,              # FCC5B setting, 5-20.
+                       gain: str = None,                         # Main TX/RX Amp, 0 or 14 (dB), default is 14
+                       p_id: str = None,                         # RF Generator ID (serial number) [W]
+                       if_gain: str = None,                      # Fine-tune TX/RX Gain, 0 - 40 dB
+                       long_pulse_width_us: str = None,          # Requested long pulse width for W53 chirp, units are in
+                       # micro-seconds.
+                       ofdm_duration: str = None,                # OFDM duration in msec
+                       ofdm_header: str = None,                  # OFDM header modulation: 0 BPSK, 1 QPSK.
+                       ofdm_payload: str = None,                 # OFDM payload modulation: 0 BPSK, 1 QPSK, 2 8PSK.
+                       ofdm_t1_off: str = None,                  # OFDM time-period one off duration in usec
+                       ofdm_t1_on: str = None,                   # OFDM time-period one on duration in usec
+                       ofdm_t2_off: str = None,                  # OFDM time-period two off duration in usec
+                       ofdm_t2_on: str = None,                   # OFDM time-period two on duration in usec
+                       ofdm_t3_off: str = None,                  # OFDM time-period three off duration in usec
+                       ofdm_t3_on: str = None,                   # OFDM time-period three on duration in usec
+                       prf1: str = None,                         # ETSI/FCC5/W53 pulse repetition frequency.
+                       prf2: str = None,                         # ETSI/FCC5 pulse repetition frequency.
+                       prf3: str = None,                         # ETSI/FCC5 pulse repetition frequency.
+                       pulse_count: str = None,                  # Number of pulses (0-255). Continuous pairs of pulses for
+                       # W53.
+                       pulse_interval_us: str = None,            # Time between pulses, in micro-seconds.
+                       pulse_width_us: str = None,               # Requested pulse width, units are in micro-seconds.
+                       # Fractional units (0.5) accepted.
+                       radar_type: str = None,                   # FCC, ETSI and other RF noise patterns.
+                       resource: int = None,                     # Resource number. [W]
+                       rfgen_flags: str = None,                  # RF Generator flags, see above.
+                       rfgen_flags_mask: str = None,             # Mask of what flags to set, see above.
+                       sample_rate: str = None,                  # Tx/Rx sample rate in khz. Use 20000 if unsure.
+                       shelf: int = 1,                           # Shelf number, usually 1. [R][D:1]
+                       sweep_time_ms: str = None,                # Time interval between pulse groups in miliseconds
+                       trigger_amp: str = None,                  # Set the trigger amplitude in 1/100 of amp, for the RF
+                       # analyzer feature (PULSE_DETECT type)
+                       trigger_dbm: str = None,                  # Set the trigger in dBm for the RF analyzer feature
+                       # (PULSE_DETECT type)
+                       uut_channel: str = None,                  # FCC5 setting, 20, 40, 80 or 160.
+##### show_rfgen
+                        p_id: str = None,                         # RF Generator serial number, or 'all'.
+                        resource: int = None,                     # Resource number, or 'all'. [W]
+                        shelf: int = 1,                           # Shelf number or alias, can be 'all'. [R][D:1]
+##### rm_rfgen
+                      p_id: str = None,                         # RF Generator ID (serial-number) [W]
+                      resource: int = None,                     # Resource number [W]
+                      shelf: int = 1,                           # Shelf number, usually 1 [R][D:1]
+##### set_wifi_radio
+                            active_peer_count: str = None,            # Number of locally-cached peer objects for this
+                            # radio.
+                            ampdu_factor: str = None,                 # ax200/ax210 only, currently. Requires module reload.
+                            # OS Default: 0xFF
+                            antenna: str = None,                      # Antenna configuration: 0 Diversity/All, 1 Fixed-A
+                            # (1x1), 4 AB (2x2), 7 ABC (3x3), 8 ABCD (4x4), 9 8x8
+                            channel: str = None,                      # Channel number for this radio device. Frequency
+                            # takes precedence if both are set to non-default
+                            # values. <tt>0xFFFF, AUTO or DEFAULT</tt> means ANY.
+                            const_tx: str = None,                     # RF Pattern Generator: encoded as a single 32-bit
+                            # integer. See above.
+                            country: str = None,                      # Country number for this radio device.
+                            flags: str = None,                        # Flags for this interface (see above.)
+                            flags_mask: str = None,                   # If set, only these flags will be considered.
+                            frag_thresh: str = None,                  # Fragmentation Threshold (256 - 2346, 2346 ==
+                            # disabled).
+                            frequency: str = None,                    # Frequency for this radio. <tt>0xFFFF, AUTO or
+                            # DEFAULT</tt> means ANY.
+                            fwname: str = None,                       # Firmware name (for example: firmware-5.bin)
+                            fwver: str = None,                        # Firmware API version (for example, 5 if firmware is
+                            # based on firmware-5.bin
+                            mac: str = None,                          # Used to identify when name cannot be trusted
+                            # (2.6.34+ kernels).
+                            max_amsdu: str = None,                    # Maximum number of frames per AMSDU that may be
+                            # transmitted. See above.
+                            mode: str = None,                         # RF Pattern Generator: WiFi mode for radar emulation,
+                            # see table. Do not use for vAPs.
+                            peer_count: str = None,                   # Number of peer objects for this radio.
+                            pref_ap: str = None,                      # Preferred AP BSSID for all station vdevs on this
+                            # radio.
+                            pulse2_interval_us: str = None,           # Pause between pattern burst for RF noise generator.
+                            pulse_interval: str = None,               # RF Pattern generator: interval between pulses in
+                            # usecs.
+                            pulse_width: str = None,                  # RF Pattern generator: pulse width in usecs.
+                            radio: str = None,                        # Name of the physical radio interface, for example:
+                            # wiphy0 [W]
+                            rate: str = None,                         # No longer used, specify the rate on the virtual
+                            # station(s) instead.
+                            rate_ctrl_count: str = None,              # Number of rate-ctrl objects for this radio.
+                            resource: int = None,                     # Resource number. [W]
+                            rts: str = None,                          # The RTS Threshold for this radio (off, or 1-2347).
+                            shelf: int = 1,                           # Shelf number. [R][D:1]
+                            skid_limit: str = None,                   # Firmware hash-table Skid Limit for this radio.
+                            stations_count: str = None,               # Number of stations supported by this radio.
+                            tids_count: str = None,                   # TIDs count for this radio.
+                            tx_pulses: str = None,                    # Number of pattern pulses per burst for RF noise
+                            # generator.
+                            txdesc_count: str = None,                 # Transmit descriptor count for this radio.
+                            txpower: str = None,                      # The transmit power setting for this radio. (AUTO for
+                            # system defaults)
+                            vdev_count: str = None,                   # Configure radio vdev count.
+##### add_sta
+                     ampdu_density: str = None,                # 0-7, or 0xFF to not set.
+                     ampdu_factor: str = None,                 # 0-3, or 0xFF to not set.
+                     ap: str = None,                           # The Access Point BSSID this Virtual STA should be
+                     # associated with (example: <tt>00:11:22:33:4:55</tt>, or
+                     # <tt>DEFAULT</tt> for any).
+                     flags: str = None,                        # Flags for this interface (see above.)
+                     flags_mask: str = None,                   # If set, only these flags will be considered.
+                     ieee80211w: str = None,                   # Management Frame Protection: 0: disabled, 1: optional, 2:
+                     # Required.
+                     key: str = None,                          # Encryption key (WEP, WPA, WPA2, WPA3, etc) for this Virtual
+                     # STA. Prepend with 0x for ascii-hex input.
+                     mac: str = None,                          # The MAC address, can also use parent-pattern in 5.3.8 and
+                     # higher: <tt>xx:xx:xx:*:*:xx</tt>
+                     max_amsdu: str = None,                    # 1 == enabled, 0 == disabled, 0xFF == do not set.
+                     mode: str = None,                         # WiFi mode: See above, use the numeric value (0 means AUTO,
+                     # 1 means 802.11a, etc. [D:0]
+                     nickname: str = None,                     # Nickname for this Virtual STA. (No longer used)
+                     radio: str = None,                        # Name of the physical radio interface, for example: wiphy0
+                     rate: str = None,                         # Max rate, see help above.
+                     resource: int = None,                     # Resource number. [W]
+                     rsn_override: str = None,                 # Check for RSN Override IEs: 0: disabled, 1: Enable if
+                     # supported, 2: Force enabled.
+                     shelf: int = 1,                           # Shelf number. [R][D:1]
+                     ssid: str = None,                         # SSID for this Virtual STA. Use [BLANK] for empty SSID.
+                     # Start with <tt>0x</tt> for HEX interpretation.
+                     sta_br_ip: str = None,                    # IP Address for station bridging. Set to 0.0.0.0 to use MAC
+                     # bridging.
+                     sta_name: str = None,                     # Name for this Virtual STA, for example: sta0 [W]
+                     wpa_cfg_file: str = None,                 # WPA Supplicant config file.
+                     x_coord: str = None,                      # Floating point number.
+                     y_coord: str = None,                      # Floating point number.
+                     z_coord: str = None,                      # Floating point number.
+##### add_vap
+                     ap_name: str = None,                      # Name for this Virtual AP, for example: vap0
+                     beacon: str = None,                       # The beacon interval, in 1kus (1.024 ms), default 100,
+                     # range: 15..65535
+                     custom_cfg: str = None,                   # Custom hostapd config file, if you want to craft your own
+                     # config.
+                     dtim_period: str = None,                  # DTIM period, range 1..255. Default 2.
+                     flags: str = None,                        # Flags for this interface (see above.)
+                     flags_mask: str = None,                   # If set, only these flags will be considered.
+                     frag_thresh: str = None,                  # UN-USED, Was Fragmentation threshold, which is now set with
+                     # set_wifi_radio, use NA
+                     ieee80211w: str = None,                   # Management Frame Protection: 0: disabled, 1: optional, 2:
+                     # Required.
+                     key: str = None,                          # Encryption key for this Virtual AP. Prepend with 0x for
+                     # ascii-hex representation.
+                     mac: str = None,                          # The MAC address, can also use parent-pattern in 5.3.8 and
+                     # higher: <tt>xx:xx:xx:*:*:xx</tt>
+                     max_sta: str = None,                      # Maximum number of Stations allowed to join this AP
+                     # (1..2007)
+                     mode: str = None,                         # WiFi mode: see table
+                     radio: str = None,                        # Name of the physical radio interface, for example: wiphy0
+                     # [W]
+                     rate: str = None,                         # Max rate, see help for add_vsta
+                     resource: int = None,                     # Resource number. [W]
+                     shelf: int = 1,                           # Shelf number. [R][D:1]
+                     ssid: str = None,                         # SSID for this Virtual AP.
+                     x_coord: str = None,                      # Floating point number.
+                     y_coord: str = None,                      # Floating point number.
+                     z_coord: str = None,                      # Floating point number.
+##### add_monitor
+                         aid: str = None,                          # AID, may be used when sniffing on /AX radios.
+                         ap_name: str = None,                      # Name for this Monitor interface, for example: moni0 [W]
+                         bssid: str = None,                        # BSSID to use when sniffing on /AX radios, optional.
+                         flags: str = None,                        # Flags for this monitor interface.
+                         flags_mask: str = None,                   # Flags mask for this monitor interface.
+                         radio: str = None,                        # Name of the physical radio interface, for example:
+                         # wiphy0
+                         resource: int = None,                     # Resource number. [W]
+                         shelf: int = 1,                           # Shelf number. [R][D:1]
+##### add_endp
+                      alias: str = None,                        # Name of endpoint. [R]
+                      ip_port: str = None,                      # IP Port: IP port for layer three endpoints. Use -1 to let
+                      # the LANforge server automatically configure the ip_port.
+                      # Layer 2 endpoints will ignore this argument. Use 0 for
+                      # 'ANY', and let the OS choose.
+                      is_pkt_sz_random: str = None,             # Yes means use random sized packets, anything else means
+                      # NO.
+                      is_rate_bursty: str = None,               # Yes means bursty, anything else means NO.
+                      max_pkt: str = None,                      # Maximum packet size, including all headers. 0 means
+                      # 'same', -1 means AUTO (5.3.2+) [D:0]
+                      max_rate: str = None,                     # Maximum transmit rate (bps), used if in bursty mode.
+                      min_pkt: str = None,                      # Minimum packet size, including all headers. -1 means AUTO
+                      # (5.3.2+) [D:-1]
+                      min_rate: str = None,                     # Minimum transmit rate (bps), or only rate if not bursty.
+                      multi_conn: str = None,                   # If > 0, will create separate process with this many
+                      # connections per endpoint. See AUTO_HELPER flag
+                      payload_pattern: str = None,              # Payload pattern, see above.
+                      port: str = None,                         # Port/Interface name or number.
+                      resource: int = None,                     # Resource number.
+                      send_bad_crc_per_million: str = None,     # If NIC supports it, will randomly send X per million
+                      # packets with bad ethernet Frame Check Sum.
+                      shelf: int = 1,                           # Shelf name/id. [D:1]
+                      ttl: str = None,                          # Time-to-live, used by UDP Multicast Endpoints only.
+                      p_type: str = None,                       # Endpoint Type: See above.
+                      use_checksum: str = None,                 # Yes means checksum the payload, anything else means NO.
+##### add_cx
+                    alias: str = None,                        # Name of the Cross Connect to create. [R]
+                    rx_endp: str = None,                      # Name of Receiving endpoint. [W]
+                    test_mgr: str = None,                     # Name of test-manager to create the CX on. [W][D:default_tm]
+                    tx_endp: str = None,                      # Name of Transmitting endpoint. [R]
+##### set_cx_state
+                          cx_name: str = None,                      # Name of the cross-connect, or 'all'. [W]
+                          cx_state: str = None,                     # One of: RUNNING, SWITCH, QUIESCE, STOPPED, or DELETED.
+                          # [W]
+                          test_mgr: str = None,                     # Name of the test-manager, or 'all'. [W]
+##### add_gen_endp
+                          alias: str = None,                        # Name of endpoint. [R]
+                          gen_flags: str = None,                    # Flags for configuring a generic endpoint. [D:0]
+                          group: str = None,                        # Group ID for {gen_zoom, gen_teams, gen_meet} endpoints
+                          # [D:NA]
+                          port: str = None,                         # Port number or name.
+                          resource: int = None,                     # Resource number.
+                          shelf: int = 1,                           # Shelf name/id. [D:1]
+                          subtype: str = None,                      # Generic Endpoint Subtype: gen_none, gen_zoom,
+                          # gen_teams, gen_meet [D:gen_none]
+                          p_type: str = None,                       # Endpoint Type : gen_generic [D:gen_generic]
+##### set_port
+                      alias: str = None,                        # A user-defined name for this interface. Can be BLANK or
+                      # NA.
+                      br_aging_time: str = None,                # MAC aging time, in seconds, 32-bit number (or peer IP for
+                      # GRE).
+                      br_forwarding_delay: str = None,          # How long to wait until the bridge will start forwarding
+                      # packets.
+                      br_hello_time: str = None,                # How often does the bridge send out STP hello packets.
+                      br_max_age: str = None,                   # How long until STP considers a non-responsive bridge dead.
+                      br_port_cost: str = None,                 # STP Port cost for a port (this applies only to NON-BRIDGE
+                      # interfaces).
+                      br_port_priority: str = None,             # STP Port priority for a port (this applies only to
+                      # NON-BRIDGE interfaces).
+                      br_priority: str = None,                  # Bridge priority, 16-bit number.
+                      bypass_wdt: str = None,                   # Watch Dog Timer (in seconds) for this port. Zero (0) to
+                      # disable.
+                      cmd_flags: str = None,                    # Command Flags: See above, or NA.
+                      cpu_mask: str = None,                     # CPU Mask for CPUs that should service this interface. Zero
+                      # is don't set (let OS make the decision). This value will
+                      # be applied to the proper /proc/irq/[irq-num]/smp_affinity
+                      # file by the pin_irq.pl script.
+                      current_flags: str = None,                # See above, or NA.
+                      current_flags_msk: str = None,            # This sets 'interest' for flags 'Enable RADIUS service' and
+                      # higher. See above, or NA.
+                      dhcp_client_id: str = None,               # Optional string of up to 63 bytes in length to be passed
+                      # to the dhclient process. See above.
+                      dhcp_hostname: str = None,                # Optional string of up to 63 bytes in length to be passed
+                      # to the dhclient process. Option 12, see above.
+                      dhcp_vendor_id: str = None,               # Optional string of up to 63 bytes in length to be passed
+                      # to the dhclient process. See above.
+                      dns_servers: str = None,                  # DNS servers for use by traffic on this port,
+                      # comma-separated list, BLANK means zero-length string.
+                      flags2: str = None,                       # Bridge &amp; other flags, see above.
+                      gateway: str = None,                      # IP address of the gateway device - used for IP routing, or
+                      # NA.
+                      interest: str = None,                     # Which things are we really interested in setting. Can
+                      # over-ride defaults based on the other arguments.
+                      ip_addr: str = None,                      # IP address for the port, or NA.
+                      ipsec_concentrator: str = None,           # IP Address of IPSec concentrator.
+                      ipsec_local_id: str = None,               # Local Identifier for this IPSec tunnel.
+                      ipsec_passwd: str = None,                 # Password for IPSec, for pubkey, use:
+                      # pubkey:[pem-file-name], for instance: pubkey:station.pem
+                      ipsec_remote_id: str = None,              # Remote Identifier for this IPSec tunnel.
+                      ipv6_addr_global: str = None,             # Global scoped IPv6 address.
+                      ipv6_addr_link: str = None,               # Link scoped IPv6 address.
+                      ipv6_dflt_gw: str = None,                 # IPv6 default gateway.
+                      mac: str = None,                          # MAC address to set this port to, or leave blank to not set
+                      # it, or NA.
+                      mtu: str = None,                          # Maximum Transmit Unit (MTU) for this interface. Can be
+                      # blank or NA.
+                      netmask: str = None,                      # Netmask which this port should use, or NA.
+                      port: str = None,                         # Port number for the port to be modified. [W]
+                      report_timer: int = None,                 # How often, in milliseconds, should we poll stats on this
+                      # interface?
+                      resource: int = None,                     # Resource number for the port to be modified. [W]
+                      shelf: int = 1,                           # Shelf number for the port to be modified. [R][D:1]
+                      sta_br_id: str = None,                    # WiFi STAtion bridge ID. Zero means none.
+                      tx_queue_len: str = None,                 # Transmit Queue Length for this interface. Can be blank or
+                      # NA.
+##### sniff_port
+                        display: str = None,                      # The DISPLAY option, for example: 192.168.1.5:0.0. Will
+                        # guess if left blank.
+                        duration: str = None,                     # Duration for doing a capture (in seconds). Default is 5
+                        # minutes for dumpcap/tshark, and forever for wireshark
+                        p_filter: str = None,                     # Optional capture filter.
+                        flags: str = None,                        # Flags that control how the sniffing is done.
+                        outfile: str = None,                      # Optional file location for saving a capture.
+                        port: str = None,                         # The port we are trying to run the packet sniffer on. See
+                        # above. [R]
+                        resource: int = None,                     # Resource number. [W]
+                        shelf: int = 1,                           # Shelf number. [R][D:1]
+                        snaplen: str = None,                      # Amount of each packet to store. Default is to store all
+                        # of it.
+##### scan_wifi
+                       extra: str = None,                        # Extra arguments to the scan script, see above.
+                       key: str = None,                          # Unique identifier for this request. Usually left blank.
+                       port: str = None,                         # Port number or name of the virtual interface. [W]
+                       resource: int = None,                     # Resource number. [W]
+                       shelf: int = 1,                           # Shelf number. [R][D:1]
+##### rm_vlan
+                     port: str = None,                         # Port number or name of the virtual interface. [W]
+                     resource: int = None,                     # Resource number. [W]
+                     shelf: int = 1,                           # Shelf number. [R][D:1]
+##### rm_cx
+                   cx_name: str = None,                      # Name of the cross-connect, or 'all'. [W]
+                   test_mgr: str = None,                     # Name of test-mgr, or 'all'. [W]
+##### rm_endp
+                     endp_name: str = None,                    # Name of the endpoint, or 'YES_ALL'. [W]
+##### reset_port
+                        port: str = None,                         # Port number to reset, or ALL. [W]
+                        pre_ifdown: str = None,                   # See above. Leave blank or use NA if unsure.
+                        reset_ospf: str = None,                   # If set to 'NO' or 'NA', then OSPF will not be updated.
+                        # Otherwise, it will be updated.
+                        resource: int = None,                     # Resource number, or ALL. [W]
+                        shelf: int = 1,                           # Shelf number, or ALL. [R][D:1]
+##### nc_show_ports
+                           port: str = None,                         # Port number, or 'all'. [W]
+                           probe_flags: str = None,                  # See above, add them together for multiple probings.
+                           # Leave blank if you want stats only.
+                           resource: int = None,                     # Resource number, or 'all'. [W]
+                           shelf: int = 1,                           # Name/id of the shelf, or 'all'. [R][D:1]
+##### wifi_event
+                        device: str = None,                       # Interface or PHY in most cases. [R]
+                        event: str = None,                        # What happened. [R]
+                        msg: str = None,                          # Entire event in human readable form.
+                        status: str = None,                       # Status on what happened.
+##### add_vlan
+                      old_name: str = None,                     # The temporary name, used for configuring un-discovered
+                      # hardware.
+                      port: str = None,                         # Port number of an existing Ethernet interface. [W]
+                      report_timer: int = None,                 # Report timer for this port, leave blank or use NA for
+                      # defaults.
+                      resource: int = None,                     # Resource number. [W]
+                      shelf: int = 1,                           # Shelf number. [R][D:1]
+                      vid: str = None,                          # The VLAN-ID for this 802.1Q VLAN interface. [W]

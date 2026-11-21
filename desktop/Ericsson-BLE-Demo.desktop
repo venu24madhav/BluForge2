@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=BluForge
+Comment=BE200 BLE interference generator + advertisement lab (manual start/stop)
+Exec=/usr/bin/xterm -T "BluForge" -e /home/lanforge/Desktop/BluForge/Blucode/desktop/start-and-open.sh
+Icon=/home/lanforge/Desktop/BluForge/Blucode/src/static/assets/favicon.ico
+Terminal=false
+Type=Application
+Categories=Network;X-Candela-Technologies;
+GenericName=Bluetooth Test Appliance

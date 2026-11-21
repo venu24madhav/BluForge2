@@ -1,0 +1,62 @@
+--- a/lf_kinstall.pl
++++ b/lf_kinstall.pl
+@@ -1460,6 +1460,10 @@
+                   0: disable GUI autostart
+                   1: enable GUI autostart
+ _
++bluforge_stage: With --do_image_prep, also remove BlueZ for the BluForge Bluetooth Test Appliance.
++               The end-user installs BlueZ later (sudo bluforge-bluez install). Initial staging only; it
++               is a no-op if already done. Requires /usr/local/sbin/bluforge-bluez (shipped by BluForge).
++_
+ do_hs20:      Build keys, configure apache ssl and other actions to enable
+               this system to act as an HS20-R2 server.  Requires specific
+               LANforge configuration as well before this will actually work.
+@@ -1887,6 +1891,7 @@
+ my $yum_mate_pkgs = "mate-sensors-applet";
+ 
+ my $do_image_prep = 0;
++my $bluforge_stage = 0;  # BluForge appliance staging: remove BlueZ (end-user installs it later)
+ my $do_vm_prep = 0;
+ my $yum_groups = q( development-tools system-tools "DNS Name Server" "Directory Server" "FTP Server" "Windows File Server");
+ my $install_vlc = 0;
+@@ -1960,6 +1965,7 @@
+         'do_hs20'                                                           => \$do_hs20,
+         'do_http'                                                           => \$do_http,
+         'do_https_cert'                                                     => \$do_https_cert,
++        'bluforge_stage'                                                    => \$bluforge_stage,
+         'do_image_prep'                                                     => \$do_image_prep,
+         'do_interop'                                                        => \$do_interop,
+         'do_iommu=i'                                                        => \$do_iommu,
+@@ -4957,6 +4963,17 @@
+     for $f (@stat) {
+         unlink($f) if (-f $f);
+     }
++    if ($bluforge_stage) {
++        # initial staging only: bluforge-bluez previews, refuses a second run, and will not
++        # remove a BlueZ the end-user installed
++        if (-x "/usr/local/sbin/bluforge-bluez") {
++            do_cmd("/usr/local/sbin/bluforge-bluez remove --staging --yes");
++        }
++        else {
++            err("--bluforge_stage: /usr/local/sbin/bluforge-bluez not found - install BluForge first");
++            exit(1);
++        }
++    }
+     do_cmd("dnf clean all -y", 1);
+ 
+     @stat = ("/home/lanforge/Downloads",
+@@ -5460,8 +5477,13 @@
+     qw(perl-Text-CSV_XS perl-Text-CSV-Separator iperf3 xauth),
+     qw(dhcp-server bridge-utils perl-JSON-XS perl-Devel-NYTProf perl-Net-Telnet cups-pdf),
+     qw(gnuplot colordiff trash-cli android-tools SDL2-devel ffms2-devel meson gcc make),
+-    qw(d-feet bluez bluez-tools libreoffice)
++    qw(d-feet libreoffice)
+ ); # pulseaudio   pulseaudio-utils  python3-pulsectl xorg-x11-apps  jnettop spamassassin
++# BluForge Bluetooth Test Appliance: BlueZ is installed by the end-user (bluforge-bluez install),
++# so once staging has removed it a later lf_kinstall run must not put it back.
++if (!-e "/var/lib/bluforge/bluez-staged-removed" && !$bluforge_stage) {
++    @yum_pkgs_warn = (@yum_pkgs_warn, qw(bluez bluez-tools));
++}
+ if ($::osveri < 30) {
+     @yum_pkgs_warn = (@yum_pkgs_warn, qw(xorg-x11-utils));
+ }

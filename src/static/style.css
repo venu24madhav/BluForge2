@@ -1,0 +1,253 @@
+/* Ericsson BLE demo GUI - styled after the real LANforge 5.5.3 Java client
+   (Metal/Ocean look & feel). Tokens and component recipes below are copied
+   from recon/02_lanforge_gui_style.md, which derived them from the running
+   client's own bytecode (lfclient.jar via javap) and a headless JDK render
+   using the exact same UIDefaults overrides -- not guessed. See that file
+   for full provenance ([bc]/[jdk]/[doc] tags per value). */
+
+:root {
+  /* ---- Metal/Ocean base [jdk] ---- */
+  --lf-control:            #eeeeee;
+  --lf-white:              #ffffff;
+  --lf-text:               #333333;
+  --lf-text-disabled:      #999999;
+  --lf-text-on-select:     #000500;
+  --lf-border:             #7a8a99;
+  --lf-border-soft:        #b8cfe5;
+  --lf-primary1:           #6382bf;
+  --lf-primary2:           #a3b8cc;
+  --lf-primary3:           #b8cfe5;
+  --lf-tab-selected:       #c8ddf2;
+  --lf-tab-area:           #dadada;
+  --lf-menubar-top:        #ffffff;
+  --lf-menubar-bottom:     #dadada;
+  --lf-menubar-rule:       #cccccc;
+  --lf-btn-top:            #dde8f3;
+  --lf-btn-mid:            #ffffff;
+  --lf-btn-bottom:         #b8cfe5;
+
+  --lf-table-bg:           #ffffff;
+  --lf-table-grid:         #bebec8;
+  --lf-table-header-bg:    #eeeeee;
+  --lf-select-bg:          #b4dcff;
+  --lf-select-fg:          #000500;
+
+  --lf-row-mgt-port:       #d1f4fc;
+  --lf-row-pass:           #00e68a;
+  --lf-row-inuse:          #00ff99;
+  --lf-row-info:           #99ccff;
+  --lf-row-warn:           #ffff66;
+  --lf-row-error:          #ff3333;
+  --lf-modified-field:     #ffe0c0;
+  --lf-tab-alert:          #ffc800;
+
+  --candela-green:         #007000;
+  --candela-gold:          #f8c048;
+
+  --lf-font: "Noto Sans", "DejaVu Sans", "Lucida Sans", Verdana, sans-serif;
+  --lf-font-brand: "Century Gothic", Arial, Helvetica, sans-serif;
+  --lf-mono: "Liberation Mono", "Courier New", Courier, monospace;
+  --lf-fs: 12px;
+  --lf-row-h: 19px;
+  --lf-btn-h: 27px;
+  --lf-menubar-h: 22px;
+  --lf-tab-h: 20px;
+  --lf-status-h: 24px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; height: 100%;
+  background: var(--lf-control); color: var(--lf-text);
+  font: var(--lf-fs)/1.3 var(--lf-font);
+}
+body { display: flex; flex-direction: column; }
+
+/* ---- title band (the web page's stand-in for the Java window titlebar) ---- */
+.lf-titleband {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--lf-tab-area); border-bottom: 1px solid #9aa0a6;
+  padding: 4px 10px; height: 34px;
+}
+.lf-titleband img.logo { height: 26px; width: auto; display: block; }
+@font-face {
+  font-family: "Exo 2"; font-weight: 700; font-style: normal; font-display: swap;
+  src: url("/assets/exo2-700.woff2") format("woff2");
+}
+.lf-titleband .title {
+  font-family: "Exo 2", "Century Gothic", Arial, Helvetica, sans-serif;
+  font-weight: 700; font-size: 20px; letter-spacing: 1px; color: #0082fc;
+}
+.spacer { flex: 1; }
+.lf-titleband .host { font-size: 11px; color: #555; }
+.lf-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--lf-row-error); display: inline-block; margin-right: 5px; vertical-align: -1px; }
+.lf-dot.up { background: var(--lf-row-pass); }
+
+/* ---- menu bar [bc] ---- */
+.lf-menubar {
+  height: var(--lf-menubar-h);
+  background: linear-gradient(var(--lf-menubar-top), var(--lf-menubar-bottom));
+  border-bottom: 1px solid var(--lf-menubar-rule);
+  display: flex; align-items: center; padding: 0 2px;
+}
+.lf-menubar span { padding: 0 8px; cursor: default; color: #333; }
+.lf-menubar span:hover { background: var(--lf-primary2); }
+
+/* ---- action button row ---- */
+.lf-actions { display: flex; justify-content: flex-end; gap: 12px; padding: 5px 12px; background: var(--lf-control); }
+.lf-btn {
+  height: var(--lf-btn-h); min-width: 63px; padding: 0 14px;
+  color: var(--lf-text); font: inherit; cursor: pointer;
+  border: 1px solid var(--lf-border); border-radius: 0;
+  background: linear-gradient(to bottom, var(--lf-btn-top) 0%, var(--lf-btn-mid) 30%, var(--lf-btn-bottom) 100%);
+}
+.lf-btn:hover { filter: brightness(0.98); }
+.lf-btn:active { background: var(--lf-primary3); }
+.lf-btn:disabled { color: var(--lf-text-disabled); background: var(--lf-control); border-color: var(--lf-primary3); cursor: not-allowed; }
+.lf-btn.danger { border-color: #a33; }
+.lf-btn.primary { border-color: var(--lf-primary1); font-weight: 700; }
+
+/* ---- tab bar [bc] ---- */
+.lf-tabs { display: flex; flex-wrap: wrap; padding: 6px 6px 0 6px; gap: 0; }
+.lf-tab {
+  height: var(--lf-tab-h); padding: 0 11px; line-height: var(--lf-tab-h);
+  border: 1px solid var(--lf-border); border-bottom: 0;
+  background: var(--lf-control); color: #444; margin-right: -1px;
+  cursor: pointer; font-size: 12px;
+}
+.lf-tab.sel {
+  background: var(--lf-tab-selected); border-top: 2px solid var(--lf-primary1);
+  box-shadow: inset 0 1px 0 #fff; color: #000; font-weight: 700;
+  padding-top: 0; height: calc(var(--lf-tab-h) - 1px);
+}
+.lf-tab.alert { background: var(--lf-tab-alert); }
+
+/* ---- content pane ---- */
+.lf-pane {
+  background: var(--lf-control);
+  border: 1px solid var(--lf-primary1);
+  box-shadow: inset 1px 1px 0 #fff, inset 3px 3px 0 var(--lf-tab-selected);
+  padding: 10px; margin: 0 6px 6px 6px; flex: 1; overflow: auto;
+}
+.lf-section { display: none; }
+.lf-section.show { display: block; }
+
+/* ---- titled group (form controls) ---- */
+.lf-group { border: 1px solid var(--lf-border-soft); margin: 0 0 10px 0; padding: 10px 12px 12px; position: relative; background: #f4f8fb; }
+.lf-group > legend { padding: 0 6px; margin: 0 0 0 8px; font-weight: 700; font-size: 11px; color: #456; }
+.lf-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 8px; }
+.lf-field { display: flex; flex-direction: column; gap: 2px; min-width: 120px; }
+.lf-field label { font-size: 11px; color: #456; }
+.lf-field small { color: #789; font-size: 10px; }
+.lf-input, select.lf-input {
+  height: 22px; border: 1px solid var(--lf-border); background: #fff; padding: 0 4px;
+  font: inherit; font-size: 12px;
+}
+.lf-input:focus { outline: 1px dotted var(--lf-primary2); }
+.lf-input.changed { background: var(--lf-modified-field); }
+.lf-check { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+.lf-check input { width: 14px; height: 14px; }
+.lf-radio-checks { display: flex; flex-wrap: wrap; gap: 2px 10px; border: 1px solid var(--lf-border); background: #fff; padding: 5px 8px; min-height: 22px; }
+.lf-radio-checks label { display: flex; align-items: center; gap: 4px; font-size: 12px; white-space: nowrap; }
+.lf-radio-checks label.busy { color: #aaa; }
+.lf-radio-checks input[disabled] + span { color: #aaa; }
+
+/* ---- table (jobs / radios) [bc] ---- */
+.lf-tablewrap { border: 1px solid var(--lf-border-soft); background: #fff; overflow: auto; }
+.lf-tablewrap .cap { text-align: center; font-size: 11px; color: #456; padding: 3px; border-bottom: 1px solid var(--lf-border-soft); background: #f7fafd; }
+table.lf-table { border-collapse: collapse; width: 100%; font-size: 12px; }
+table.lf-table th {
+  background: var(--lf-table-header-bg); font-weight: 400; padding: 3px 8px; height: 20px;
+  border: 1px solid var(--lf-table-grid); border-top-color: #fff; border-left-color: #fff;
+  text-align: center; white-space: nowrap;
+}
+table.lf-table td {
+  height: var(--lf-row-h); padding: 1px 8px; border: 1px solid var(--lf-table-grid);
+  white-space: nowrap; background: var(--lf-table-bg);
+}
+table.lf-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.lf-table tr.idle td { color: #888; }
+table.lf-table tr.running td { background: var(--lf-row-mgt-port); }
+table.lf-table tr.err td { background: var(--lf-row-error); color: #fff; }
+table.lf-table td .mini-btn {
+  font-size: 11px; padding: 1px 8px; border: 1px solid var(--lf-border); cursor: pointer;
+  background: linear-gradient(to bottom, var(--lf-btn-top), var(--lf-btn-bottom));
+}
+.pill { font-size: 10px; padding: 1px 7px; border-radius: 2px; border: 1px solid var(--lf-border); display: inline-block; }
+.pill.ok { background: var(--lf-row-pass); border-color: #090; }
+.pill.busy { background: var(--lf-row-warn); border-color: #990; }
+.pill.off { background: var(--lf-control); color: #888; }
+
+/* ---- console ---- */
+.lf-console {
+  margin-top: 10px; height: 220px; overflow: auto; background: #0b0e13; color: #c9d4e0;
+  border: 1px solid var(--lf-border); font: 11px/1.5 var(--lf-mono); padding: 8px 10px; white-space: pre-wrap;
+}
+.lf-console .s { color: #6cb6ff; }
+.lf-console .g { color: #6fe36f; }
+.lf-console .y { color: #e3c86f; }
+.lf-console .r { color: #ff8080; }
+.lf-console .dim { color: #7890a0; }
+
+/* ---- status bar [bc] ---- */
+.lf-status {
+  height: var(--lf-status-h); border-top: 1px solid var(--lf-border-soft);
+  box-shadow: inset 0 1px 0 #fff; padding: 3px 10px; font-size: 11px; color: #444;
+  display: flex; align-items: center; gap: 16px;
+}
+
+/* ---- misc ---- */
+.note { color: #567; font-size: 11px; margin-top: 4px; }
+a.lf-link { color: #1a4fa0; cursor: pointer; }
+.hidden { display: none !important; }
+
+@media (max-width: 760px) {
+  .lf-row { flex-direction: column; align-items: stretch; }
+  .lf-field { min-width: 0; }
+  .lf-tablewrap { overflow-x: auto; }
+}
+
+/* ---- Bluetooth Classic tab ---- */
+.c-banner { border: 1px solid #c9a227; background: #fff7d6; color: #5a4600; padding: 6px 10px; margin-bottom: 10px; font-size: 11px; }
+.c-banner.bad { border-color: #a33; background: #ffe3e3; color: #6a1010; }
+.c-banner b { font-weight: 700; }
+.c-readout { height: 22px; line-height: 20px; border: 1px solid var(--lf-border-soft); background: #fff; padding: 0 8px; min-width: 150px; font-size: 12px; }
+.c-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px 10px; }
+.c-grid > div { border: 1px solid var(--lf-border-soft); background: #fff; padding: 3px 8px; display: flex; flex-direction: column; min-height: 36px; }
+.c-grid > div span { font-size: 10px; color: #678; }
+.c-grid > div b { font-weight: 600; font-size: 12px; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.c-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+.lf-btn.mini { height: 22px; min-width: 0; padding: 0 9px; font-size: 11px; }
+.c-result { border: 2px solid var(--lf-border); padding: 8px 12px; margin-bottom: 10px; font-size: 12px; background: #fff; }
+.c-result.pass { border-color: #090; background: #e6fbe9; }
+.c-result.fail { border-color: #b00; background: #ffe9e9; }
+.c-result h4 { margin: 0 0 4px 0; font-size: 13px; }
+.c-result ul { margin: 2px 0 0 18px; padding: 0; }
+.c-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; margin-top: 10px; }
+.c-charts .cap { text-align: left; font-size: 11px; color: #456; padding: 0 0 2px 2px; }
+.c-charts canvas { width: 100%; height: 110px; border: 1px solid var(--lf-border-soft); background: #fff; display: block; }
+table.lf-table tr.pass td { background: #d9f7dc; }
+table.lf-table tr.fail td { background: #ffd6d6; }
+table.lf-table td.wrap { white-space: normal; max-width: 420px; }
+.lf-btn.mini[disabled], .lf-btn[disabled] { opacity: .6; }
+.c-readout { display: flex; align-items: center; }
+
+/* ---- BlueZ-missing banner ---- */
+.lf-banner { background: #fff4d6; border-bottom: 2px solid #e0a800; padding: 8px 12px; font-size: 13px; color: #4a3a00; }
+.lf-banner-row { display: flex; align-items: center; gap: 12px; }
+.lf-banner-note { margin-top: 4px; font-size: 12px; color: #6b5a1a; max-width: 900px; }
+
+/* (i) help tips: the bubble is position:fixed (placed by app.js) so scrolling tables and fieldsets never clip it */
+.lf-labelrow { display: flex; align-items: center; gap: 4px; }
+.lf-tip { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 13px; height: 13px;
+  border-radius: 50%; background: #5b7fa6; color: #fff; font: italic bold 9px/1 serif; cursor: help; flex: none; user-select: none; }
+.lf-tip:hover, .lf-tip:focus { background: #0082fc; outline: none; }
+.lf-tip:hover::after, .lf-tip:focus::after { content: attr(data-tip); position: fixed; left: var(--tx, 8px); top: var(--ty, 40px); z-index: 1000;
+  width: 270px; padding: 7px 9px; background: #17202b; color: #f2f6fa; border-radius: 4px; box-shadow: 0 3px 10px rgba(0,0,0,.35);
+  font: normal 11px/1.4 sans-serif; white-space: normal; text-align: left; pointer-events: none; }
+.lf-tip.up:hover::after, .lf-tip.up:focus::after { top: auto; bottom: var(--by, 40px); }
+.lf-check .lf-tip { margin-left: 4px; }
+.lf-row > .lf-tip { align-self: center; }
+
+/* LANforge cluster: a heading row for each unit in the radios table */
+table.lf-table tr.unitrow td { background: #e4eefa; color: #123; font-weight: 700; font-size: 11px; padding: 3px 8px; border-top: 2px solid var(--lf-border); }

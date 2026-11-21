@@ -1,0 +1,3211 @@
+{
+ "meta": {
+  "host": "ct523c-ccb8",
+  "ip": "10.28.3.73",
+  "collected": "2026-10-05T18:27:47",
+  "kernel": "6.18.14+",
+  "bluez": "bluez-5.77-1.fc39.x86_64",
+  "bluetooth_core_module_version": "2.22",
+  "method": "Read-only HCI queries over HCI_CHANNEL_RAW (python socket, allowlisted READ opcodes only, bt_probe.py), cross-checked with btmon 5.77 and Wireshark/tshark 4.7.0 decode of the same capture (raw/probe.btsnoop); btmgmt (run under a pty), bluetoothctl, sysfs, debugfs (read only), rotated syslog.",
+  "hci_channel_user_opened": false,
+  "commands_sent_per_controller": [
+   "LE Read Advertising Physical Channel TX Power",
+   "LE Read Buffer Size [v1]",
+   "LE Read Filter Accept List Size",
+   "LE Read Local Supported Features",
+   "LE Read Maximum Advertising Data Length",
+   "LE Read Maximum Data Length",
+   "LE Read Number of Supported Advertising Sets",
+   "LE Read Resolving List Size",
+   "LE Read Supported States",
+   "LE Read Transmit Power",
+   "Read BD_ADDR",
+   "Read Local Supported Commands",
+   "Read Local Supported Features",
+   "Read Local Version Information"
+  ]
+ },
+ "decisive_answers": {
+  "le_transmitter_test": {
+   "v1_0x201E": true,
+   "v2_0x2034": true,
+   "v3_0x2050": false,
+   "v4_0x207B": true,
+   "test_end_0x201F": true,
+   "receiver_test": {
+    "v1_0x201D": true,
+    "v2_0x2033": true,
+    "v3_0x204F": false
+   },
+   "bitmap_evidence_octets": {
+    "28": "0x7f (Rx/Tx/End v1)",
+    "35": "0xff (Enh Rx v2 = bit7)",
+    "36": "0xff (Enh Tx v2 = bit0)",
+    "39": "0x07 (bits 3,4 clear => v3 Rx/Tx absent)",
+    "44": "0xff",
+    "45": "0xff (Tx v4 = bit0 per Core 5.3/5.4 table)"
+   },
+   "caveat": "Support is read from the Supported Commands bitmap; no test command was executed (transmission forbidden). btmon 5.77 and Wireshark do not expand octets 44-45, so the v4 bit position is from the Core spec table, not tool-verified; octets 44 and 45 are 0xff so v4 reads as supported at any bit in those two octets."
+  },
+  "extended_advertising": {
+   "le_feature_bit_ext_adv": true,
+   "set_ext_adv_params_0x2036": true,
+   "set_ext_adv_data_0x2037": true,
+   "set_ext_scan_rsp_0x2038": true,
+   "set_ext_adv_enable_0x2039": true,
+   "set_adv_set_random_addr_0x2035": true,
+   "max_adv_data_len_hci": 200,
+   "adv_sets": 12,
+   "periodic_advertising": {
+    "feature_bit": false,
+    "cmds_0x203E_0x2040": [
+     false,
+     false,
+     false
+    ]
+   },
+   "phys": {
+    "2M": true,
+    "Coded": true
+   }
+  }
+ },
+ "kernel_user_channel": {
+  "running_kernel": "6.18.14+",
+  "config_gz": false,
+  "boot_config_files_found": [
+   "/boot/config-6.11.9-100.fc39.x86_64",
+   "/boot/config-6.5.6-300.fc39.x86_64"
+  ],
+  "boot_config_matches_running_kernel": false,
+  "boot_config_6.11.9_BT": "CONFIG_BT=m, CONFIG_BT_HCIBTUSB=m, CONFIG_BT_INTEL=m, CONFIG_BT_LE=y (different kernel, informational only)",
+  "running_kernel_evidence": {
+   "bluetooth_ko": "/lib/modules/6.18.14+/kernel/net/bluetooth/bluetooth.ko (loaded, version 2.22)",
+   "hci_sock_symbols_in_kallsyms": [
+    "hci_sock_bind",
+    "hci_sock_sendmsg",
+    "hci_sock_setsockopt",
+    "hci_sock_create",
+    "hci_mgmt_chan_register"
+   ],
+   "bluetooth_ko_strings_contains_HCI_USER_CHANNEL": true,
+   "mgmt_version": "1.23",
+   "btmon_note": "Bluetooth subsystem version 2.22"
+  },
+  "devices_currently_up": true,
+  "devices_must_be_down_for_user_channel": true,
+  "up_evidence": "btmgmt current settings include 'powered' on all 8; raw-channel HCI commands completed on all 8 (would fail with ENETDOWN if down)",
+  "only_hci_socket_owner": "bluetoothd pid 1131 (2 sockets in /proc/net/hci)",
+  "user_channel_opened_by_this_recon": false
+ },
+ "controllers": {
+  "hci0": {
+   "bd_addr": "80:84:89:00:90:5F",
+   "manufacturer": {
+    "id": 2,
+    "name": "Intel Corp."
+   },
+   "hci_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "lmp_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "hci_revision": "0x4657",
+   "lmp_subversion": "0x4657",
+   "firmware": {
+    "firmware_timestamp": "2024.38",
+    "firmware_buildtype": 1,
+    "firmware_build": 67159,
+    "firmware_sha1": "0x083ad0b2",
+    "firmware_file": "intel/ibt-0291-0291.sfi",
+    "boot_address": "0x100800",
+    "firmware_version": "87-38.24",
+    "firmware_already_loaded_note": true
+   },
+   "debugfs_hardware_info": "INTEL platform=55 variant=28",
+   "usb": {
+    "port_path": "1-1",
+    "busnum": 1,
+    "devnum": 2,
+    "vid_pid": "8087:0036",
+    "speed_mbps": "12",
+    "usb_host_controller_pci": "0000:0d:00.0",
+    "sysfs": "/devices/pci0000:00/0000:00:1c.0/0000:09:00.0/0000:0a:04.0/0000:0b:00.0/0000:0c:03.0/0000:0d:00.0/usb1/1-1/1-1:1.0"
+   },
+   "wifi_sibling_inferred": {
+    "wiphy": "wiphy11",
+    "pci": "0000:15:00.0",
+    "basis": "BT BD_ADDR == last address of the module's 4-address Wi-Fi MAC block + 1 (8/8 controllers match); NOT derivable from USB/PCI topology"
+   },
+   "supported_commands_hex": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000",
+   "commands": {
+    "LE Set Random Address": true,
+    "LE Set Advertising Parameters": true,
+    "LE Read Advertising Physical Channel TX Power": true,
+    "LE Set Advertising Data": true,
+    "LE Set Scan Response Data": true,
+    "LE Set Advertising Enable": true,
+    "LE Set Scan Parameters": true,
+    "LE Set Scan Enable": true,
+    "LE Read Filter Accept List Size": true,
+    "LE Read Supported States": true,
+    "LE Receiver Test [v1]": true,
+    "LE Transmitter Test [v1]": true,
+    "LE Test End": true,
+    "LE Read Resolving List Size": true,
+    "LE Read Maximum Data Length": true,
+    "LE Enhanced Receiver Test [v2]": true,
+    "LE Enhanced Transmitter Test [v2]": true,
+    "LE Set Advertising Set Random Address": true,
+    "LE Set Extended Advertising Parameters [v1]": true,
+    "LE Set Extended Advertising Data": true,
+    "LE Set Extended Scan Response Data": true,
+    "LE Set Extended Advertising Enable": true,
+    "LE Read Maximum Advertising Data Length": true,
+    "LE Read Number of Supported Advertising Sets": true,
+    "LE Remove Advertising Set": true,
+    "LE Clear Advertising Sets": true,
+    "LE Set Periodic Advertising Parameters [v1]": false,
+    "LE Set Periodic Advertising Data": false,
+    "LE Set Periodic Advertising Enable": false,
+    "LE Set Extended Scan Parameters": true,
+    "LE Set Extended Scan Enable": true,
+    "LE Extended Create Connection [v1]": true,
+    "LE Read Transmit Power": true,
+    "LE Read RF Path Compensation": true,
+    "LE Write RF Path Compensation": true,
+    "LE Receiver Test [v3]": false,
+    "LE Transmitter Test [v3]": false,
+    "LE Enhanced Read Transmit Power Level": true,
+    "LE Read Remote Transmit Power Level": true,
+    "LE Set Path Loss Reporting Parameters": true,
+    "LE Set Path Loss Reporting Enable": true,
+    "LE Set Transmit Power Reporting Enable": true,
+    "LE Transmitter Test [v4]": true,
+    "LE Set Data Related Address Changes": true,
+    "Read Transmit Power Level (BR/EDR)": false,
+    "Write Inquiry Transmit Power Level (BR/EDR)": true,
+    "Enable Device Under Test Mode (BR/EDR)": true
+   },
+   "command_bits": {
+    "LE Set Random Address": "0x2005 oct25.bit4",
+    "LE Set Advertising Parameters": "0x2006 oct25.bit5",
+    "LE Read Advertising Physical Channel TX Power": "0x2007 oct25.bit6",
+    "LE Set Advertising Data": "0x2008 oct25.bit7",
+    "LE Set Scan Response Data": "0x2009 oct26.bit0",
+    "LE Set Advertising Enable": "0x200a oct26.bit1",
+    "LE Set Scan Parameters": "0x200b oct26.bit2",
+    "LE Set Scan Enable": "0x200c oct26.bit3",
+    "LE Read Filter Accept List Size": "0x200f oct26.bit6",
+    "LE Read Supported States": "0x201c oct28.bit3",
+    "LE Receiver Test [v1]": "0x201d oct28.bit4",
+    "LE Transmitter Test [v1]": "0x201e oct28.bit5",
+    "LE Test End": "0x201f oct28.bit6",
+    "LE Read Resolving List Size": "0x202a oct34.bit6",
+    "LE Read Maximum Data Length": "0x202f oct35.bit3",
+    "LE Enhanced Receiver Test [v2]": "0x2033 oct35.bit7",
+    "LE Enhanced Transmitter Test [v2]": "0x2034 oct36.bit0",
+    "LE Set Advertising Set Random Address": "0x2035 oct36.bit1",
+    "LE Set Extended Advertising Parameters [v1]": "0x2036 oct36.bit2",
+    "LE Set Extended Advertising Data": "0x2037 oct36.bit3",
+    "LE Set Extended Scan Response Data": "0x2038 oct36.bit4",
+    "LE Set Extended Advertising Enable": "0x2039 oct36.bit5",
+    "LE Read Maximum Advertising Data Length": "0x203a oct36.bit6",
+    "LE Read Number of Supported Advertising Sets": "0x203b oct36.bit7",
+    "LE Remove Advertising Set": "0x203c oct37.bit0",
+    "LE Clear Advertising Sets": "0x203d oct37.bit1",
+    "LE Set Periodic Advertising Parameters [v1]": "0x203e oct37.bit2",
+    "LE Set Periodic Advertising Data": "0x203f oct37.bit3",
+    "LE Set Periodic Advertising Enable": "0x2040 oct37.bit4",
+    "LE Set Extended Scan Parameters": "0x2041 oct37.bit5",
+    "LE Set Extended Scan Enable": "0x2042 oct37.bit6",
+    "LE Extended Create Connection [v1]": "0x2043 oct37.bit7",
+    "LE Read Transmit Power": "0x204b oct38.bit7",
+    "LE Read RF Path Compensation": "0x204c oct39.bit0",
+    "LE Write RF Path Compensation": "0x204d oct39.bit1",
+    "LE Receiver Test [v3]": "0x204f oct39.bit3",
+    "LE Transmitter Test [v3]": "0x2050 oct39.bit4",
+    "LE Enhanced Read Transmit Power Level": "0x2076 oct44.bit3",
+    "LE Read Remote Transmit Power Level": "0x2077 oct44.bit4",
+    "LE Set Path Loss Reporting Parameters": "0x2078 oct44.bit5",
+    "LE Set Path Loss Reporting Enable": "0x2079 oct44.bit6",
+    "LE Set Transmit Power Reporting Enable": "0x207a oct44.bit7",
+    "LE Transmitter Test [v4]": "0x207b oct45.bit0",
+    "LE Set Data Related Address Changes": "0x207c oct45.bit1",
+    "Read Transmit Power Level (BR/EDR)": "0x0c2d oct10.bit1",
+    "Write Inquiry Transmit Power Level (BR/EDR)": "0x0c59 oct18.bit1",
+    "Enable Device Under Test Mode (BR/EDR)": "0x1803 oct16.bit2"
+   },
+   "le_features_hex": "ffd9013cae000000",
+   "le_features_supported": [
+    "LE Encryption",
+    "Connection Parameters Request Procedure",
+    "Extended Reject Indication",
+    "Peripheral-initiated Features Exchange",
+    "LE Ping",
+    "LE Data Packet Length Extension",
+    "LL Privacy",
+    "Extended Scanner Filter Policies",
+    "LE 2M PHY",
+    "LE Coded PHY",
+    "LE Extended Advertising",
+    "Channel Selection Algorithm #2",
+    "LE Power Class 1",
+    "Minimum Number of Used Channels Procedure",
+    "Sleep Clock Accuracy Updates",
+    "Remote Public Key Validation",
+    "Connected Isochronous Stream - Central",
+    "Connected Isochronous Stream - Peripheral",
+    "LE Power Control Request",
+    "LE Path Loss Monitoring",
+    "Connection Subrating",
+    "Channel Classification",
+    "LE Power Change Indication"
+   ],
+   "le_features_not_supported": [
+    "Stable Modulation Index - Transmitter",
+    "Stable Modulation Index - Receiver",
+    "LE Periodic Advertising",
+    "Connection CTE Request",
+    "Connection CTE Response",
+    "Connectionless CTE Transmitter",
+    "Connectionless CTE Receiver",
+    "Antenna Switching During CTE Tx (AoD)",
+    "Antenna Switching During CTE Rx (AoA)",
+    "Receiving CTE",
+    "Periodic Advertising Sync Transfer - Sender",
+    "Periodic Advertising Sync Transfer - Recipient",
+    "Isochronous Broadcaster",
+    "Synchronized Receiver",
+    "Connected Isochronous Stream (Host Support)",
+    "Periodic Advertising ADI support",
+    "Connection Subrating (Host Support)"
+   ],
+   "lmp_features_page0_hex": "bffe0ffedbff7b87",
+   "le_supported_states_hex": "ffffffffff030000",
+   "le_supported_states_note": "0x000003ffffffffff = all 42 defined LE states supported (btmon decode)",
+   "le_max_adv_data_len_hci": 200,
+   "le_max_adv_data_len_bluez_mgmt": 251,
+   "le_num_adv_sets_hci": 12,
+   "le_tx_power_range_dbm_reported": {
+    "min": -64,
+    "max": 66
+   },
+   "le_adv_channel_tx_power_legacy_cmd_status": 12,
+   "le_buffer_size_v1": {
+    "acl_len": 251,
+    "acl_pkts": 6
+   },
+   "le_max_data_length": {
+    "max_tx_octets": 251,
+    "max_tx_time_us": 2704,
+    "max_rx_octets": 251,
+    "max_rx_time_us": 2704
+   },
+   "le_filter_accept_list_size": 64,
+   "le_resolving_list_size": 64,
+   "raw_responses": {
+    "0x1001": {
+     "name": "Read Local Version Information",
+     "status": 0,
+     "ret": "0d57460d02005746"
+    },
+    "0x1009": {
+     "name": "Read BD_ADDR",
+     "status": 0,
+     "ret": "5f9000898480"
+    },
+    "0x1003": {
+     "name": "Read Local Supported Features",
+     "status": 0,
+     "ret": "bffe0ffedbff7b87"
+    },
+    "0x1002": {
+     "name": "Read Local Supported Commands",
+     "status": 0,
+     "ret": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000"
+    },
+    "0x2003": {
+     "name": "LE Read Local Supported Features",
+     "status": 0,
+     "ret": "ffd9013cae000000"
+    },
+    "0x201c": {
+     "name": "LE Read Supported States",
+     "status": 0,
+     "ret": "ffffffffff030000"
+    },
+    "0x2002": {
+     "name": "LE Read Buffer Size [v1]",
+     "status": 0,
+     "ret": "fb0006"
+    },
+    "0x2007": {
+     "name": "LE Read Advertising Physical Channel TX Power",
+     "status": 12,
+     "ret": "fb"
+    },
+    "0x203a": {
+     "name": "LE Read Maximum Advertising Data Length",
+     "status": 0,
+     "ret": "c800"
+    },
+    "0x203b": {
+     "name": "LE Read Number of Supported Advertising Sets",
+     "status": 0,
+     "ret": "0c"
+    },
+    "0x204b": {
+     "name": "LE Read Transmit Power",
+     "status": 0,
+     "ret": "c042"
+    },
+    "0x202f": {
+     "name": "LE Read Maximum Data Length",
+     "status": 0,
+     "ret": "fb00900afb00900a"
+    },
+    "0x200f": {
+     "name": "LE Read Filter Accept List Size",
+     "status": 0,
+     "ret": "40"
+    },
+    "0x202a": {
+     "name": "LE Read Resolving List Size",
+     "status": 0,
+     "ret": "40"
+    }
+   },
+   "mgmt": {
+    "addr": "80:84:89:00:90:5F",
+    "mgmt_version": 13,
+    "manufacturer": 2,
+    "cod": "0x7c0104",
+    "supported_settings": [
+     "powered",
+     "connectable",
+     "fast-connectable",
+     "discoverable",
+     "bondable",
+     "link-security",
+     "ssp",
+     "br/edr",
+     "le",
+     "advertising",
+     "secure-conn",
+     "debug-keys",
+     "privacy",
+     "configuration",
+     "static-addr",
+     "phy-configuration",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "current_settings": [
+     "powered",
+     "bondable",
+     "ssp",
+     "br/edr",
+     "le",
+     "secure-conn",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "advinfo": {
+     "supported_flags": [
+      "connectable",
+      "general-discoverable",
+      "limited-discoverable",
+      "managed-flags",
+      "tx-power",
+      "scan-rsp-appearance",
+      "scan-rsp-local-name",
+      "Secondary-channel-1M",
+      "Secondary-channel-2M",
+      "Secondary-channel-CODED"
+     ],
+     "max_adv_data_len": 251,
+     "max_scan_rsp_len": 251,
+     "max_instances": 12,
+     "instances_in_use": 0
+    }
+   },
+   "bluetoothctl": {
+    "SupportedIncludes": [
+     "tx-power",
+     "appearance",
+     "local-name"
+    ],
+    "SupportedSecondaryChannels": [
+     "1M",
+     "2M",
+     "Coded"
+    ],
+    "SupportedFeatures": [
+     "CanSetTxPower",
+     "HardwareOffload"
+    ],
+    "Roles": [
+     "central",
+     "peripheral"
+    ],
+    "Name": "BlueZ 5.77",
+    "Alias": "BlueZ 5.77",
+    "Powered": "yes",
+    "PowerState": "on",
+    "Discoverable": "no",
+    "Pairable": "yes",
+    "Modalias": "usb:v1D6Bp0246d054D",
+    "Discovering": "no",
+    "ActiveInstances": "0x00 (0)",
+    "SupportedInstances": "0x0c (12)",
+    "SupportedCapabilities.MinTxPower": "0xffffffc0 (-64)",
+    "SupportedCapabilities.MaxTxPower": "0x0042 (66)",
+    "SupportedCapabilities.MaxAdvLen": "0xfb (251)",
+    "SupportedCapabilities.MaxScnRspLen": "0xfb (251)"
+   },
+   "state": {
+    "powered_up": true,
+    "connections": 0,
+    "scanning": false,
+    "discoverable": false,
+    "active_adv_instances": 0,
+    "dut_mode_debugfs": "N",
+    "random_address_debugfs": "00:00:00:00:00:00",
+    "idle": true
+   }
+  },
+  "hci1": {
+   "bd_addr": "BC:CD:99:F8:7F:04",
+   "manufacturer": {
+    "id": 2,
+    "name": "Intel Corp."
+   },
+   "hci_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "lmp_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "hci_revision": "0x4657",
+   "lmp_subversion": "0x4657",
+   "firmware": {
+    "firmware_timestamp": "2024.38",
+    "firmware_buildtype": 1,
+    "firmware_build": 67159,
+    "firmware_sha1": "0x083ad0b2",
+    "firmware_file": "intel/ibt-0291-0291.sfi",
+    "boot_address": "0x100800",
+    "firmware_version": "87-38.24",
+    "firmware_already_loaded_note": true
+   },
+   "debugfs_hardware_info": "INTEL platform=55 variant=28",
+   "usb": {
+    "port_path": "5-1",
+    "busnum": 5,
+    "devnum": 2,
+    "vid_pid": "8087:0036",
+    "speed_mbps": "12",
+    "usb_host_controller_pci": "0000:10:00.0",
+    "sysfs": "/devices/pci0000:00/0000:00:1c.0/0000:09:00.0/0000:0a:05.0/0000:0e:00.0/0000:0f:03.0/0000:10:00.0/usb5/5-1/5-1:1.0"
+   },
+   "wifi_sibling_inferred": {
+    "wiphy": "wiphy10",
+    "pci": "0000:19:00.0",
+    "basis": "BT BD_ADDR == last address of the module's 4-address Wi-Fi MAC block + 1 (8/8 controllers match); NOT derivable from USB/PCI topology"
+   },
+   "supported_commands_hex": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000",
+   "commands": {
+    "LE Set Random Address": true,
+    "LE Set Advertising Parameters": true,
+    "LE Read Advertising Physical Channel TX Power": true,
+    "LE Set Advertising Data": true,
+    "LE Set Scan Response Data": true,
+    "LE Set Advertising Enable": true,
+    "LE Set Scan Parameters": true,
+    "LE Set Scan Enable": true,
+    "LE Read Filter Accept List Size": true,
+    "LE Read Supported States": true,
+    "LE Receiver Test [v1]": true,
+    "LE Transmitter Test [v1]": true,
+    "LE Test End": true,
+    "LE Read Resolving List Size": true,
+    "LE Read Maximum Data Length": true,
+    "LE Enhanced Receiver Test [v2]": true,
+    "LE Enhanced Transmitter Test [v2]": true,
+    "LE Set Advertising Set Random Address": true,
+    "LE Set Extended Advertising Parameters [v1]": true,
+    "LE Set Extended Advertising Data": true,
+    "LE Set Extended Scan Response Data": true,
+    "LE Set Extended Advertising Enable": true,
+    "LE Read Maximum Advertising Data Length": true,
+    "LE Read Number of Supported Advertising Sets": true,
+    "LE Remove Advertising Set": true,
+    "LE Clear Advertising Sets": true,
+    "LE Set Periodic Advertising Parameters [v1]": false,
+    "LE Set Periodic Advertising Data": false,
+    "LE Set Periodic Advertising Enable": false,
+    "LE Set Extended Scan Parameters": true,
+    "LE Set Extended Scan Enable": true,
+    "LE Extended Create Connection [v1]": true,
+    "LE Read Transmit Power": true,
+    "LE Read RF Path Compensation": true,
+    "LE Write RF Path Compensation": true,
+    "LE Receiver Test [v3]": false,
+    "LE Transmitter Test [v3]": false,
+    "LE Enhanced Read Transmit Power Level": true,
+    "LE Read Remote Transmit Power Level": true,
+    "LE Set Path Loss Reporting Parameters": true,
+    "LE Set Path Loss Reporting Enable": true,
+    "LE Set Transmit Power Reporting Enable": true,
+    "LE Transmitter Test [v4]": true,
+    "LE Set Data Related Address Changes": true,
+    "Read Transmit Power Level (BR/EDR)": false,
+    "Write Inquiry Transmit Power Level (BR/EDR)": true,
+    "Enable Device Under Test Mode (BR/EDR)": true
+   },
+   "command_bits": {
+    "LE Set Random Address": "0x2005 oct25.bit4",
+    "LE Set Advertising Parameters": "0x2006 oct25.bit5",
+    "LE Read Advertising Physical Channel TX Power": "0x2007 oct25.bit6",
+    "LE Set Advertising Data": "0x2008 oct25.bit7",
+    "LE Set Scan Response Data": "0x2009 oct26.bit0",
+    "LE Set Advertising Enable": "0x200a oct26.bit1",
+    "LE Set Scan Parameters": "0x200b oct26.bit2",
+    "LE Set Scan Enable": "0x200c oct26.bit3",
+    "LE Read Filter Accept List Size": "0x200f oct26.bit6",
+    "LE Read Supported States": "0x201c oct28.bit3",
+    "LE Receiver Test [v1]": "0x201d oct28.bit4",
+    "LE Transmitter Test [v1]": "0x201e oct28.bit5",
+    "LE Test End": "0x201f oct28.bit6",
+    "LE Read Resolving List Size": "0x202a oct34.bit6",
+    "LE Read Maximum Data Length": "0x202f oct35.bit3",
+    "LE Enhanced Receiver Test [v2]": "0x2033 oct35.bit7",
+    "LE Enhanced Transmitter Test [v2]": "0x2034 oct36.bit0",
+    "LE Set Advertising Set Random Address": "0x2035 oct36.bit1",
+    "LE Set Extended Advertising Parameters [v1]": "0x2036 oct36.bit2",
+    "LE Set Extended Advertising Data": "0x2037 oct36.bit3",
+    "LE Set Extended Scan Response Data": "0x2038 oct36.bit4",
+    "LE Set Extended Advertising Enable": "0x2039 oct36.bit5",
+    "LE Read Maximum Advertising Data Length": "0x203a oct36.bit6",
+    "LE Read Number of Supported Advertising Sets": "0x203b oct36.bit7",
+    "LE Remove Advertising Set": "0x203c oct37.bit0",
+    "LE Clear Advertising Sets": "0x203d oct37.bit1",
+    "LE Set Periodic Advertising Parameters [v1]": "0x203e oct37.bit2",
+    "LE Set Periodic Advertising Data": "0x203f oct37.bit3",
+    "LE Set Periodic Advertising Enable": "0x2040 oct37.bit4",
+    "LE Set Extended Scan Parameters": "0x2041 oct37.bit5",
+    "LE Set Extended Scan Enable": "0x2042 oct37.bit6",
+    "LE Extended Create Connection [v1]": "0x2043 oct37.bit7",
+    "LE Read Transmit Power": "0x204b oct38.bit7",
+    "LE Read RF Path Compensation": "0x204c oct39.bit0",
+    "LE Write RF Path Compensation": "0x204d oct39.bit1",
+    "LE Receiver Test [v3]": "0x204f oct39.bit3",
+    "LE Transmitter Test [v3]": "0x2050 oct39.bit4",
+    "LE Enhanced Read Transmit Power Level": "0x2076 oct44.bit3",
+    "LE Read Remote Transmit Power Level": "0x2077 oct44.bit4",
+    "LE Set Path Loss Reporting Parameters": "0x2078 oct44.bit5",
+    "LE Set Path Loss Reporting Enable": "0x2079 oct44.bit6",
+    "LE Set Transmit Power Reporting Enable": "0x207a oct44.bit7",
+    "LE Transmitter Test [v4]": "0x207b oct45.bit0",
+    "LE Set Data Related Address Changes": "0x207c oct45.bit1",
+    "Read Transmit Power Level (BR/EDR)": "0x0c2d oct10.bit1",
+    "Write Inquiry Transmit Power Level (BR/EDR)": "0x0c59 oct18.bit1",
+    "Enable Device Under Test Mode (BR/EDR)": "0x1803 oct16.bit2"
+   },
+   "le_features_hex": "ffd9013cae000000",
+   "le_features_supported": [
+    "LE Encryption",
+    "Connection Parameters Request Procedure",
+    "Extended Reject Indication",
+    "Peripheral-initiated Features Exchange",
+    "LE Ping",
+    "LE Data Packet Length Extension",
+    "LL Privacy",
+    "Extended Scanner Filter Policies",
+    "LE 2M PHY",
+    "LE Coded PHY",
+    "LE Extended Advertising",
+    "Channel Selection Algorithm #2",
+    "LE Power Class 1",
+    "Minimum Number of Used Channels Procedure",
+    "Sleep Clock Accuracy Updates",
+    "Remote Public Key Validation",
+    "Connected Isochronous Stream - Central",
+    "Connected Isochronous Stream - Peripheral",
+    "LE Power Control Request",
+    "LE Path Loss Monitoring",
+    "Connection Subrating",
+    "Channel Classification",
+    "LE Power Change Indication"
+   ],
+   "le_features_not_supported": [
+    "Stable Modulation Index - Transmitter",
+    "Stable Modulation Index - Receiver",
+    "LE Periodic Advertising",
+    "Connection CTE Request",
+    "Connection CTE Response",
+    "Connectionless CTE Transmitter",
+    "Connectionless CTE Receiver",
+    "Antenna Switching During CTE Tx (AoD)",
+    "Antenna Switching During CTE Rx (AoA)",
+    "Receiving CTE",
+    "Periodic Advertising Sync Transfer - Sender",
+    "Periodic Advertising Sync Transfer - Recipient",
+    "Isochronous Broadcaster",
+    "Synchronized Receiver",
+    "Connected Isochronous Stream (Host Support)",
+    "Periodic Advertising ADI support",
+    "Connection Subrating (Host Support)"
+   ],
+   "lmp_features_page0_hex": "bffe0ffedbff7b87",
+   "le_supported_states_hex": "ffffffffff030000",
+   "le_supported_states_note": "0x000003ffffffffff = all 42 defined LE states supported (btmon decode)",
+   "le_max_adv_data_len_hci": 200,
+   "le_max_adv_data_len_bluez_mgmt": 251,
+   "le_num_adv_sets_hci": 12,
+   "le_tx_power_range_dbm_reported": {
+    "min": -64,
+    "max": 66
+   },
+   "le_adv_channel_tx_power_legacy_cmd_status": 12,
+   "le_buffer_size_v1": {
+    "acl_len": 251,
+    "acl_pkts": 6
+   },
+   "le_max_data_length": {
+    "max_tx_octets": 251,
+    "max_tx_time_us": 2704,
+    "max_rx_octets": 251,
+    "max_rx_time_us": 2704
+   },
+   "le_filter_accept_list_size": 64,
+   "le_resolving_list_size": 64,
+   "raw_responses": {
+    "0x1001": {
+     "name": "Read Local Version Information",
+     "status": 0,
+     "ret": "0d57460d02005746"
+    },
+    "0x1009": {
+     "name": "Read BD_ADDR",
+     "status": 0,
+     "ret": "047ff899cdbc"
+    },
+    "0x1003": {
+     "name": "Read Local Supported Features",
+     "status": 0,
+     "ret": "bffe0ffedbff7b87"
+    },
+    "0x1002": {
+     "name": "Read Local Supported Commands",
+     "status": 0,
+     "ret": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000"
+    },
+    "0x2003": {
+     "name": "LE Read Local Supported Features",
+     "status": 0,
+     "ret": "ffd9013cae000000"
+    },
+    "0x201c": {
+     "name": "LE Read Supported States",
+     "status": 0,
+     "ret": "ffffffffff030000"
+    },
+    "0x2002": {
+     "name": "LE Read Buffer Size [v1]",
+     "status": 0,
+     "ret": "fb0006"
+    },
+    "0x2007": {
+     "name": "LE Read Advertising Physical Channel TX Power",
+     "status": 12,
+     "ret": "fb"
+    },
+    "0x203a": {
+     "name": "LE Read Maximum Advertising Data Length",
+     "status": 0,
+     "ret": "c800"
+    },
+    "0x203b": {
+     "name": "LE Read Number of Supported Advertising Sets",
+     "status": 0,
+     "ret": "0c"
+    },
+    "0x204b": {
+     "name": "LE Read Transmit Power",
+     "status": 0,
+     "ret": "c042"
+    },
+    "0x202f": {
+     "name": "LE Read Maximum Data Length",
+     "status": 0,
+     "ret": "fb00900afb00900a"
+    },
+    "0x200f": {
+     "name": "LE Read Filter Accept List Size",
+     "status": 0,
+     "ret": "40"
+    },
+    "0x202a": {
+     "name": "LE Read Resolving List Size",
+     "status": 0,
+     "ret": "40"
+    }
+   },
+   "mgmt": {
+    "addr": "BC:CD:99:F8:7F:04",
+    "mgmt_version": 13,
+    "manufacturer": 2,
+    "cod": "0x7c0104",
+    "supported_settings": [
+     "powered",
+     "connectable",
+     "fast-connectable",
+     "discoverable",
+     "bondable",
+     "link-security",
+     "ssp",
+     "br/edr",
+     "le",
+     "advertising",
+     "secure-conn",
+     "debug-keys",
+     "privacy",
+     "configuration",
+     "static-addr",
+     "phy-configuration",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "current_settings": [
+     "powered",
+     "bondable",
+     "ssp",
+     "br/edr",
+     "le",
+     "secure-conn",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "advinfo": {
+     "supported_flags": [
+      "connectable",
+      "general-discoverable",
+      "limited-discoverable",
+      "managed-flags",
+      "tx-power",
+      "scan-rsp-appearance",
+      "scan-rsp-local-name",
+      "Secondary-channel-1M",
+      "Secondary-channel-2M",
+      "Secondary-channel-CODED"
+     ],
+     "max_adv_data_len": 251,
+     "max_scan_rsp_len": 251,
+     "max_instances": 12,
+     "instances_in_use": 0
+    }
+   },
+   "bluetoothctl": {
+    "SupportedIncludes": [
+     "tx-power",
+     "appearance",
+     "local-name"
+    ],
+    "SupportedSecondaryChannels": [
+     "1M",
+     "2M",
+     "Coded"
+    ],
+    "SupportedFeatures": [
+     "CanSetTxPower",
+     "HardwareOffload"
+    ],
+    "Roles": [
+     "central",
+     "peripheral"
+    ],
+    "Name": "BlueZ 5.77",
+    "Alias": "BlueZ 5.77",
+    "Powered": "yes",
+    "PowerState": "on",
+    "Discoverable": "no",
+    "Pairable": "yes",
+    "Modalias": "usb:v1D6Bp0246d054D",
+    "Discovering": "no",
+    "ActiveInstances": "0x00 (0)",
+    "SupportedInstances": "0x0c (12)",
+    "SupportedCapabilities.MinTxPower": "0xffffffc0 (-64)",
+    "SupportedCapabilities.MaxTxPower": "0x0042 (66)",
+    "SupportedCapabilities.MaxAdvLen": "0xfb (251)",
+    "SupportedCapabilities.MaxScnRspLen": "0xfb (251)"
+   },
+   "state": {
+    "powered_up": true,
+    "connections": 0,
+    "scanning": false,
+    "discoverable": false,
+    "active_adv_instances": 0,
+    "dut_mode_debugfs": "N",
+    "random_address_debugfs": "00:00:00:00:00:00",
+    "idle": true
+   }
+  },
+  "hci2": {
+   "bd_addr": "80:84:89:08:E4:44",
+   "manufacturer": {
+    "id": 2,
+    "name": "Intel Corp."
+   },
+   "hci_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "lmp_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "hci_revision": "0x4657",
+   "lmp_subversion": "0x4657",
+   "firmware": {
+    "firmware_timestamp": "2024.38",
+    "firmware_buildtype": 1,
+    "firmware_build": 67159,
+    "firmware_sha1": "0x083ad0b2",
+    "firmware_file": "intel/ibt-0291-0291.sfi",
+    "boot_address": "0x100800",
+    "firmware_version": "87-38.24",
+    "firmware_already_loaded_note": true
+   },
+   "debugfs_hardware_info": "INTEL platform=55 variant=28",
+   "usb": {
+    "port_path": "1-2",
+    "busnum": 1,
+    "devnum": 3,
+    "vid_pid": "8087:0036",
+    "speed_mbps": "12",
+    "usb_host_controller_pci": "0000:0d:00.0",
+    "sysfs": "/devices/pci0000:00/0000:00:1c.0/0000:09:00.0/0000:0a:04.0/0000:0b:00.0/0000:0c:03.0/0000:0d:00.0/usb1/1-2/1-2:1.0"
+   },
+   "wifi_sibling_inferred": {
+    "wiphy": "wiphy8",
+    "pci": "0000:16:00.0",
+    "basis": "BT BD_ADDR == last address of the module's 4-address Wi-Fi MAC block + 1 (8/8 controllers match); NOT derivable from USB/PCI topology"
+   },
+   "supported_commands_hex": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000",
+   "commands": {
+    "LE Set Random Address": true,
+    "LE Set Advertising Parameters": true,
+    "LE Read Advertising Physical Channel TX Power": true,
+    "LE Set Advertising Data": true,
+    "LE Set Scan Response Data": true,
+    "LE Set Advertising Enable": true,
+    "LE Set Scan Parameters": true,
+    "LE Set Scan Enable": true,
+    "LE Read Filter Accept List Size": true,
+    "LE Read Supported States": true,
+    "LE Receiver Test [v1]": true,
+    "LE Transmitter Test [v1]": true,
+    "LE Test End": true,
+    "LE Read Resolving List Size": true,
+    "LE Read Maximum Data Length": true,
+    "LE Enhanced Receiver Test [v2]": true,
+    "LE Enhanced Transmitter Test [v2]": true,
+    "LE Set Advertising Set Random Address": true,
+    "LE Set Extended Advertising Parameters [v1]": true,
+    "LE Set Extended Advertising Data": true,
+    "LE Set Extended Scan Response Data": true,
+    "LE Set Extended Advertising Enable": true,
+    "LE Read Maximum Advertising Data Length": true,
+    "LE Read Number of Supported Advertising Sets": true,
+    "LE Remove Advertising Set": true,
+    "LE Clear Advertising Sets": true,
+    "LE Set Periodic Advertising Parameters [v1]": false,
+    "LE Set Periodic Advertising Data": false,
+    "LE Set Periodic Advertising Enable": false,
+    "LE Set Extended Scan Parameters": true,
+    "LE Set Extended Scan Enable": true,
+    "LE Extended Create Connection [v1]": true,
+    "LE Read Transmit Power": true,
+    "LE Read RF Path Compensation": true,
+    "LE Write RF Path Compensation": true,
+    "LE Receiver Test [v3]": false,
+    "LE Transmitter Test [v3]": false,
+    "LE Enhanced Read Transmit Power Level": true,
+    "LE Read Remote Transmit Power Level": true,
+    "LE Set Path Loss Reporting Parameters": true,
+    "LE Set Path Loss Reporting Enable": true,
+    "LE Set Transmit Power Reporting Enable": true,
+    "LE Transmitter Test [v4]": true,
+    "LE Set Data Related Address Changes": true,
+    "Read Transmit Power Level (BR/EDR)": false,
+    "Write Inquiry Transmit Power Level (BR/EDR)": true,
+    "Enable Device Under Test Mode (BR/EDR)": true
+   },
+   "command_bits": {
+    "LE Set Random Address": "0x2005 oct25.bit4",
+    "LE Set Advertising Parameters": "0x2006 oct25.bit5",
+    "LE Read Advertising Physical Channel TX Power": "0x2007 oct25.bit6",
+    "LE Set Advertising Data": "0x2008 oct25.bit7",
+    "LE Set Scan Response Data": "0x2009 oct26.bit0",
+    "LE Set Advertising Enable": "0x200a oct26.bit1",
+    "LE Set Scan Parameters": "0x200b oct26.bit2",
+    "LE Set Scan Enable": "0x200c oct26.bit3",
+    "LE Read Filter Accept List Size": "0x200f oct26.bit6",
+    "LE Read Supported States": "0x201c oct28.bit3",
+    "LE Receiver Test [v1]": "0x201d oct28.bit4",
+    "LE Transmitter Test [v1]": "0x201e oct28.bit5",
+    "LE Test End": "0x201f oct28.bit6",
+    "LE Read Resolving List Size": "0x202a oct34.bit6",
+    "LE Read Maximum Data Length": "0x202f oct35.bit3",
+    "LE Enhanced Receiver Test [v2]": "0x2033 oct35.bit7",
+    "LE Enhanced Transmitter Test [v2]": "0x2034 oct36.bit0",
+    "LE Set Advertising Set Random Address": "0x2035 oct36.bit1",
+    "LE Set Extended Advertising Parameters [v1]": "0x2036 oct36.bit2",
+    "LE Set Extended Advertising Data": "0x2037 oct36.bit3",
+    "LE Set Extended Scan Response Data": "0x2038 oct36.bit4",
+    "LE Set Extended Advertising Enable": "0x2039 oct36.bit5",
+    "LE Read Maximum Advertising Data Length": "0x203a oct36.bit6",
+    "LE Read Number of Supported Advertising Sets": "0x203b oct36.bit7",
+    "LE Remove Advertising Set": "0x203c oct37.bit0",
+    "LE Clear Advertising Sets": "0x203d oct37.bit1",
+    "LE Set Periodic Advertising Parameters [v1]": "0x203e oct37.bit2",
+    "LE Set Periodic Advertising Data": "0x203f oct37.bit3",
+    "LE Set Periodic Advertising Enable": "0x2040 oct37.bit4",
+    "LE Set Extended Scan Parameters": "0x2041 oct37.bit5",
+    "LE Set Extended Scan Enable": "0x2042 oct37.bit6",
+    "LE Extended Create Connection [v1]": "0x2043 oct37.bit7",
+    "LE Read Transmit Power": "0x204b oct38.bit7",
+    "LE Read RF Path Compensation": "0x204c oct39.bit0",
+    "LE Write RF Path Compensation": "0x204d oct39.bit1",
+    "LE Receiver Test [v3]": "0x204f oct39.bit3",
+    "LE Transmitter Test [v3]": "0x2050 oct39.bit4",
+    "LE Enhanced Read Transmit Power Level": "0x2076 oct44.bit3",
+    "LE Read Remote Transmit Power Level": "0x2077 oct44.bit4",
+    "LE Set Path Loss Reporting Parameters": "0x2078 oct44.bit5",
+    "LE Set Path Loss Reporting Enable": "0x2079 oct44.bit6",
+    "LE Set Transmit Power Reporting Enable": "0x207a oct44.bit7",
+    "LE Transmitter Test [v4]": "0x207b oct45.bit0",
+    "LE Set Data Related Address Changes": "0x207c oct45.bit1",
+    "Read Transmit Power Level (BR/EDR)": "0x0c2d oct10.bit1",
+    "Write Inquiry Transmit Power Level (BR/EDR)": "0x0c59 oct18.bit1",
+    "Enable Device Under Test Mode (BR/EDR)": "0x1803 oct16.bit2"
+   },
+   "le_features_hex": "ffd9013cae000000",
+   "le_features_supported": [
+    "LE Encryption",
+    "Connection Parameters Request Procedure",
+    "Extended Reject Indication",
+    "Peripheral-initiated Features Exchange",
+    "LE Ping",
+    "LE Data Packet Length Extension",
+    "LL Privacy",
+    "Extended Scanner Filter Policies",
+    "LE 2M PHY",
+    "LE Coded PHY",
+    "LE Extended Advertising",
+    "Channel Selection Algorithm #2",
+    "LE Power Class 1",
+    "Minimum Number of Used Channels Procedure",
+    "Sleep Clock Accuracy Updates",
+    "Remote Public Key Validation",
+    "Connected Isochronous Stream - Central",
+    "Connected Isochronous Stream - Peripheral",
+    "LE Power Control Request",
+    "LE Path Loss Monitoring",
+    "Connection Subrating",
+    "Channel Classification",
+    "LE Power Change Indication"
+   ],
+   "le_features_not_supported": [
+    "Stable Modulation Index - Transmitter",
+    "Stable Modulation Index - Receiver",
+    "LE Periodic Advertising",
+    "Connection CTE Request",
+    "Connection CTE Response",
+    "Connectionless CTE Transmitter",
+    "Connectionless CTE Receiver",
+    "Antenna Switching During CTE Tx (AoD)",
+    "Antenna Switching During CTE Rx (AoA)",
+    "Receiving CTE",
+    "Periodic Advertising Sync Transfer - Sender",
+    "Periodic Advertising Sync Transfer - Recipient",
+    "Isochronous Broadcaster",
+    "Synchronized Receiver",
+    "Connected Isochronous Stream (Host Support)",
+    "Periodic Advertising ADI support",
+    "Connection Subrating (Host Support)"
+   ],
+   "lmp_features_page0_hex": "bffe0ffedbff7b87",
+   "le_supported_states_hex": "ffffffffff030000",
+   "le_supported_states_note": "0x000003ffffffffff = all 42 defined LE states supported (btmon decode)",
+   "le_max_adv_data_len_hci": 200,
+   "le_max_adv_data_len_bluez_mgmt": 251,
+   "le_num_adv_sets_hci": 12,
+   "le_tx_power_range_dbm_reported": {
+    "min": -64,
+    "max": 66
+   },
+   "le_adv_channel_tx_power_legacy_cmd_status": 12,
+   "le_buffer_size_v1": {
+    "acl_len": 251,
+    "acl_pkts": 6
+   },
+   "le_max_data_length": {
+    "max_tx_octets": 251,
+    "max_tx_time_us": 2704,
+    "max_rx_octets": 251,
+    "max_rx_time_us": 2704
+   },
+   "le_filter_accept_list_size": 64,
+   "le_resolving_list_size": 64,
+   "raw_responses": {
+    "0x1001": {
+     "name": "Read Local Version Information",
+     "status": 0,
+     "ret": "0d57460d02005746"
+    },
+    "0x1009": {
+     "name": "Read BD_ADDR",
+     "status": 0,
+     "ret": "44e408898480"
+    },
+    "0x1003": {
+     "name": "Read Local Supported Features",
+     "status": 0,
+     "ret": "bffe0ffedbff7b87"
+    },
+    "0x1002": {
+     "name": "Read Local Supported Commands",
+     "status": 0,
+     "ret": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000"
+    },
+    "0x2003": {
+     "name": "LE Read Local Supported Features",
+     "status": 0,
+     "ret": "ffd9013cae000000"
+    },
+    "0x201c": {
+     "name": "LE Read Supported States",
+     "status": 0,
+     "ret": "ffffffffff030000"
+    },
+    "0x2002": {
+     "name": "LE Read Buffer Size [v1]",
+     "status": 0,
+     "ret": "fb0006"
+    },
+    "0x2007": {
+     "name": "LE Read Advertising Physical Channel TX Power",
+     "status": 12,
+     "ret": "fb"
+    },
+    "0x203a": {
+     "name": "LE Read Maximum Advertising Data Length",
+     "status": 0,
+     "ret": "c800"
+    },
+    "0x203b": {
+     "name": "LE Read Number of Supported Advertising Sets",
+     "status": 0,
+     "ret": "0c"
+    },
+    "0x204b": {
+     "name": "LE Read Transmit Power",
+     "status": 0,
+     "ret": "c042"
+    },
+    "0x202f": {
+     "name": "LE Read Maximum Data Length",
+     "status": 0,
+     "ret": "fb00900afb00900a"
+    },
+    "0x200f": {
+     "name": "LE Read Filter Accept List Size",
+     "status": 0,
+     "ret": "40"
+    },
+    "0x202a": {
+     "name": "LE Read Resolving List Size",
+     "status": 0,
+     "ret": "40"
+    }
+   },
+   "mgmt": {
+    "addr": "80:84:89:08:E4:44",
+    "mgmt_version": 13,
+    "manufacturer": 2,
+    "cod": "0x7c0104",
+    "supported_settings": [
+     "powered",
+     "connectable",
+     "fast-connectable",
+     "discoverable",
+     "bondable",
+     "link-security",
+     "ssp",
+     "br/edr",
+     "le",
+     "advertising",
+     "secure-conn",
+     "debug-keys",
+     "privacy",
+     "configuration",
+     "static-addr",
+     "phy-configuration",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "current_settings": [
+     "powered",
+     "bondable",
+     "ssp",
+     "br/edr",
+     "le",
+     "secure-conn",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "advinfo": {
+     "supported_flags": [
+      "connectable",
+      "general-discoverable",
+      "limited-discoverable",
+      "managed-flags",
+      "tx-power",
+      "scan-rsp-appearance",
+      "scan-rsp-local-name",
+      "Secondary-channel-1M",
+      "Secondary-channel-2M",
+      "Secondary-channel-CODED"
+     ],
+     "max_adv_data_len": 251,
+     "max_scan_rsp_len": 251,
+     "max_instances": 12,
+     "instances_in_use": 0
+    }
+   },
+   "bluetoothctl": {
+    "SupportedIncludes": [
+     "tx-power",
+     "appearance",
+     "local-name"
+    ],
+    "SupportedSecondaryChannels": [
+     "1M",
+     "2M",
+     "Coded"
+    ],
+    "SupportedFeatures": [
+     "CanSetTxPower",
+     "HardwareOffload"
+    ],
+    "Roles": [
+     "central",
+     "peripheral"
+    ],
+    "Name": "BlueZ 5.77",
+    "Alias": "BlueZ 5.77",
+    "Powered": "yes",
+    "PowerState": "on",
+    "Discoverable": "no",
+    "Pairable": "yes",
+    "Modalias": "usb:v1D6Bp0246d054D",
+    "Discovering": "no",
+    "ActiveInstances": "0x00 (0)",
+    "SupportedInstances": "0x0c (12)",
+    "SupportedCapabilities.MinTxPower": "0xffffffc0 (-64)",
+    "SupportedCapabilities.MaxTxPower": "0x0042 (66)",
+    "SupportedCapabilities.MaxAdvLen": "0xfb (251)",
+    "SupportedCapabilities.MaxScnRspLen": "0xfb (251)"
+   },
+   "state": {
+    "powered_up": true,
+    "connections": 0,
+    "scanning": false,
+    "discoverable": false,
+    "active_adv_instances": 0,
+    "dut_mode_debugfs": "N",
+    "random_address_debugfs": "00:00:00:00:00:00",
+    "idle": true
+   }
+  },
+  "hci3": {
+   "bd_addr": "80:84:89:00:81:E6",
+   "manufacturer": {
+    "id": 2,
+    "name": "Intel Corp."
+   },
+   "hci_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "lmp_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "hci_revision": "0x4657",
+   "lmp_subversion": "0x4657",
+   "firmware": {
+    "firmware_timestamp": "2024.38",
+    "firmware_buildtype": 1,
+    "firmware_build": 67159,
+    "firmware_sha1": "0x083ad0b2",
+    "firmware_file": "intel/ibt-0291-0291.sfi",
+    "boot_address": "0x100800",
+    "firmware_version": "87-38.24",
+    "firmware_already_loaded_note": true
+   },
+   "debugfs_hardware_info": "INTEL platform=55 variant=28",
+   "usb": {
+    "port_path": "5-2",
+    "busnum": 5,
+    "devnum": 3,
+    "vid_pid": "8087:0036",
+    "speed_mbps": "12",
+    "usb_host_controller_pci": "0000:10:00.0",
+    "sysfs": "/devices/pci0000:00/0000:00:1c.0/0000:09:00.0/0000:0a:05.0/0000:0e:00.0/0000:0f:03.0/0000:10:00.0/usb5/5-2/5-2:1.0"
+   },
+   "wifi_sibling_inferred": {
+    "wiphy": "wiphy4",
+    "pci": "0000:1a:00.0",
+    "basis": "BT BD_ADDR == last address of the module's 4-address Wi-Fi MAC block + 1 (8/8 controllers match); NOT derivable from USB/PCI topology"
+   },
+   "supported_commands_hex": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000",
+   "commands": {
+    "LE Set Random Address": true,
+    "LE Set Advertising Parameters": true,
+    "LE Read Advertising Physical Channel TX Power": true,
+    "LE Set Advertising Data": true,
+    "LE Set Scan Response Data": true,
+    "LE Set Advertising Enable": true,
+    "LE Set Scan Parameters": true,
+    "LE Set Scan Enable": true,
+    "LE Read Filter Accept List Size": true,
+    "LE Read Supported States": true,
+    "LE Receiver Test [v1]": true,
+    "LE Transmitter Test [v1]": true,
+    "LE Test End": true,
+    "LE Read Resolving List Size": true,
+    "LE Read Maximum Data Length": true,
+    "LE Enhanced Receiver Test [v2]": true,
+    "LE Enhanced Transmitter Test [v2]": true,
+    "LE Set Advertising Set Random Address": true,
+    "LE Set Extended Advertising Parameters [v1]": true,
+    "LE Set Extended Advertising Data": true,
+    "LE Set Extended Scan Response Data": true,
+    "LE Set Extended Advertising Enable": true,
+    "LE Read Maximum Advertising Data Length": true,
+    "LE Read Number of Supported Advertising Sets": true,
+    "LE Remove Advertising Set": true,
+    "LE Clear Advertising Sets": true,
+    "LE Set Periodic Advertising Parameters [v1]": false,
+    "LE Set Periodic Advertising Data": false,
+    "LE Set Periodic Advertising Enable": false,
+    "LE Set Extended Scan Parameters": true,
+    "LE Set Extended Scan Enable": true,
+    "LE Extended Create Connection [v1]": true,
+    "LE Read Transmit Power": true,
+    "LE Read RF Path Compensation": true,
+    "LE Write RF Path Compensation": true,
+    "LE Receiver Test [v3]": false,
+    "LE Transmitter Test [v3]": false,
+    "LE Enhanced Read Transmit Power Level": true,
+    "LE Read Remote Transmit Power Level": true,
+    "LE Set Path Loss Reporting Parameters": true,
+    "LE Set Path Loss Reporting Enable": true,
+    "LE Set Transmit Power Reporting Enable": true,
+    "LE Transmitter Test [v4]": true,
+    "LE Set Data Related Address Changes": true,
+    "Read Transmit Power Level (BR/EDR)": false,
+    "Write Inquiry Transmit Power Level (BR/EDR)": true,
+    "Enable Device Under Test Mode (BR/EDR)": true
+   },
+   "command_bits": {
+    "LE Set Random Address": "0x2005 oct25.bit4",
+    "LE Set Advertising Parameters": "0x2006 oct25.bit5",
+    "LE Read Advertising Physical Channel TX Power": "0x2007 oct25.bit6",
+    "LE Set Advertising Data": "0x2008 oct25.bit7",
+    "LE Set Scan Response Data": "0x2009 oct26.bit0",
+    "LE Set Advertising Enable": "0x200a oct26.bit1",
+    "LE Set Scan Parameters": "0x200b oct26.bit2",
+    "LE Set Scan Enable": "0x200c oct26.bit3",
+    "LE Read Filter Accept List Size": "0x200f oct26.bit6",
+    "LE Read Supported States": "0x201c oct28.bit3",
+    "LE Receiver Test [v1]": "0x201d oct28.bit4",
+    "LE Transmitter Test [v1]": "0x201e oct28.bit5",
+    "LE Test End": "0x201f oct28.bit6",
+    "LE Read Resolving List Size": "0x202a oct34.bit6",
+    "LE Read Maximum Data Length": "0x202f oct35.bit3",
+    "LE Enhanced Receiver Test [v2]": "0x2033 oct35.bit7",
+    "LE Enhanced Transmitter Test [v2]": "0x2034 oct36.bit0",
+    "LE Set Advertising Set Random Address": "0x2035 oct36.bit1",
+    "LE Set Extended Advertising Parameters [v1]": "0x2036 oct36.bit2",
+    "LE Set Extended Advertising Data": "0x2037 oct36.bit3",
+    "LE Set Extended Scan Response Data": "0x2038 oct36.bit4",
+    "LE Set Extended Advertising Enable": "0x2039 oct36.bit5",
+    "LE Read Maximum Advertising Data Length": "0x203a oct36.bit6",
+    "LE Read Number of Supported Advertising Sets": "0x203b oct36.bit7",
+    "LE Remove Advertising Set": "0x203c oct37.bit0",
+    "LE Clear Advertising Sets": "0x203d oct37.bit1",
+    "LE Set Periodic Advertising Parameters [v1]": "0x203e oct37.bit2",
+    "LE Set Periodic Advertising Data": "0x203f oct37.bit3",
+    "LE Set Periodic Advertising Enable": "0x2040 oct37.bit4",
+    "LE Set Extended Scan Parameters": "0x2041 oct37.bit5",
+    "LE Set Extended Scan Enable": "0x2042 oct37.bit6",
+    "LE Extended Create Connection [v1]": "0x2043 oct37.bit7",
+    "LE Read Transmit Power": "0x204b oct38.bit7",
+    "LE Read RF Path Compensation": "0x204c oct39.bit0",
+    "LE Write RF Path Compensation": "0x204d oct39.bit1",
+    "LE Receiver Test [v3]": "0x204f oct39.bit3",
+    "LE Transmitter Test [v3]": "0x2050 oct39.bit4",
+    "LE Enhanced Read Transmit Power Level": "0x2076 oct44.bit3",
+    "LE Read Remote Transmit Power Level": "0x2077 oct44.bit4",
+    "LE Set Path Loss Reporting Parameters": "0x2078 oct44.bit5",
+    "LE Set Path Loss Reporting Enable": "0x2079 oct44.bit6",
+    "LE Set Transmit Power Reporting Enable": "0x207a oct44.bit7",
+    "LE Transmitter Test [v4]": "0x207b oct45.bit0",
+    "LE Set Data Related Address Changes": "0x207c oct45.bit1",
+    "Read Transmit Power Level (BR/EDR)": "0x0c2d oct10.bit1",
+    "Write Inquiry Transmit Power Level (BR/EDR)": "0x0c59 oct18.bit1",
+    "Enable Device Under Test Mode (BR/EDR)": "0x1803 oct16.bit2"
+   },
+   "le_features_hex": "ffd9013cae000000",
+   "le_features_supported": [
+    "LE Encryption",
+    "Connection Parameters Request Procedure",
+    "Extended Reject Indication",
+    "Peripheral-initiated Features Exchange",
+    "LE Ping",
+    "LE Data Packet Length Extension",
+    "LL Privacy",
+    "Extended Scanner Filter Policies",
+    "LE 2M PHY",
+    "LE Coded PHY",
+    "LE Extended Advertising",
+    "Channel Selection Algorithm #2",
+    "LE Power Class 1",
+    "Minimum Number of Used Channels Procedure",
+    "Sleep Clock Accuracy Updates",
+    "Remote Public Key Validation",
+    "Connected Isochronous Stream - Central",
+    "Connected Isochronous Stream - Peripheral",
+    "LE Power Control Request",
+    "LE Path Loss Monitoring",
+    "Connection Subrating",
+    "Channel Classification",
+    "LE Power Change Indication"
+   ],
+   "le_features_not_supported": [
+    "Stable Modulation Index - Transmitter",
+    "Stable Modulation Index - Receiver",
+    "LE Periodic Advertising",
+    "Connection CTE Request",
+    "Connection CTE Response",
+    "Connectionless CTE Transmitter",
+    "Connectionless CTE Receiver",
+    "Antenna Switching During CTE Tx (AoD)",
+    "Antenna Switching During CTE Rx (AoA)",
+    "Receiving CTE",
+    "Periodic Advertising Sync Transfer - Sender",
+    "Periodic Advertising Sync Transfer - Recipient",
+    "Isochronous Broadcaster",
+    "Synchronized Receiver",
+    "Connected Isochronous Stream (Host Support)",
+    "Periodic Advertising ADI support",
+    "Connection Subrating (Host Support)"
+   ],
+   "lmp_features_page0_hex": "bffe0ffedbff7b87",
+   "le_supported_states_hex": "ffffffffff030000",
+   "le_supported_states_note": "0x000003ffffffffff = all 42 defined LE states supported (btmon decode)",
+   "le_max_adv_data_len_hci": 200,
+   "le_max_adv_data_len_bluez_mgmt": 251,
+   "le_num_adv_sets_hci": 12,
+   "le_tx_power_range_dbm_reported": {
+    "min": -64,
+    "max": 66
+   },
+   "le_adv_channel_tx_power_legacy_cmd_status": 12,
+   "le_buffer_size_v1": {
+    "acl_len": 251,
+    "acl_pkts": 6
+   },
+   "le_max_data_length": {
+    "max_tx_octets": 251,
+    "max_tx_time_us": 2704,
+    "max_rx_octets": 251,
+    "max_rx_time_us": 2704
+   },
+   "le_filter_accept_list_size": 64,
+   "le_resolving_list_size": 64,
+   "raw_responses": {
+    "0x1001": {
+     "name": "Read Local Version Information",
+     "status": 0,
+     "ret": "0d57460d02005746"
+    },
+    "0x1009": {
+     "name": "Read BD_ADDR",
+     "status": 0,
+     "ret": "e68100898480"
+    },
+    "0x1003": {
+     "name": "Read Local Supported Features",
+     "status": 0,
+     "ret": "bffe0ffedbff7b87"
+    },
+    "0x1002": {
+     "name": "Read Local Supported Commands",
+     "status": 0,
+     "ret": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000"
+    },
+    "0x2003": {
+     "name": "LE Read Local Supported Features",
+     "status": 0,
+     "ret": "ffd9013cae000000"
+    },
+    "0x201c": {
+     "name": "LE Read Supported States",
+     "status": 0,
+     "ret": "ffffffffff030000"
+    },
+    "0x2002": {
+     "name": "LE Read Buffer Size [v1]",
+     "status": 0,
+     "ret": "fb0006"
+    },
+    "0x2007": {
+     "name": "LE Read Advertising Physical Channel TX Power",
+     "status": 12,
+     "ret": "fb"
+    },
+    "0x203a": {
+     "name": "LE Read Maximum Advertising Data Length",
+     "status": 0,
+     "ret": "c800"
+    },
+    "0x203b": {
+     "name": "LE Read Number of Supported Advertising Sets",
+     "status": 0,
+     "ret": "0c"
+    },
+    "0x204b": {
+     "name": "LE Read Transmit Power",
+     "status": 0,
+     "ret": "c042"
+    },
+    "0x202f": {
+     "name": "LE Read Maximum Data Length",
+     "status": 0,
+     "ret": "fb00900afb00900a"
+    },
+    "0x200f": {
+     "name": "LE Read Filter Accept List Size",
+     "status": 0,
+     "ret": "40"
+    },
+    "0x202a": {
+     "name": "LE Read Resolving List Size",
+     "status": 0,
+     "ret": "40"
+    }
+   },
+   "mgmt": {
+    "addr": "80:84:89:00:81:E6",
+    "mgmt_version": 13,
+    "manufacturer": 2,
+    "cod": "0x7c0104",
+    "supported_settings": [
+     "powered",
+     "connectable",
+     "fast-connectable",
+     "discoverable",
+     "bondable",
+     "link-security",
+     "ssp",
+     "br/edr",
+     "le",
+     "advertising",
+     "secure-conn",
+     "debug-keys",
+     "privacy",
+     "configuration",
+     "static-addr",
+     "phy-configuration",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "current_settings": [
+     "powered",
+     "bondable",
+     "ssp",
+     "br/edr",
+     "le",
+     "secure-conn",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "advinfo": {
+     "supported_flags": [
+      "connectable",
+      "general-discoverable",
+      "limited-discoverable",
+      "managed-flags",
+      "tx-power",
+      "scan-rsp-appearance",
+      "scan-rsp-local-name",
+      "Secondary-channel-1M",
+      "Secondary-channel-2M",
+      "Secondary-channel-CODED"
+     ],
+     "max_adv_data_len": 251,
+     "max_scan_rsp_len": 251,
+     "max_instances": 12,
+     "instances_in_use": 0
+    }
+   },
+   "bluetoothctl": {
+    "SupportedIncludes": [
+     "tx-power",
+     "appearance",
+     "local-name"
+    ],
+    "SupportedSecondaryChannels": [
+     "1M",
+     "2M",
+     "Coded"
+    ],
+    "SupportedFeatures": [
+     "CanSetTxPower",
+     "HardwareOffload"
+    ],
+    "Roles": [
+     "central",
+     "peripheral"
+    ],
+    "Name": "BlueZ 5.77",
+    "Alias": "BlueZ 5.77",
+    "Powered": "yes",
+    "PowerState": "on",
+    "Discoverable": "no",
+    "Pairable": "yes",
+    "Modalias": "usb:v1D6Bp0246d054D",
+    "Discovering": "no",
+    "ActiveInstances": "0x00 (0)",
+    "SupportedInstances": "0x0c (12)",
+    "SupportedCapabilities.MinTxPower": "0xffffffc0 (-64)",
+    "SupportedCapabilities.MaxTxPower": "0x0042 (66)",
+    "SupportedCapabilities.MaxAdvLen": "0xfb (251)",
+    "SupportedCapabilities.MaxScnRspLen": "0xfb (251)"
+   },
+   "state": {
+    "powered_up": true,
+    "connections": 0,
+    "scanning": false,
+    "discoverable": false,
+    "active_adv_instances": 0,
+    "dut_mode_debugfs": "N",
+    "random_address_debugfs": "00:00:00:00:00:00",
+    "idle": true
+   }
+  },
+  "hci4": {
+   "bd_addr": "80:84:89:00:90:96",
+   "manufacturer": {
+    "id": 2,
+    "name": "Intel Corp."
+   },
+   "hci_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "lmp_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "hci_revision": "0x4657",
+   "lmp_subversion": "0x4657",
+   "firmware": {
+    "firmware_timestamp": "2024.38",
+    "firmware_buildtype": 1,
+    "firmware_build": 67159,
+    "firmware_sha1": "0x083ad0b2",
+    "firmware_file": "intel/ibt-0291-0291.sfi",
+    "boot_address": "0x100800",
+    "firmware_version": "87-38.24",
+    "firmware_already_loaded_note": true
+   },
+   "debugfs_hardware_info": "INTEL platform=55 variant=28",
+   "usb": {
+    "port_path": "4-1",
+    "busnum": 4,
+    "devnum": 2,
+    "vid_pid": "8087:0036",
+    "speed_mbps": "12",
+    "usb_host_controller_pci": "0000:0d:00.1",
+    "sysfs": "/devices/pci0000:00/0000:00:1c.0/0000:09:00.0/0000:0a:04.0/0000:0b:00.0/0000:0c:03.0/0000:0d:00.1/usb4/4-1/4-1:1.0"
+   },
+   "wifi_sibling_inferred": {
+    "wiphy": "wiphy7",
+    "pci": "0000:17:00.0",
+    "basis": "BT BD_ADDR == last address of the module's 4-address Wi-Fi MAC block + 1 (8/8 controllers match); NOT derivable from USB/PCI topology"
+   },
+   "supported_commands_hex": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000",
+   "commands": {
+    "LE Set Random Address": true,
+    "LE Set Advertising Parameters": true,
+    "LE Read Advertising Physical Channel TX Power": true,
+    "LE Set Advertising Data": true,
+    "LE Set Scan Response Data": true,
+    "LE Set Advertising Enable": true,
+    "LE Set Scan Parameters": true,
+    "LE Set Scan Enable": true,
+    "LE Read Filter Accept List Size": true,
+    "LE Read Supported States": true,
+    "LE Receiver Test [v1]": true,
+    "LE Transmitter Test [v1]": true,
+    "LE Test End": true,
+    "LE Read Resolving List Size": true,
+    "LE Read Maximum Data Length": true,
+    "LE Enhanced Receiver Test [v2]": true,
+    "LE Enhanced Transmitter Test [v2]": true,
+    "LE Set Advertising Set Random Address": true,
+    "LE Set Extended Advertising Parameters [v1]": true,
+    "LE Set Extended Advertising Data": true,
+    "LE Set Extended Scan Response Data": true,
+    "LE Set Extended Advertising Enable": true,
+    "LE Read Maximum Advertising Data Length": true,
+    "LE Read Number of Supported Advertising Sets": true,
+    "LE Remove Advertising Set": true,
+    "LE Clear Advertising Sets": true,
+    "LE Set Periodic Advertising Parameters [v1]": false,
+    "LE Set Periodic Advertising Data": false,
+    "LE Set Periodic Advertising Enable": false,
+    "LE Set Extended Scan Parameters": true,
+    "LE Set Extended Scan Enable": true,
+    "LE Extended Create Connection [v1]": true,
+    "LE Read Transmit Power": true,
+    "LE Read RF Path Compensation": true,
+    "LE Write RF Path Compensation": true,
+    "LE Receiver Test [v3]": false,
+    "LE Transmitter Test [v3]": false,
+    "LE Enhanced Read Transmit Power Level": true,
+    "LE Read Remote Transmit Power Level": true,
+    "LE Set Path Loss Reporting Parameters": true,
+    "LE Set Path Loss Reporting Enable": true,
+    "LE Set Transmit Power Reporting Enable": true,
+    "LE Transmitter Test [v4]": true,
+    "LE Set Data Related Address Changes": true,
+    "Read Transmit Power Level (BR/EDR)": false,
+    "Write Inquiry Transmit Power Level (BR/EDR)": true,
+    "Enable Device Under Test Mode (BR/EDR)": true
+   },
+   "command_bits": {
+    "LE Set Random Address": "0x2005 oct25.bit4",
+    "LE Set Advertising Parameters": "0x2006 oct25.bit5",
+    "LE Read Advertising Physical Channel TX Power": "0x2007 oct25.bit6",
+    "LE Set Advertising Data": "0x2008 oct25.bit7",
+    "LE Set Scan Response Data": "0x2009 oct26.bit0",
+    "LE Set Advertising Enable": "0x200a oct26.bit1",
+    "LE Set Scan Parameters": "0x200b oct26.bit2",
+    "LE Set Scan Enable": "0x200c oct26.bit3",
+    "LE Read Filter Accept List Size": "0x200f oct26.bit6",
+    "LE Read Supported States": "0x201c oct28.bit3",
+    "LE Receiver Test [v1]": "0x201d oct28.bit4",
+    "LE Transmitter Test [v1]": "0x201e oct28.bit5",
+    "LE Test End": "0x201f oct28.bit6",
+    "LE Read Resolving List Size": "0x202a oct34.bit6",
+    "LE Read Maximum Data Length": "0x202f oct35.bit3",
+    "LE Enhanced Receiver Test [v2]": "0x2033 oct35.bit7",
+    "LE Enhanced Transmitter Test [v2]": "0x2034 oct36.bit0",
+    "LE Set Advertising Set Random Address": "0x2035 oct36.bit1",
+    "LE Set Extended Advertising Parameters [v1]": "0x2036 oct36.bit2",
+    "LE Set Extended Advertising Data": "0x2037 oct36.bit3",
+    "LE Set Extended Scan Response Data": "0x2038 oct36.bit4",
+    "LE Set Extended Advertising Enable": "0x2039 oct36.bit5",
+    "LE Read Maximum Advertising Data Length": "0x203a oct36.bit6",
+    "LE Read Number of Supported Advertising Sets": "0x203b oct36.bit7",
+    "LE Remove Advertising Set": "0x203c oct37.bit0",
+    "LE Clear Advertising Sets": "0x203d oct37.bit1",
+    "LE Set Periodic Advertising Parameters [v1]": "0x203e oct37.bit2",
+    "LE Set Periodic Advertising Data": "0x203f oct37.bit3",
+    "LE Set Periodic Advertising Enable": "0x2040 oct37.bit4",
+    "LE Set Extended Scan Parameters": "0x2041 oct37.bit5",
+    "LE Set Extended Scan Enable": "0x2042 oct37.bit6",
+    "LE Extended Create Connection [v1]": "0x2043 oct37.bit7",
+    "LE Read Transmit Power": "0x204b oct38.bit7",
+    "LE Read RF Path Compensation": "0x204c oct39.bit0",
+    "LE Write RF Path Compensation": "0x204d oct39.bit1",
+    "LE Receiver Test [v3]": "0x204f oct39.bit3",
+    "LE Transmitter Test [v3]": "0x2050 oct39.bit4",
+    "LE Enhanced Read Transmit Power Level": "0x2076 oct44.bit3",
+    "LE Read Remote Transmit Power Level": "0x2077 oct44.bit4",
+    "LE Set Path Loss Reporting Parameters": "0x2078 oct44.bit5",
+    "LE Set Path Loss Reporting Enable": "0x2079 oct44.bit6",
+    "LE Set Transmit Power Reporting Enable": "0x207a oct44.bit7",
+    "LE Transmitter Test [v4]": "0x207b oct45.bit0",
+    "LE Set Data Related Address Changes": "0x207c oct45.bit1",
+    "Read Transmit Power Level (BR/EDR)": "0x0c2d oct10.bit1",
+    "Write Inquiry Transmit Power Level (BR/EDR)": "0x0c59 oct18.bit1",
+    "Enable Device Under Test Mode (BR/EDR)": "0x1803 oct16.bit2"
+   },
+   "le_features_hex": "ffd9013cae000000",
+   "le_features_supported": [
+    "LE Encryption",
+    "Connection Parameters Request Procedure",
+    "Extended Reject Indication",
+    "Peripheral-initiated Features Exchange",
+    "LE Ping",
+    "LE Data Packet Length Extension",
+    "LL Privacy",
+    "Extended Scanner Filter Policies",
+    "LE 2M PHY",
+    "LE Coded PHY",
+    "LE Extended Advertising",
+    "Channel Selection Algorithm #2",
+    "LE Power Class 1",
+    "Minimum Number of Used Channels Procedure",
+    "Sleep Clock Accuracy Updates",
+    "Remote Public Key Validation",
+    "Connected Isochronous Stream - Central",
+    "Connected Isochronous Stream - Peripheral",
+    "LE Power Control Request",
+    "LE Path Loss Monitoring",
+    "Connection Subrating",
+    "Channel Classification",
+    "LE Power Change Indication"
+   ],
+   "le_features_not_supported": [
+    "Stable Modulation Index - Transmitter",
+    "Stable Modulation Index - Receiver",
+    "LE Periodic Advertising",
+    "Connection CTE Request",
+    "Connection CTE Response",
+    "Connectionless CTE Transmitter",
+    "Connectionless CTE Receiver",
+    "Antenna Switching During CTE Tx (AoD)",
+    "Antenna Switching During CTE Rx (AoA)",
+    "Receiving CTE",
+    "Periodic Advertising Sync Transfer - Sender",
+    "Periodic Advertising Sync Transfer - Recipient",
+    "Isochronous Broadcaster",
+    "Synchronized Receiver",
+    "Connected Isochronous Stream (Host Support)",
+    "Periodic Advertising ADI support",
+    "Connection Subrating (Host Support)"
+   ],
+   "lmp_features_page0_hex": "bffe0ffedbff7b87",
+   "le_supported_states_hex": "ffffffffff030000",
+   "le_supported_states_note": "0x000003ffffffffff = all 42 defined LE states supported (btmon decode)",
+   "le_max_adv_data_len_hci": 200,
+   "le_max_adv_data_len_bluez_mgmt": 251,
+   "le_num_adv_sets_hci": 12,
+   "le_tx_power_range_dbm_reported": {
+    "min": -64,
+    "max": 66
+   },
+   "le_adv_channel_tx_power_legacy_cmd_status": 12,
+   "le_buffer_size_v1": {
+    "acl_len": 251,
+    "acl_pkts": 6
+   },
+   "le_max_data_length": {
+    "max_tx_octets": 251,
+    "max_tx_time_us": 2704,
+    "max_rx_octets": 251,
+    "max_rx_time_us": 2704
+   },
+   "le_filter_accept_list_size": 64,
+   "le_resolving_list_size": 64,
+   "raw_responses": {
+    "0x1001": {
+     "name": "Read Local Version Information",
+     "status": 0,
+     "ret": "0d57460d02005746"
+    },
+    "0x1009": {
+     "name": "Read BD_ADDR",
+     "status": 0,
+     "ret": "969000898480"
+    },
+    "0x1003": {
+     "name": "Read Local Supported Features",
+     "status": 0,
+     "ret": "bffe0ffedbff7b87"
+    },
+    "0x1002": {
+     "name": "Read Local Supported Commands",
+     "status": 0,
+     "ret": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000"
+    },
+    "0x2003": {
+     "name": "LE Read Local Supported Features",
+     "status": 0,
+     "ret": "ffd9013cae000000"
+    },
+    "0x201c": {
+     "name": "LE Read Supported States",
+     "status": 0,
+     "ret": "ffffffffff030000"
+    },
+    "0x2002": {
+     "name": "LE Read Buffer Size [v1]",
+     "status": 0,
+     "ret": "fb0006"
+    },
+    "0x2007": {
+     "name": "LE Read Advertising Physical Channel TX Power",
+     "status": 12,
+     "ret": "fb"
+    },
+    "0x203a": {
+     "name": "LE Read Maximum Advertising Data Length",
+     "status": 0,
+     "ret": "c800"
+    },
+    "0x203b": {
+     "name": "LE Read Number of Supported Advertising Sets",
+     "status": 0,
+     "ret": "0c"
+    },
+    "0x204b": {
+     "name": "LE Read Transmit Power",
+     "status": 0,
+     "ret": "c042"
+    },
+    "0x202f": {
+     "name": "LE Read Maximum Data Length",
+     "status": 0,
+     "ret": "fb00900afb00900a"
+    },
+    "0x200f": {
+     "name": "LE Read Filter Accept List Size",
+     "status": 0,
+     "ret": "40"
+    },
+    "0x202a": {
+     "name": "LE Read Resolving List Size",
+     "status": 0,
+     "ret": "40"
+    }
+   },
+   "mgmt": {
+    "addr": "80:84:89:00:90:96",
+    "mgmt_version": 13,
+    "manufacturer": 2,
+    "cod": "0x7c0104",
+    "supported_settings": [
+     "powered",
+     "connectable",
+     "fast-connectable",
+     "discoverable",
+     "bondable",
+     "link-security",
+     "ssp",
+     "br/edr",
+     "le",
+     "advertising",
+     "secure-conn",
+     "debug-keys",
+     "privacy",
+     "configuration",
+     "static-addr",
+     "phy-configuration",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "current_settings": [
+     "powered",
+     "bondable",
+     "ssp",
+     "br/edr",
+     "le",
+     "secure-conn",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "advinfo": {
+     "supported_flags": [
+      "connectable",
+      "general-discoverable",
+      "limited-discoverable",
+      "managed-flags",
+      "tx-power",
+      "scan-rsp-appearance",
+      "scan-rsp-local-name",
+      "Secondary-channel-1M",
+      "Secondary-channel-2M",
+      "Secondary-channel-CODED"
+     ],
+     "max_adv_data_len": 251,
+     "max_scan_rsp_len": 251,
+     "max_instances": 12,
+     "instances_in_use": 0
+    }
+   },
+   "bluetoothctl": {
+    "SupportedIncludes": [
+     "tx-power",
+     "appearance",
+     "local-name"
+    ],
+    "SupportedSecondaryChannels": [
+     "1M",
+     "2M",
+     "Coded"
+    ],
+    "SupportedFeatures": [
+     "CanSetTxPower",
+     "HardwareOffload"
+    ],
+    "Roles": [
+     "central",
+     "peripheral"
+    ],
+    "Name": "BlueZ 5.77",
+    "Alias": "BlueZ 5.77",
+    "Powered": "yes",
+    "PowerState": "on",
+    "Discoverable": "no",
+    "Pairable": "yes",
+    "Modalias": "usb:v1D6Bp0246d054D",
+    "Discovering": "no",
+    "ActiveInstances": "0x00 (0)",
+    "SupportedInstances": "0x0c (12)",
+    "SupportedCapabilities.MinTxPower": "0xffffffc0 (-64)",
+    "SupportedCapabilities.MaxTxPower": "0x0042 (66)",
+    "SupportedCapabilities.MaxAdvLen": "0xfb (251)",
+    "SupportedCapabilities.MaxScnRspLen": "0xfb (251)"
+   },
+   "state": {
+    "powered_up": true,
+    "connections": 0,
+    "scanning": false,
+    "discoverable": false,
+    "active_adv_instances": 0,
+    "dut_mode_debugfs": "N",
+    "random_address_debugfs": "31:48:c8:c1:cc:e4",
+    "idle": true
+   }
+  },
+  "hci5": {
+   "bd_addr": "80:84:89:08:E2:78",
+   "manufacturer": {
+    "id": 2,
+    "name": "Intel Corp."
+   },
+   "hci_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "lmp_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "hci_revision": "0x4657",
+   "lmp_subversion": "0x4657",
+   "firmware": {
+    "firmware_timestamp": "2024.38",
+    "firmware_buildtype": 1,
+    "firmware_build": 67159,
+    "firmware_sha1": "0x083ad0b2",
+    "firmware_file": "intel/ibt-0291-0291.sfi",
+    "boot_address": "0x100800",
+    "firmware_version": "87-38.24",
+    "firmware_already_loaded_note": true
+   },
+   "debugfs_hardware_info": "INTEL platform=55 variant=28",
+   "usb": {
+    "port_path": "6-1",
+    "busnum": 6,
+    "devnum": 2,
+    "vid_pid": "8087:0036",
+    "speed_mbps": "12",
+    "usb_host_controller_pci": "0000:10:00.1",
+    "sysfs": "/devices/pci0000:00/0000:00:1c.0/0000:09:00.0/0000:0a:05.0/0000:0e:00.0/0000:0f:03.0/0000:10:00.1/usb6/6-1/6-1:1.0"
+   },
+   "wifi_sibling_inferred": {
+    "wiphy": "wiphy5",
+    "pci": "0000:1b:00.0",
+    "basis": "BT BD_ADDR == last address of the module's 4-address Wi-Fi MAC block + 1 (8/8 controllers match); NOT derivable from USB/PCI topology"
+   },
+   "supported_commands_hex": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000",
+   "commands": {
+    "LE Set Random Address": true,
+    "LE Set Advertising Parameters": true,
+    "LE Read Advertising Physical Channel TX Power": true,
+    "LE Set Advertising Data": true,
+    "LE Set Scan Response Data": true,
+    "LE Set Advertising Enable": true,
+    "LE Set Scan Parameters": true,
+    "LE Set Scan Enable": true,
+    "LE Read Filter Accept List Size": true,
+    "LE Read Supported States": true,
+    "LE Receiver Test [v1]": true,
+    "LE Transmitter Test [v1]": true,
+    "LE Test End": true,
+    "LE Read Resolving List Size": true,
+    "LE Read Maximum Data Length": true,
+    "LE Enhanced Receiver Test [v2]": true,
+    "LE Enhanced Transmitter Test [v2]": true,
+    "LE Set Advertising Set Random Address": true,
+    "LE Set Extended Advertising Parameters [v1]": true,
+    "LE Set Extended Advertising Data": true,
+    "LE Set Extended Scan Response Data": true,
+    "LE Set Extended Advertising Enable": true,
+    "LE Read Maximum Advertising Data Length": true,
+    "LE Read Number of Supported Advertising Sets": true,
+    "LE Remove Advertising Set": true,
+    "LE Clear Advertising Sets": true,
+    "LE Set Periodic Advertising Parameters [v1]": false,
+    "LE Set Periodic Advertising Data": false,
+    "LE Set Periodic Advertising Enable": false,
+    "LE Set Extended Scan Parameters": true,
+    "LE Set Extended Scan Enable": true,
+    "LE Extended Create Connection [v1]": true,
+    "LE Read Transmit Power": true,
+    "LE Read RF Path Compensation": true,
+    "LE Write RF Path Compensation": true,
+    "LE Receiver Test [v3]": false,
+    "LE Transmitter Test [v3]": false,
+    "LE Enhanced Read Transmit Power Level": true,
+    "LE Read Remote Transmit Power Level": true,
+    "LE Set Path Loss Reporting Parameters": true,
+    "LE Set Path Loss Reporting Enable": true,
+    "LE Set Transmit Power Reporting Enable": true,
+    "LE Transmitter Test [v4]": true,
+    "LE Set Data Related Address Changes": true,
+    "Read Transmit Power Level (BR/EDR)": false,
+    "Write Inquiry Transmit Power Level (BR/EDR)": true,
+    "Enable Device Under Test Mode (BR/EDR)": true
+   },
+   "command_bits": {
+    "LE Set Random Address": "0x2005 oct25.bit4",
+    "LE Set Advertising Parameters": "0x2006 oct25.bit5",
+    "LE Read Advertising Physical Channel TX Power": "0x2007 oct25.bit6",
+    "LE Set Advertising Data": "0x2008 oct25.bit7",
+    "LE Set Scan Response Data": "0x2009 oct26.bit0",
+    "LE Set Advertising Enable": "0x200a oct26.bit1",
+    "LE Set Scan Parameters": "0x200b oct26.bit2",
+    "LE Set Scan Enable": "0x200c oct26.bit3",
+    "LE Read Filter Accept List Size": "0x200f oct26.bit6",
+    "LE Read Supported States": "0x201c oct28.bit3",
+    "LE Receiver Test [v1]": "0x201d oct28.bit4",
+    "LE Transmitter Test [v1]": "0x201e oct28.bit5",
+    "LE Test End": "0x201f oct28.bit6",
+    "LE Read Resolving List Size": "0x202a oct34.bit6",
+    "LE Read Maximum Data Length": "0x202f oct35.bit3",
+    "LE Enhanced Receiver Test [v2]": "0x2033 oct35.bit7",
+    "LE Enhanced Transmitter Test [v2]": "0x2034 oct36.bit0",
+    "LE Set Advertising Set Random Address": "0x2035 oct36.bit1",
+    "LE Set Extended Advertising Parameters [v1]": "0x2036 oct36.bit2",
+    "LE Set Extended Advertising Data": "0x2037 oct36.bit3",
+    "LE Set Extended Scan Response Data": "0x2038 oct36.bit4",
+    "LE Set Extended Advertising Enable": "0x2039 oct36.bit5",
+    "LE Read Maximum Advertising Data Length": "0x203a oct36.bit6",
+    "LE Read Number of Supported Advertising Sets": "0x203b oct36.bit7",
+    "LE Remove Advertising Set": "0x203c oct37.bit0",
+    "LE Clear Advertising Sets": "0x203d oct37.bit1",
+    "LE Set Periodic Advertising Parameters [v1]": "0x203e oct37.bit2",
+    "LE Set Periodic Advertising Data": "0x203f oct37.bit3",
+    "LE Set Periodic Advertising Enable": "0x2040 oct37.bit4",
+    "LE Set Extended Scan Parameters": "0x2041 oct37.bit5",
+    "LE Set Extended Scan Enable": "0x2042 oct37.bit6",
+    "LE Extended Create Connection [v1]": "0x2043 oct37.bit7",
+    "LE Read Transmit Power": "0x204b oct38.bit7",
+    "LE Read RF Path Compensation": "0x204c oct39.bit0",
+    "LE Write RF Path Compensation": "0x204d oct39.bit1",
+    "LE Receiver Test [v3]": "0x204f oct39.bit3",
+    "LE Transmitter Test [v3]": "0x2050 oct39.bit4",
+    "LE Enhanced Read Transmit Power Level": "0x2076 oct44.bit3",
+    "LE Read Remote Transmit Power Level": "0x2077 oct44.bit4",
+    "LE Set Path Loss Reporting Parameters": "0x2078 oct44.bit5",
+    "LE Set Path Loss Reporting Enable": "0x2079 oct44.bit6",
+    "LE Set Transmit Power Reporting Enable": "0x207a oct44.bit7",
+    "LE Transmitter Test [v4]": "0x207b oct45.bit0",
+    "LE Set Data Related Address Changes": "0x207c oct45.bit1",
+    "Read Transmit Power Level (BR/EDR)": "0x0c2d oct10.bit1",
+    "Write Inquiry Transmit Power Level (BR/EDR)": "0x0c59 oct18.bit1",
+    "Enable Device Under Test Mode (BR/EDR)": "0x1803 oct16.bit2"
+   },
+   "le_features_hex": "ffd9013cae000000",
+   "le_features_supported": [
+    "LE Encryption",
+    "Connection Parameters Request Procedure",
+    "Extended Reject Indication",
+    "Peripheral-initiated Features Exchange",
+    "LE Ping",
+    "LE Data Packet Length Extension",
+    "LL Privacy",
+    "Extended Scanner Filter Policies",
+    "LE 2M PHY",
+    "LE Coded PHY",
+    "LE Extended Advertising",
+    "Channel Selection Algorithm #2",
+    "LE Power Class 1",
+    "Minimum Number of Used Channels Procedure",
+    "Sleep Clock Accuracy Updates",
+    "Remote Public Key Validation",
+    "Connected Isochronous Stream - Central",
+    "Connected Isochronous Stream - Peripheral",
+    "LE Power Control Request",
+    "LE Path Loss Monitoring",
+    "Connection Subrating",
+    "Channel Classification",
+    "LE Power Change Indication"
+   ],
+   "le_features_not_supported": [
+    "Stable Modulation Index - Transmitter",
+    "Stable Modulation Index - Receiver",
+    "LE Periodic Advertising",
+    "Connection CTE Request",
+    "Connection CTE Response",
+    "Connectionless CTE Transmitter",
+    "Connectionless CTE Receiver",
+    "Antenna Switching During CTE Tx (AoD)",
+    "Antenna Switching During CTE Rx (AoA)",
+    "Receiving CTE",
+    "Periodic Advertising Sync Transfer - Sender",
+    "Periodic Advertising Sync Transfer - Recipient",
+    "Isochronous Broadcaster",
+    "Synchronized Receiver",
+    "Connected Isochronous Stream (Host Support)",
+    "Periodic Advertising ADI support",
+    "Connection Subrating (Host Support)"
+   ],
+   "lmp_features_page0_hex": "bffe0ffedbff7b87",
+   "le_supported_states_hex": "ffffffffff030000",
+   "le_supported_states_note": "0x000003ffffffffff = all 42 defined LE states supported (btmon decode)",
+   "le_max_adv_data_len_hci": 200,
+   "le_max_adv_data_len_bluez_mgmt": 251,
+   "le_num_adv_sets_hci": 12,
+   "le_tx_power_range_dbm_reported": {
+    "min": -64,
+    "max": 66
+   },
+   "le_adv_channel_tx_power_legacy_cmd_status": 12,
+   "le_buffer_size_v1": {
+    "acl_len": 251,
+    "acl_pkts": 6
+   },
+   "le_max_data_length": {
+    "max_tx_octets": 251,
+    "max_tx_time_us": 2704,
+    "max_rx_octets": 251,
+    "max_rx_time_us": 2704
+   },
+   "le_filter_accept_list_size": 64,
+   "le_resolving_list_size": 64,
+   "raw_responses": {
+    "0x1001": {
+     "name": "Read Local Version Information",
+     "status": 0,
+     "ret": "0d57460d02005746"
+    },
+    "0x1009": {
+     "name": "Read BD_ADDR",
+     "status": 0,
+     "ret": "78e208898480"
+    },
+    "0x1003": {
+     "name": "Read Local Supported Features",
+     "status": 0,
+     "ret": "bffe0ffedbff7b87"
+    },
+    "0x1002": {
+     "name": "Read Local Supported Commands",
+     "status": 0,
+     "ret": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000"
+    },
+    "0x2003": {
+     "name": "LE Read Local Supported Features",
+     "status": 0,
+     "ret": "ffd9013cae000000"
+    },
+    "0x201c": {
+     "name": "LE Read Supported States",
+     "status": 0,
+     "ret": "ffffffffff030000"
+    },
+    "0x2002": {
+     "name": "LE Read Buffer Size [v1]",
+     "status": 0,
+     "ret": "fb0006"
+    },
+    "0x2007": {
+     "name": "LE Read Advertising Physical Channel TX Power",
+     "status": 12,
+     "ret": "fb"
+    },
+    "0x203a": {
+     "name": "LE Read Maximum Advertising Data Length",
+     "status": 0,
+     "ret": "c800"
+    },
+    "0x203b": {
+     "name": "LE Read Number of Supported Advertising Sets",
+     "status": 0,
+     "ret": "0c"
+    },
+    "0x204b": {
+     "name": "LE Read Transmit Power",
+     "status": 0,
+     "ret": "c042"
+    },
+    "0x202f": {
+     "name": "LE Read Maximum Data Length",
+     "status": 0,
+     "ret": "fb00900afb00900a"
+    },
+    "0x200f": {
+     "name": "LE Read Filter Accept List Size",
+     "status": 0,
+     "ret": "40"
+    },
+    "0x202a": {
+     "name": "LE Read Resolving List Size",
+     "status": 0,
+     "ret": "40"
+    }
+   },
+   "mgmt": {
+    "addr": "80:84:89:08:E2:78",
+    "mgmt_version": 13,
+    "manufacturer": 2,
+    "cod": "0x7c0104",
+    "supported_settings": [
+     "powered",
+     "connectable",
+     "fast-connectable",
+     "discoverable",
+     "bondable",
+     "link-security",
+     "ssp",
+     "br/edr",
+     "le",
+     "advertising",
+     "secure-conn",
+     "debug-keys",
+     "privacy",
+     "configuration",
+     "static-addr",
+     "phy-configuration",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "current_settings": [
+     "powered",
+     "bondable",
+     "ssp",
+     "br/edr",
+     "le",
+     "secure-conn",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "advinfo": {
+     "supported_flags": [
+      "connectable",
+      "general-discoverable",
+      "limited-discoverable",
+      "managed-flags",
+      "tx-power",
+      "scan-rsp-appearance",
+      "scan-rsp-local-name",
+      "Secondary-channel-1M",
+      "Secondary-channel-2M",
+      "Secondary-channel-CODED"
+     ],
+     "max_adv_data_len": 251,
+     "max_scan_rsp_len": 251,
+     "max_instances": 12,
+     "instances_in_use": 0
+    }
+   },
+   "bluetoothctl": {
+    "SupportedIncludes": [
+     "tx-power",
+     "appearance",
+     "local-name"
+    ],
+    "SupportedSecondaryChannels": [
+     "1M",
+     "2M",
+     "Coded"
+    ],
+    "SupportedFeatures": [
+     "CanSetTxPower",
+     "HardwareOffload"
+    ],
+    "Roles": [
+     "central",
+     "peripheral"
+    ],
+    "Name": "BlueZ 5.77",
+    "Alias": "BlueZ 5.77",
+    "Powered": "yes",
+    "PowerState": "on",
+    "Discoverable": "no",
+    "Pairable": "yes",
+    "Modalias": "usb:v1D6Bp0246d054D",
+    "Discovering": "no",
+    "ActiveInstances": "0x00 (0)",
+    "SupportedInstances": "0x0c (12)",
+    "SupportedCapabilities.MinTxPower": "0xffffffc0 (-64)",
+    "SupportedCapabilities.MaxTxPower": "0x0042 (66)",
+    "SupportedCapabilities.MaxAdvLen": "0xfb (251)",
+    "SupportedCapabilities.MaxScnRspLen": "0xfb (251)"
+   },
+   "state": {
+    "powered_up": true,
+    "connections": 0,
+    "scanning": false,
+    "discoverable": false,
+    "active_adv_instances": 0,
+    "dut_mode_debugfs": "N",
+    "random_address_debugfs": "00:00:00:00:00:00",
+    "idle": true
+   }
+  },
+  "hci6": {
+   "bd_addr": "BC:CD:99:F8:01:AA",
+   "manufacturer": {
+    "id": 2,
+    "name": "Intel Corp."
+   },
+   "hci_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "lmp_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "hci_revision": "0x4657",
+   "lmp_subversion": "0x4657",
+   "firmware": {
+    "firmware_timestamp": "2024.38",
+    "firmware_buildtype": 1,
+    "firmware_build": 67159,
+    "firmware_sha1": "0x083ad0b2",
+    "firmware_file": "intel/ibt-0291-0291.sfi",
+    "boot_address": "0x100800",
+    "firmware_version": "87-38.24",
+    "firmware_already_loaded_note": true
+   },
+   "debugfs_hardware_info": "INTEL platform=55 variant=28",
+   "usb": {
+    "port_path": "4-2",
+    "busnum": 4,
+    "devnum": 3,
+    "vid_pid": "8087:0036",
+    "speed_mbps": "12",
+    "usb_host_controller_pci": "0000:0d:00.1",
+    "sysfs": "/devices/pci0000:00/0000:00:1c.0/0000:09:00.0/0000:0a:04.0/0000:0b:00.0/0000:0c:03.0/0000:0d:00.1/usb4/4-2/4-2:1.0"
+   },
+   "wifi_sibling_inferred": {
+    "wiphy": "wiphy9",
+    "pci": "0000:18:00.0",
+    "basis": "BT BD_ADDR == last address of the module's 4-address Wi-Fi MAC block + 1 (8/8 controllers match); NOT derivable from USB/PCI topology"
+   },
+   "supported_commands_hex": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000",
+   "commands": {
+    "LE Set Random Address": true,
+    "LE Set Advertising Parameters": true,
+    "LE Read Advertising Physical Channel TX Power": true,
+    "LE Set Advertising Data": true,
+    "LE Set Scan Response Data": true,
+    "LE Set Advertising Enable": true,
+    "LE Set Scan Parameters": true,
+    "LE Set Scan Enable": true,
+    "LE Read Filter Accept List Size": true,
+    "LE Read Supported States": true,
+    "LE Receiver Test [v1]": true,
+    "LE Transmitter Test [v1]": true,
+    "LE Test End": true,
+    "LE Read Resolving List Size": true,
+    "LE Read Maximum Data Length": true,
+    "LE Enhanced Receiver Test [v2]": true,
+    "LE Enhanced Transmitter Test [v2]": true,
+    "LE Set Advertising Set Random Address": true,
+    "LE Set Extended Advertising Parameters [v1]": true,
+    "LE Set Extended Advertising Data": true,
+    "LE Set Extended Scan Response Data": true,
+    "LE Set Extended Advertising Enable": true,
+    "LE Read Maximum Advertising Data Length": true,
+    "LE Read Number of Supported Advertising Sets": true,
+    "LE Remove Advertising Set": true,
+    "LE Clear Advertising Sets": true,
+    "LE Set Periodic Advertising Parameters [v1]": false,
+    "LE Set Periodic Advertising Data": false,
+    "LE Set Periodic Advertising Enable": false,
+    "LE Set Extended Scan Parameters": true,
+    "LE Set Extended Scan Enable": true,
+    "LE Extended Create Connection [v1]": true,
+    "LE Read Transmit Power": true,
+    "LE Read RF Path Compensation": true,
+    "LE Write RF Path Compensation": true,
+    "LE Receiver Test [v3]": false,
+    "LE Transmitter Test [v3]": false,
+    "LE Enhanced Read Transmit Power Level": true,
+    "LE Read Remote Transmit Power Level": true,
+    "LE Set Path Loss Reporting Parameters": true,
+    "LE Set Path Loss Reporting Enable": true,
+    "LE Set Transmit Power Reporting Enable": true,
+    "LE Transmitter Test [v4]": true,
+    "LE Set Data Related Address Changes": true,
+    "Read Transmit Power Level (BR/EDR)": false,
+    "Write Inquiry Transmit Power Level (BR/EDR)": true,
+    "Enable Device Under Test Mode (BR/EDR)": true
+   },
+   "command_bits": {
+    "LE Set Random Address": "0x2005 oct25.bit4",
+    "LE Set Advertising Parameters": "0x2006 oct25.bit5",
+    "LE Read Advertising Physical Channel TX Power": "0x2007 oct25.bit6",
+    "LE Set Advertising Data": "0x2008 oct25.bit7",
+    "LE Set Scan Response Data": "0x2009 oct26.bit0",
+    "LE Set Advertising Enable": "0x200a oct26.bit1",
+    "LE Set Scan Parameters": "0x200b oct26.bit2",
+    "LE Set Scan Enable": "0x200c oct26.bit3",
+    "LE Read Filter Accept List Size": "0x200f oct26.bit6",
+    "LE Read Supported States": "0x201c oct28.bit3",
+    "LE Receiver Test [v1]": "0x201d oct28.bit4",
+    "LE Transmitter Test [v1]": "0x201e oct28.bit5",
+    "LE Test End": "0x201f oct28.bit6",
+    "LE Read Resolving List Size": "0x202a oct34.bit6",
+    "LE Read Maximum Data Length": "0x202f oct35.bit3",
+    "LE Enhanced Receiver Test [v2]": "0x2033 oct35.bit7",
+    "LE Enhanced Transmitter Test [v2]": "0x2034 oct36.bit0",
+    "LE Set Advertising Set Random Address": "0x2035 oct36.bit1",
+    "LE Set Extended Advertising Parameters [v1]": "0x2036 oct36.bit2",
+    "LE Set Extended Advertising Data": "0x2037 oct36.bit3",
+    "LE Set Extended Scan Response Data": "0x2038 oct36.bit4",
+    "LE Set Extended Advertising Enable": "0x2039 oct36.bit5",
+    "LE Read Maximum Advertising Data Length": "0x203a oct36.bit6",
+    "LE Read Number of Supported Advertising Sets": "0x203b oct36.bit7",
+    "LE Remove Advertising Set": "0x203c oct37.bit0",
+    "LE Clear Advertising Sets": "0x203d oct37.bit1",
+    "LE Set Periodic Advertising Parameters [v1]": "0x203e oct37.bit2",
+    "LE Set Periodic Advertising Data": "0x203f oct37.bit3",
+    "LE Set Periodic Advertising Enable": "0x2040 oct37.bit4",
+    "LE Set Extended Scan Parameters": "0x2041 oct37.bit5",
+    "LE Set Extended Scan Enable": "0x2042 oct37.bit6",
+    "LE Extended Create Connection [v1]": "0x2043 oct37.bit7",
+    "LE Read Transmit Power": "0x204b oct38.bit7",
+    "LE Read RF Path Compensation": "0x204c oct39.bit0",
+    "LE Write RF Path Compensation": "0x204d oct39.bit1",
+    "LE Receiver Test [v3]": "0x204f oct39.bit3",
+    "LE Transmitter Test [v3]": "0x2050 oct39.bit4",
+    "LE Enhanced Read Transmit Power Level": "0x2076 oct44.bit3",
+    "LE Read Remote Transmit Power Level": "0x2077 oct44.bit4",
+    "LE Set Path Loss Reporting Parameters": "0x2078 oct44.bit5",
+    "LE Set Path Loss Reporting Enable": "0x2079 oct44.bit6",
+    "LE Set Transmit Power Reporting Enable": "0x207a oct44.bit7",
+    "LE Transmitter Test [v4]": "0x207b oct45.bit0",
+    "LE Set Data Related Address Changes": "0x207c oct45.bit1",
+    "Read Transmit Power Level (BR/EDR)": "0x0c2d oct10.bit1",
+    "Write Inquiry Transmit Power Level (BR/EDR)": "0x0c59 oct18.bit1",
+    "Enable Device Under Test Mode (BR/EDR)": "0x1803 oct16.bit2"
+   },
+   "le_features_hex": "ffd9013cae000000",
+   "le_features_supported": [
+    "LE Encryption",
+    "Connection Parameters Request Procedure",
+    "Extended Reject Indication",
+    "Peripheral-initiated Features Exchange",
+    "LE Ping",
+    "LE Data Packet Length Extension",
+    "LL Privacy",
+    "Extended Scanner Filter Policies",
+    "LE 2M PHY",
+    "LE Coded PHY",
+    "LE Extended Advertising",
+    "Channel Selection Algorithm #2",
+    "LE Power Class 1",
+    "Minimum Number of Used Channels Procedure",
+    "Sleep Clock Accuracy Updates",
+    "Remote Public Key Validation",
+    "Connected Isochronous Stream - Central",
+    "Connected Isochronous Stream - Peripheral",
+    "LE Power Control Request",
+    "LE Path Loss Monitoring",
+    "Connection Subrating",
+    "Channel Classification",
+    "LE Power Change Indication"
+   ],
+   "le_features_not_supported": [
+    "Stable Modulation Index - Transmitter",
+    "Stable Modulation Index - Receiver",
+    "LE Periodic Advertising",
+    "Connection CTE Request",
+    "Connection CTE Response",
+    "Connectionless CTE Transmitter",
+    "Connectionless CTE Receiver",
+    "Antenna Switching During CTE Tx (AoD)",
+    "Antenna Switching During CTE Rx (AoA)",
+    "Receiving CTE",
+    "Periodic Advertising Sync Transfer - Sender",
+    "Periodic Advertising Sync Transfer - Recipient",
+    "Isochronous Broadcaster",
+    "Synchronized Receiver",
+    "Connected Isochronous Stream (Host Support)",
+    "Periodic Advertising ADI support",
+    "Connection Subrating (Host Support)"
+   ],
+   "lmp_features_page0_hex": "bffe0ffedbff7b87",
+   "le_supported_states_hex": "ffffffffff030000",
+   "le_supported_states_note": "0x000003ffffffffff = all 42 defined LE states supported (btmon decode)",
+   "le_max_adv_data_len_hci": 200,
+   "le_max_adv_data_len_bluez_mgmt": 251,
+   "le_num_adv_sets_hci": 12,
+   "le_tx_power_range_dbm_reported": {
+    "min": -64,
+    "max": 66
+   },
+   "le_adv_channel_tx_power_legacy_cmd_status": 12,
+   "le_buffer_size_v1": {
+    "acl_len": 251,
+    "acl_pkts": 6
+   },
+   "le_max_data_length": {
+    "max_tx_octets": 251,
+    "max_tx_time_us": 2704,
+    "max_rx_octets": 251,
+    "max_rx_time_us": 2704
+   },
+   "le_filter_accept_list_size": 64,
+   "le_resolving_list_size": 64,
+   "raw_responses": {
+    "0x1001": {
+     "name": "Read Local Version Information",
+     "status": 0,
+     "ret": "0d57460d02005746"
+    },
+    "0x1009": {
+     "name": "Read BD_ADDR",
+     "status": 0,
+     "ret": "aa01f899cdbc"
+    },
+    "0x1003": {
+     "name": "Read Local Supported Features",
+     "status": 0,
+     "ret": "bffe0ffedbff7b87"
+    },
+    "0x1002": {
+     "name": "Read Local Supported Commands",
+     "status": 0,
+     "ret": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000"
+    },
+    "0x2003": {
+     "name": "LE Read Local Supported Features",
+     "status": 0,
+     "ret": "ffd9013cae000000"
+    },
+    "0x201c": {
+     "name": "LE Read Supported States",
+     "status": 0,
+     "ret": "ffffffffff030000"
+    },
+    "0x2002": {
+     "name": "LE Read Buffer Size [v1]",
+     "status": 0,
+     "ret": "fb0006"
+    },
+    "0x2007": {
+     "name": "LE Read Advertising Physical Channel TX Power",
+     "status": 12,
+     "ret": "fb"
+    },
+    "0x203a": {
+     "name": "LE Read Maximum Advertising Data Length",
+     "status": 0,
+     "ret": "c800"
+    },
+    "0x203b": {
+     "name": "LE Read Number of Supported Advertising Sets",
+     "status": 0,
+     "ret": "0c"
+    },
+    "0x204b": {
+     "name": "LE Read Transmit Power",
+     "status": 0,
+     "ret": "c042"
+    },
+    "0x202f": {
+     "name": "LE Read Maximum Data Length",
+     "status": 0,
+     "ret": "fb00900afb00900a"
+    },
+    "0x200f": {
+     "name": "LE Read Filter Accept List Size",
+     "status": 0,
+     "ret": "40"
+    },
+    "0x202a": {
+     "name": "LE Read Resolving List Size",
+     "status": 0,
+     "ret": "40"
+    }
+   },
+   "mgmt": {
+    "addr": "BC:CD:99:F8:01:AA",
+    "mgmt_version": 13,
+    "manufacturer": 2,
+    "cod": "0x7c0104",
+    "supported_settings": [
+     "powered",
+     "connectable",
+     "fast-connectable",
+     "discoverable",
+     "bondable",
+     "link-security",
+     "ssp",
+     "br/edr",
+     "le",
+     "advertising",
+     "secure-conn",
+     "debug-keys",
+     "privacy",
+     "configuration",
+     "static-addr",
+     "phy-configuration",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "current_settings": [
+     "powered",
+     "bondable",
+     "ssp",
+     "br/edr",
+     "le",
+     "secure-conn",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "advinfo": {
+     "supported_flags": [
+      "connectable",
+      "general-discoverable",
+      "limited-discoverable",
+      "managed-flags",
+      "tx-power",
+      "scan-rsp-appearance",
+      "scan-rsp-local-name",
+      "Secondary-channel-1M",
+      "Secondary-channel-2M",
+      "Secondary-channel-CODED"
+     ],
+     "max_adv_data_len": 251,
+     "max_scan_rsp_len": 251,
+     "max_instances": 12,
+     "instances_in_use": 0
+    }
+   },
+   "bluetoothctl": {
+    "SupportedIncludes": [
+     "tx-power",
+     "appearance",
+     "local-name"
+    ],
+    "SupportedSecondaryChannels": [
+     "1M",
+     "2M",
+     "Coded"
+    ],
+    "SupportedFeatures": [
+     "CanSetTxPower",
+     "HardwareOffload"
+    ],
+    "Roles": [
+     "central",
+     "peripheral"
+    ],
+    "Name": "BlueZ 5.77",
+    "Alias": "BlueZ 5.77",
+    "Powered": "yes",
+    "PowerState": "on",
+    "Discoverable": "no",
+    "Pairable": "yes",
+    "Modalias": "usb:v1D6Bp0246d054D",
+    "Discovering": "no",
+    "ActiveInstances": "0x00 (0)",
+    "SupportedInstances": "0x0c (12)",
+    "SupportedCapabilities.MinTxPower": "0xffffffc0 (-64)",
+    "SupportedCapabilities.MaxTxPower": "0x0042 (66)",
+    "SupportedCapabilities.MaxAdvLen": "0xfb (251)",
+    "SupportedCapabilities.MaxScnRspLen": "0xfb (251)"
+   },
+   "state": {
+    "powered_up": true,
+    "connections": 0,
+    "scanning": false,
+    "discoverable": false,
+    "active_adv_instances": 0,
+    "dut_mode_debugfs": "N",
+    "random_address_debugfs": "00:00:00:00:00:00",
+    "idle": true
+   }
+  },
+  "hci7": {
+   "bd_addr": "80:84:89:00:90:55",
+   "manufacturer": {
+    "id": 2,
+    "name": "Intel Corp."
+   },
+   "hci_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "lmp_version": {
+    "value": 13,
+    "spec": "Bluetooth 5.4"
+   },
+   "hci_revision": "0x4657",
+   "lmp_subversion": "0x4657",
+   "firmware": {
+    "firmware_timestamp": "2024.38",
+    "firmware_buildtype": 1,
+    "firmware_build": 67159,
+    "firmware_sha1": "0x083ad0b2",
+    "firmware_file": "intel/ibt-0291-0291.sfi",
+    "boot_address": "0x100800",
+    "firmware_version": "87-38.24",
+    "firmware_already_loaded_note": true
+   },
+   "debugfs_hardware_info": "INTEL platform=55 variant=28",
+   "usb": {
+    "port_path": "6-2",
+    "busnum": 6,
+    "devnum": 3,
+    "vid_pid": "8087:0036",
+    "speed_mbps": "12",
+    "usb_host_controller_pci": "0000:10:00.1",
+    "sysfs": "/devices/pci0000:00/0000:00:1c.0/0000:09:00.0/0000:0a:05.0/0000:0e:00.0/0000:0f:03.0/0000:10:00.1/usb6/6-2/6-2:1.0"
+   },
+   "wifi_sibling_inferred": {
+    "wiphy": "wiphy6",
+    "pci": "0000:1c:00.0",
+    "basis": "BT BD_ADDR == last address of the module's 4-address Wi-Fi MAC block + 1 (8/8 controllers match); NOT derivable from USB/PCI topology"
+   },
+   "supported_commands_hex": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000",
+   "commands": {
+    "LE Set Random Address": true,
+    "LE Set Advertising Parameters": true,
+    "LE Read Advertising Physical Channel TX Power": true,
+    "LE Set Advertising Data": true,
+    "LE Set Scan Response Data": true,
+    "LE Set Advertising Enable": true,
+    "LE Set Scan Parameters": true,
+    "LE Set Scan Enable": true,
+    "LE Read Filter Accept List Size": true,
+    "LE Read Supported States": true,
+    "LE Receiver Test [v1]": true,
+    "LE Transmitter Test [v1]": true,
+    "LE Test End": true,
+    "LE Read Resolving List Size": true,
+    "LE Read Maximum Data Length": true,
+    "LE Enhanced Receiver Test [v2]": true,
+    "LE Enhanced Transmitter Test [v2]": true,
+    "LE Set Advertising Set Random Address": true,
+    "LE Set Extended Advertising Parameters [v1]": true,
+    "LE Set Extended Advertising Data": true,
+    "LE Set Extended Scan Response Data": true,
+    "LE Set Extended Advertising Enable": true,
+    "LE Read Maximum Advertising Data Length": true,
+    "LE Read Number of Supported Advertising Sets": true,
+    "LE Remove Advertising Set": true,
+    "LE Clear Advertising Sets": true,
+    "LE Set Periodic Advertising Parameters [v1]": false,
+    "LE Set Periodic Advertising Data": false,
+    "LE Set Periodic Advertising Enable": false,
+    "LE Set Extended Scan Parameters": true,
+    "LE Set Extended Scan Enable": true,
+    "LE Extended Create Connection [v1]": true,
+    "LE Read Transmit Power": true,
+    "LE Read RF Path Compensation": true,
+    "LE Write RF Path Compensation": true,
+    "LE Receiver Test [v3]": false,
+    "LE Transmitter Test [v3]": false,
+    "LE Enhanced Read Transmit Power Level": true,
+    "LE Read Remote Transmit Power Level": true,
+    "LE Set Path Loss Reporting Parameters": true,
+    "LE Set Path Loss Reporting Enable": true,
+    "LE Set Transmit Power Reporting Enable": true,
+    "LE Transmitter Test [v4]": true,
+    "LE Set Data Related Address Changes": true,
+    "Read Transmit Power Level (BR/EDR)": false,
+    "Write Inquiry Transmit Power Level (BR/EDR)": true,
+    "Enable Device Under Test Mode (BR/EDR)": true
+   },
+   "command_bits": {
+    "LE Set Random Address": "0x2005 oct25.bit4",
+    "LE Set Advertising Parameters": "0x2006 oct25.bit5",
+    "LE Read Advertising Physical Channel TX Power": "0x2007 oct25.bit6",
+    "LE Set Advertising Data": "0x2008 oct25.bit7",
+    "LE Set Scan Response Data": "0x2009 oct26.bit0",
+    "LE Set Advertising Enable": "0x200a oct26.bit1",
+    "LE Set Scan Parameters": "0x200b oct26.bit2",
+    "LE Set Scan Enable": "0x200c oct26.bit3",
+    "LE Read Filter Accept List Size": "0x200f oct26.bit6",
+    "LE Read Supported States": "0x201c oct28.bit3",
+    "LE Receiver Test [v1]": "0x201d oct28.bit4",
+    "LE Transmitter Test [v1]": "0x201e oct28.bit5",
+    "LE Test End": "0x201f oct28.bit6",
+    "LE Read Resolving List Size": "0x202a oct34.bit6",
+    "LE Read Maximum Data Length": "0x202f oct35.bit3",
+    "LE Enhanced Receiver Test [v2]": "0x2033 oct35.bit7",
+    "LE Enhanced Transmitter Test [v2]": "0x2034 oct36.bit0",
+    "LE Set Advertising Set Random Address": "0x2035 oct36.bit1",
+    "LE Set Extended Advertising Parameters [v1]": "0x2036 oct36.bit2",
+    "LE Set Extended Advertising Data": "0x2037 oct36.bit3",
+    "LE Set Extended Scan Response Data": "0x2038 oct36.bit4",
+    "LE Set Extended Advertising Enable": "0x2039 oct36.bit5",
+    "LE Read Maximum Advertising Data Length": "0x203a oct36.bit6",
+    "LE Read Number of Supported Advertising Sets": "0x203b oct36.bit7",
+    "LE Remove Advertising Set": "0x203c oct37.bit0",
+    "LE Clear Advertising Sets": "0x203d oct37.bit1",
+    "LE Set Periodic Advertising Parameters [v1]": "0x203e oct37.bit2",
+    "LE Set Periodic Advertising Data": "0x203f oct37.bit3",
+    "LE Set Periodic Advertising Enable": "0x2040 oct37.bit4",
+    "LE Set Extended Scan Parameters": "0x2041 oct37.bit5",
+    "LE Set Extended Scan Enable": "0x2042 oct37.bit6",
+    "LE Extended Create Connection [v1]": "0x2043 oct37.bit7",
+    "LE Read Transmit Power": "0x204b oct38.bit7",
+    "LE Read RF Path Compensation": "0x204c oct39.bit0",
+    "LE Write RF Path Compensation": "0x204d oct39.bit1",
+    "LE Receiver Test [v3]": "0x204f oct39.bit3",
+    "LE Transmitter Test [v3]": "0x2050 oct39.bit4",
+    "LE Enhanced Read Transmit Power Level": "0x2076 oct44.bit3",
+    "LE Read Remote Transmit Power Level": "0x2077 oct44.bit4",
+    "LE Set Path Loss Reporting Parameters": "0x2078 oct44.bit5",
+    "LE Set Path Loss Reporting Enable": "0x2079 oct44.bit6",
+    "LE Set Transmit Power Reporting Enable": "0x207a oct44.bit7",
+    "LE Transmitter Test [v4]": "0x207b oct45.bit0",
+    "LE Set Data Related Address Changes": "0x207c oct45.bit1",
+    "Read Transmit Power Level (BR/EDR)": "0x0c2d oct10.bit1",
+    "Write Inquiry Transmit Power Level (BR/EDR)": "0x0c59 oct18.bit1",
+    "Enable Device Under Test Mode (BR/EDR)": "0x1803 oct16.bit2"
+   },
+   "le_features_hex": "ffd9013cae000000",
+   "le_features_supported": [
+    "LE Encryption",
+    "Connection Parameters Request Procedure",
+    "Extended Reject Indication",
+    "Peripheral-initiated Features Exchange",
+    "LE Ping",
+    "LE Data Packet Length Extension",
+    "LL Privacy",
+    "Extended Scanner Filter Policies",
+    "LE 2M PHY",
+    "LE Coded PHY",
+    "LE Extended Advertising",
+    "Channel Selection Algorithm #2",
+    "LE Power Class 1",
+    "Minimum Number of Used Channels Procedure",
+    "Sleep Clock Accuracy Updates",
+    "Remote Public Key Validation",
+    "Connected Isochronous Stream - Central",
+    "Connected Isochronous Stream - Peripheral",
+    "LE Power Control Request",
+    "LE Path Loss Monitoring",
+    "Connection Subrating",
+    "Channel Classification",
+    "LE Power Change Indication"
+   ],
+   "le_features_not_supported": [
+    "Stable Modulation Index - Transmitter",
+    "Stable Modulation Index - Receiver",
+    "LE Periodic Advertising",
+    "Connection CTE Request",
+    "Connection CTE Response",
+    "Connectionless CTE Transmitter",
+    "Connectionless CTE Receiver",
+    "Antenna Switching During CTE Tx (AoD)",
+    "Antenna Switching During CTE Rx (AoA)",
+    "Receiving CTE",
+    "Periodic Advertising Sync Transfer - Sender",
+    "Periodic Advertising Sync Transfer - Recipient",
+    "Isochronous Broadcaster",
+    "Synchronized Receiver",
+    "Connected Isochronous Stream (Host Support)",
+    "Periodic Advertising ADI support",
+    "Connection Subrating (Host Support)"
+   ],
+   "lmp_features_page0_hex": "bffe0ffedbff7b87",
+   "le_supported_states_hex": "ffffffffff030000",
+   "le_supported_states_note": "0x000003ffffffffff = all 42 defined LE states supported (btmon decode)",
+   "le_max_adv_data_len_hci": 200,
+   "le_max_adv_data_len_bluez_mgmt": 251,
+   "le_num_adv_sets_hci": 12,
+   "le_tx_power_range_dbm_reported": {
+    "min": -64,
+    "max": 66
+   },
+   "le_adv_channel_tx_power_legacy_cmd_status": 12,
+   "le_buffer_size_v1": {
+    "acl_len": 251,
+    "acl_pkts": 6
+   },
+   "le_max_data_length": {
+    "max_tx_octets": 251,
+    "max_tx_time_us": 2704,
+    "max_rx_octets": 251,
+    "max_rx_time_us": 2704
+   },
+   "le_filter_accept_list_size": 64,
+   "le_resolving_list_size": 64,
+   "raw_responses": {
+    "0x1001": {
+     "name": "Read Local Version Information",
+     "status": 0,
+     "ret": "0d57460d02005746"
+    },
+    "0x1009": {
+     "name": "Read BD_ADDR",
+     "status": 0,
+     "ret": "559000898480"
+    },
+    "0x1003": {
+     "name": "Read Local Supported Features",
+     "status": 0,
+     "ret": "bffe0ffedbff7b87"
+    },
+    "0x1002": {
+     "name": "Read Local Supported Commands",
+     "status": 0,
+     "ret": "bffffb03ccff0fffbffffc1ff20fe8fe3ff78fff1c00040061f7ffff7f380000fef0ffffffe3800700e81ffcffff030000000000000000000000000000000000"
+    },
+    "0x2003": {
+     "name": "LE Read Local Supported Features",
+     "status": 0,
+     "ret": "ffd9013cae000000"
+    },
+    "0x201c": {
+     "name": "LE Read Supported States",
+     "status": 0,
+     "ret": "ffffffffff030000"
+    },
+    "0x2002": {
+     "name": "LE Read Buffer Size [v1]",
+     "status": 0,
+     "ret": "fb0006"
+    },
+    "0x2007": {
+     "name": "LE Read Advertising Physical Channel TX Power",
+     "status": 12,
+     "ret": "fb"
+    },
+    "0x203a": {
+     "name": "LE Read Maximum Advertising Data Length",
+     "status": 0,
+     "ret": "c800"
+    },
+    "0x203b": {
+     "name": "LE Read Number of Supported Advertising Sets",
+     "status": 0,
+     "ret": "0c"
+    },
+    "0x204b": {
+     "name": "LE Read Transmit Power",
+     "status": 0,
+     "ret": "c042"
+    },
+    "0x202f": {
+     "name": "LE Read Maximum Data Length",
+     "status": 0,
+     "ret": "fb00900afb00900a"
+    },
+    "0x200f": {
+     "name": "LE Read Filter Accept List Size",
+     "status": 0,
+     "ret": "40"
+    },
+    "0x202a": {
+     "name": "LE Read Resolving List Size",
+     "status": 0,
+     "ret": "40"
+    }
+   },
+   "mgmt": {
+    "addr": "80:84:89:00:90:55",
+    "mgmt_version": 13,
+    "manufacturer": 2,
+    "cod": "0x7c0104",
+    "supported_settings": [
+     "powered",
+     "connectable",
+     "fast-connectable",
+     "discoverable",
+     "bondable",
+     "link-security",
+     "ssp",
+     "br/edr",
+     "le",
+     "advertising",
+     "secure-conn",
+     "debug-keys",
+     "privacy",
+     "configuration",
+     "static-addr",
+     "phy-configuration",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "current_settings": [
+     "powered",
+     "bondable",
+     "ssp",
+     "br/edr",
+     "le",
+     "secure-conn",
+     "wide-band-speech",
+     "cis-central",
+     "cis-peripheral"
+    ],
+    "advinfo": {
+     "supported_flags": [
+      "connectable",
+      "general-discoverable",
+      "limited-discoverable",
+      "managed-flags",
+      "tx-power",
+      "scan-rsp-appearance",
+      "scan-rsp-local-name",
+      "Secondary-channel-1M",
+      "Secondary-channel-2M",
+      "Secondary-channel-CODED"
+     ],
+     "max_adv_data_len": 251,
+     "max_scan_rsp_len": 251,
+     "max_instances": 12,
+     "instances_in_use": 0
+    }
+   },
+   "bluetoothctl": {
+    "SupportedIncludes": [
+     "tx-power",
+     "appearance",
+     "local-name"
+    ],
+    "SupportedSecondaryChannels": [
+     "1M",
+     "2M",
+     "Coded"
+    ],
+    "SupportedFeatures": [
+     "CanSetTxPower",
+     "HardwareOffload"
+    ],
+    "Roles": [
+     "central",
+     "peripheral"
+    ],
+    "Name": "BlueZ 5.77",
+    "Alias": "BlueZ 5.77",
+    "Powered": "yes",
+    "PowerState": "on",
+    "Discoverable": "no",
+    "Pairable": "yes",
+    "Modalias": "usb:v1D6Bp0246d054D",
+    "Discovering": "no",
+    "ActiveInstances": "0x00 (0)",
+    "SupportedInstances": "0x0c (12)",
+    "SupportedCapabilities.MinTxPower": "0xffffffc0 (-64)",
+    "SupportedCapabilities.MaxTxPower": "0x0042 (66)",
+    "SupportedCapabilities.MaxAdvLen": "0xfb (251)",
+    "SupportedCapabilities.MaxScnRspLen": "0xfb (251)"
+   },
+   "state": {
+    "powered_up": true,
+    "connections": 0,
+    "scanning": false,
+    "discoverable": false,
+    "active_adv_instances": 0,
+    "dut_mode_debugfs": "N",
+    "random_address_debugfs": "00:00:00:00:00:00",
+    "idle": true
+   }
+  }
+ },
+ "rfkill": [
+  "0: hci0: Bluetooth",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "1: hci1: Bluetooth",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "2: hci2: Bluetooth",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "3: hci3: Bluetooth",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "4: hci4: Bluetooth",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "5: hci5: Bluetooth",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "6: hci6: Bluetooth",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "7: hci7: Bluetooth",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "8: phy0: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "9: phy4: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "10: phy5: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "11: phy6: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "12: phy7: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "13: phy8: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "14: phy9: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "15: phy10: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "16: phy1: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "17: phy3: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no",
+  "18: phy2: Wireless LAN",
+  " Soft blocked: no",
+  " Hard blocked: no"
+ ],
+ "all_eight_identical_capabilities": true
+}

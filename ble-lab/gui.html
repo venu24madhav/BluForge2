@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BluForge</title>
+<style>
+:root{
+  --bg:#0e1116; --panel:#171c24; --panel2:#1e2530; --line:#2a3340;
+  --fg:#e6edf3; --dim:#8b98a8; --acc:#3ea6ff; --grn:#3fb950; --yel:#d29922; --red:#f85149;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+header{display:flex;align-items:center;gap:16px;padding:12px 18px;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+header h1{font-size:16px;margin:0;font-weight:600;letter-spacing:.3px}
+header h1 .b{color:var(--acc)}
+#brandLogo{height:28px;width:auto;display:block}
+.status{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--dim)}
+.dot.run{background:var(--grn);box-shadow:0 0 8px var(--grn)}
+.spacer{flex:1}
+button{font:inherit;color:var(--fg);background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer}
+button:hover{border-color:var(--acc)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.primary{background:var(--acc);border-color:var(--acc);color:#04121f;font-weight:600}
+button.stop{background:var(--red);border-color:var(--red);color:#1a0505;font-weight:600}
+.tabs{display:flex;gap:4px;padding:12px 18px 0}
+.tab{padding:8px 16px;border:1px solid var(--line);border-bottom:none;border-radius:8px 8px 0 0;background:var(--panel);color:var(--dim);cursor:pointer}
+.tab.active{background:var(--panel2);color:var(--fg);font-weight:600}
+main{padding:0 18px 18px}
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:0 8px 8px 8px;padding:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.f{display:flex;flex-direction:column;gap:4px}
+.f label{font-size:12px;color:var(--dim)}
+.f small{color:var(--dim);font-size:11px}
+input,select{font:inherit;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 9px}
+input:focus,select:focus{outline:none;border-color:var(--acc)}
+.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.chk{display:flex;align-items:center;gap:7px}
+.chk input{width:16px;height:16px}
+.hidden{display:none!important}
+.note{color:var(--dim);font-size:12px;margin:10px 0 0}
+.pill{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--panel);border:1px solid var(--line);color:var(--dim)}
+.pill.ok{color:var(--grn);border-color:#20402a}
+.pill.no{color:var(--red);border-color:#40201f}
+/* console */
+#console{margin-top:16px;background:#0b0e13;border:1px solid var(--line);border-radius:8px;height:220px;overflow:auto;padding:10px 12px;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#c9d4e0;white-space:pre-wrap}
+#console .s{color:var(--acc)}
+#console .g{color:var(--grn)}
+#console .y{color:var(--yel)}
+#console .r{color:var(--red)}
+/* sniff table */
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--dim);font-weight:600;font-size:12px;position:sticky;top:0;background:var(--panel2)}
+td.rssi{font-weight:600}
+.tblwrap{max-height:340px;overflow:auto;border:1px solid var(--line);border-radius:8px;margin-top:14px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+a{color:var(--acc);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+.hint{background:#12202e;border:1px solid #1d3346;border-radius:6px;padding:6px 10px;color:#9fc7e8;font-size:12px;margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="b">Blu</span>Forge</h1>
+  <div class="status"><span id="dot" class="dot"></span><span id="stat">idle</span></div>
+  <span class="spacer"></span>
+  <img id="brandLogo" alt="Candela Technologies" src="data:image/png;base64,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">
+  <button id="stopBtn" class="stop" onclick="stopJob()" disabled>■ Stop</button>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-tab="adv" onclick="showTab('adv')">Advertise</div>
+  <div class="tab" data-tab="interfere" onclick="showTab('interfere')">Interfere</div>
+  <div class="tab" data-tab="sniff" onclick="showTab('sniff')">BLE Sniff</div>
+  <div class="tab" data-tab="classic" onclick="showTab('classic')">Classic Sniff</div>
+  <div class="tab" data-tab="coex" onclick="showTab('coex')">Coexistence</div>
+</div>
+
+<main>
+<!-- ADVERTISE ------------------------------------------------------------->
+<section id="tab-adv" class="card">
+  <div class="grid">
+    <div class="f"><label>PDU type</label>
+      <select id="adv_type">
+        <option value="ind">ADV_IND (connectable, scannable)</option>
+        <option value="direct">ADV_DIRECT_IND (directed, high duty)</option>
+        <option value="direct-l">ADV_DIRECT_IND (directed, low duty)</option>
+        <option value="scan">ADV_SCAN_IND (scannable)</option>
+        <option value="nonconn">ADV_NONCONN_IND (beacon)</option>
+      </select></div>
+    <div class="f"><label>Interval (ms)</label><input id="adv_interval" type="number" value="100" min="20" max="10240"></div>
+    <div class="f"><label>Channels</label>
+      <div class="row" style="margin:4px 0">
+        <span class="chk"><input type="checkbox" id="adv_c37" checked>37</span>
+        <span class="chk"><input type="checkbox" id="adv_c38" checked>38</span>
+        <span class="chk"><input type="checkbox" id="adv_c39" checked>39</span>
+      </div></div>
+    <div class="f"><label>Own address type</label>
+      <select id="adv_own"><option value="public">public</option><option value="random">random</option></select></div>
+    <div class="f"><label>Random address <small>(if random)</small></label><input id="adv_randaddr" class="mono" placeholder="C0:11:22:33:44:55"></div>
+    <div class="f" id="adv_peerwrap"><label>Peer / target address <small>(directed)</small></label><input id="adv_peer" class="mono" placeholder="AA:BB:CC:DD:EE:FF"></div>
+    <div class="f" id="adv_peertypewrap"><label>Peer type</label>
+      <select id="adv_peertype"><option value="public">public</option><option value="random">random</option></select></div>
+    <div class="f"><label>Device name</label><input id="adv_name" placeholder="BE200-Test"></div>
+    <div class="f"><label>Raw AdvData (hex) <small>overrides name/flags</small></label><input id="adv_data" class="mono" placeholder="0201060909426561636f6e"></div>
+    <div class="f"><label>Scan response (hex) <small>ind/scan</small></label><input id="adv_scan" class="mono" placeholder="05094e616d65"></div>
+    <div class="f"><label>Flags byte</label><input id="adv_flags" class="mono" value="06"></div>
+    <div class="f"><label>Duration (s) <small>0 = until Stop</small></label><input id="adv_dur" type="number" value="0" min="0"></div>
+  </div>
+  <div class="row">
+    <span class="chk"><input type="checkbox" id="adv_noflags"><label>no Flags AD</label></span>
+    <button class="primary" onclick="start('adv')">▶ Start advertising</button>
+  </div>
+  <p class="note">Directed PDUs need a peer and carry no AdvData. Scan response only applies to ADV_IND / ADV_SCAN_IND.</p>
+</section>
+
+<!-- INTERFERE ------------------------------------------------------------->
+<section id="tab-interfere" class="card hidden">
+  <div class="grid">
+    <div class="f"><label>Mode</label>
+      <select id="int_mode" onchange="intMode()">
+        <option value="auto">auto — scan air, hit busiest Wi-Fi channel</option>
+        <option value="wifi">wifi — target a Wi-Fi channel</option>
+        <option value="single">single — one BLE channel</option>
+        <option value="sweep">sweep — a range of BLE channels</option>
+        <option value="hop">hop — an explicit channel list</option>
+        <option value="band">band — full 2.4 GHz</option>
+        <option value="adv-flood">adv-flood — real ADV_NONCONN_IND traffic</option>
+      </select></div>
+    <div class="f" id="int_argwrap"><label id="int_arglabel">Wi-Fi channel (1-14)</label><input id="int_arg" placeholder="6"></div>
+    <div class="f m-wifi"><label>Bandwidth (MHz)</label>
+      <select id="int_bw"><option>20</option><option>40</option></select></div>
+    <div class="f m-dtm"><label>Payload pattern</label><select id="int_payload"></select></div>
+    <div class="f m-dtm"><label>PHY</label><select id="int_phy"></select></div>
+    <div class="f m-dtm"><label>Packet length (0-255)</label><input id="int_len" type="number" value="255" min="0" max="255"></div>
+    <div class="f m-hop"><label>Dwell per channel (ms)</label><input id="int_dwell" type="number" value="20" min="1"></div>
+    <div class="f m-dtm"><label>TX power <span id="powerpill" class="pill" style="margin-left:4px">?</span></label><input id="int_power" placeholder="max | min | -20 | blank=default"></div>
+    <div class="f m-auto"><label>Scan interface</label><select id="int_scaniface"></select></div>
+    <div class="f m-auto"><label>Re-scan every (s)</label><input id="int_retarget" type="number" value="10" min="2"></div>
+    <div class="f m-flood"><label>Adv interval (ms)</label><input id="int_finterval" type="number" value="20" min="20"></div>
+    <div class="f m-flood"><label>Adv channels</label><input id="int_fchannels" class="mono" value="37,38,39"></div>
+    <div class="f"><label>Duration (s) <small>0 = until Stop</small></label><input id="int_dur" type="number" value="0" min="0"></div>
+  </div>
+  <div class="row">
+    <span class="chk m-dtm"><input type="checkbox" id="int_map"><label>plan only (no TX)</label></span>
+    <button class="primary" onclick="start('interfere')">▶ Start interference</button>
+  </div>
+  <p class="note">DTM channel N = 2402 + 2·N MHz. <b>power=max</b> for the strongest effect. Real Wi-Fi almost always sits on ch 1 / 6 / 11 — <b>auto</b> finds it for you.</p>
+</section>
+
+<!-- SNIFF ----------------------------------------------------------------->
+<section id="tab-sniff" class="card hidden">
+  <p class="note" style="margin-top:0">
+    Press <b>Start</b> to capture <b>every</b> BLE advertisement in the air — legacy and
+    BT&nbsp;5.0 Extended Advertising, on 1M and Coded PHY, nothing deduplicated. Devices show
+    up live below. Press <b>Stop &amp; save</b> to get a real BLE Link-Layer
+    <span class="mono">.pcap</span> of the whole session — opens in Wireshark exactly
+    like a capture from a dedicated over-the-air sniffer.
+  </p>
+  <div class="row" style="margin-top:0">
+    <button id="sniffStartBtn" class="primary" onclick="sniffStart()">▶ Start sniffing</button>
+    <button id="sniffStopBtn" class="stop" onclick="sniffStop()" disabled>■ Stop &amp; save</button>
+    <span id="sniffState" class="pill">idle</span>
+    <span id="sn_count" class="pill">0 devices</span>
+    <button onclick="clearSniff()">Clear table</button>
+  </div>
+  <div class="row">
+    <span class="chk"><input type="checkbox" id="sn_active" checked><label>active scan (request names / scan responses)</label></span>
+    <span class="chk"><input type="checkbox" id="sn_dedup"><label>let controller filter duplicates <small>(off = catch everything)</small></label></span>
+    <div class="f" style="flex:1;min-width:180px"><input id="sn_filter" placeholder="filter: address or name contains… (optional)"></div>
+  </div>
+  <div class="tblwrap">
+    <table id="sn_table">
+      <thead><tr><th>RSSI</th><th>Address</th><th>Type</th><th>PDU</th><th>PHY</th><th>Name / Mfg</th><th>#</th><th>Last</th></tr></thead>
+      <tbody id="sn_body"></tbody>
+    </table>
+  </div>
+  <h2 style="margin-top:20px;color:var(--acc);font-size:13px">Saved captures (Wireshark .pcap)</h2>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>File</th><th>Size</th><th>When</th><th></th></tr></thead>
+      <tbody id="capBody"><tr><td colspan="4" style="color:var(--dim)">none yet</td></tr></tbody>
+    </table>
+  </div>
+  <div class="hint">
+    Captures the advertisements the BE200 hears over the air. Following a <i>third-party</i>
+    connection between two other devices across the frequency hopping and decrypting it needs
+    dedicated sniffer hardware (Ubertooth / nRF52 / Ellisys) — no commercial combo chip,
+    BE200 included, exposes that mode.
+  </div>
+</section>
+
+<!-- CLASSIC SNIFF ----------------------------------------------------------->
+<section id="tab-classic" class="card hidden">
+  <p class="note" style="margin-top:0">
+    Press <b>Start</b> to discover Classic Bluetooth (BR/EDR) devices via Inquiry —
+    address, RSSI, device class, and name (via Extended Inquiry Response), continuously
+    re-armed until you stop. This is a separate radio job from BLE Sniff (one Bluetooth
+    job runs at a time) — stop one before starting the other.
+    Press <b>Stop &amp; save</b> for a <span class="mono">.pcap</span> — a lossless
+    container conversion of the full HCI capture (every byte preserved, nothing
+    reconstructed), so Wireshark decodes the Inquiry Results natively with full field
+    breakdown.
+  </p>
+  <div class="row" style="margin-top:0">
+    <button id="clStartBtn" class="primary" onclick="classicStart()">▶ Start sniffing</button>
+    <button id="clStopBtn" class="stop" onclick="classicStop()" disabled>■ Stop &amp; save</button>
+    <span id="clState" class="pill">idle</span>
+    <span id="cl_count" class="pill">0 devices</span>
+    <button onclick="clearClassic()">Clear table</button>
+  </div>
+  <div class="row">
+    <div class="f" style="flex:1;min-width:180px"><input id="cl_filter" placeholder="filter: address, name, or class contains… (optional)"></div>
+  </div>
+  <div class="tblwrap">
+    <table id="cl_table">
+      <thead><tr><th>RSSI</th><th>Address</th><th>Class of Device</th><th>Event</th><th>Name</th><th>#</th><th>Last</th></tr></thead>
+      <tbody id="cl_body"></tbody>
+    </table>
+  </div>
+  <h2 style="margin-top:20px;color:var(--acc);font-size:13px">Saved captures (Wireshark .pcap)</h2>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>File</th><th>Size</th><th>When</th><th></th></tr></thead>
+      <tbody id="clCapBody"><tr><td colspan="4" style="color:var(--dim)">none yet</td></tr></tbody>
+    </table>
+  </div>
+  <div class="hint">
+    Inquiry-based discovery — the same mechanism <span class="mono">bluetoothctl scan</span>
+    uses: it sees devices that respond to being paged (put the target into
+    pairing/discoverable mode). It is <b>not</b> promiscuous interception of an existing
+    Classic connection between two other devices — that needs dedicated BR/EDR
+    protocol-analyzer hardware, well beyond any commercial combo chip including the BE200.
+  </div>
+</section>
+
+<!-- COEX ------------------------------------------------------------------>
+<section id="tab-coex" class="card hidden">
+  <div class="grid">
+    <div class="f"><label>Victim Wi-Fi interface</label><select id="cx_iface"></select></div>
+    <div class="f"><label>iperf3 server (host)</label><input id="cx_server" class="mono" placeholder="192.168.1.10"></div>
+    <div class="f"><label>Seconds per run</label><input id="cx_time" type="number" value="15"></div>
+    <div class="f"><label>Interferer bandwidth</label><select id="cx_bw"><option>20</option><option>40</option></select></div>
+    <div class="f"><label>Extra interferer args</label><input id="cx_extra" class="mono" placeholder="-P all1 -D 5 --power max"></div>
+  </div>
+  <div class="row">
+    <span class="chk"><input type="checkbox" id="cx_reverse"><label>downlink (-R)</label></span>
+    <span class="chk"><input type="checkbox" id="cx_udp"><label>UDP</label></span>
+    <span class="chk"><input type="checkbox" id="cx_dry"><label>dry-run (detect channel only)</label></span>
+    <button class="primary" onclick="start('coex')">▶ Run coexistence test</button>
+  </div>
+  <p class="note">On a host reachable over the Wi-Fi under test, run <span class="mono">iperf3 -s</span>. Best result: victim = a MediaTek card, interferer = BE200 BT. Both must be on a 2.4 GHz channel.</p>
+</section>
+
+<!-- CONSOLE --------------------------------------------------------------->
+<div id="console"></div>
+
+<div id="insightModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;overflow:auto;padding:28px">
+  <div style="max-width:1000px;margin:0 auto;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:20px">
+    <div class="row" style="margin-top:0;justify-content:space-between">
+      <h2 style="margin:0;color:var(--acc);font-size:15px">⚡ BluForge Insights <span id="insightFile" class="pill"></span></h2>
+      <button onclick="document.getElementById('insightModal').classList.add('hidden')">✕ close</button>
+    </div>
+    <div id="insightBody" style="margin-top:14px">analysing…</div>
+  </div>
+</div>
+</main>
+
+<script>
+const BUILD_ID='bluforge-ai-insights-2026-08-20';
+let running=false, curStart=null, curKind=null;
+
+function showTab(t){
+  document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('active',e.dataset.tab===t));
+  ['adv','interfere','sniff','classic','coex'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('hidden',x!==t));
+  if(t==='sniff')capRefresh();
+  if(t==='classic')classicCapRefresh();
+}
+function logLine(text){
+  const c=document.getElementById('console');
+  let cls='';
+  if(text.includes('[+]'))cls='g'; else if(text.includes('[!]'))cls='y';
+  else if(text.includes('[x]')||text.toLowerCase().includes('fail'))cls='r'; else if(text.includes('[*]'))cls='s';
+  const div=document.createElement('div'); if(cls)div.className=cls; div.textContent=text;
+  c.appendChild(div); c.scrollTop=c.scrollHeight;
+  while(c.children.length>500)c.removeChild(c.firstChild);
+}
+function setStatus(s){
+  running=s.running; curKind=s.kind; curStart=s.started;
+  document.getElementById('dot').classList.toggle('run',running);
+  document.getElementById('stat').textContent = running ? (s.kind+' running') : 'idle';
+  document.getElementById('stopBtn').disabled = !running;
+  document.querySelectorAll('button.primary').forEach(b=>b.disabled=running);
+}
+setInterval(()=>{ if(running&&curStart){document.getElementById('stat').textContent=curKind+' running · '+((Date.now()/1000-curStart)|0)+'s';}},1000);
+
+// ---- sniff table ----
+const dev={};
+function clearSniff(){for(const k in dev)delete dev[k];document.getElementById('sn_body').innerHTML='';document.getElementById('sn_count').textContent='0 devices';}
+function sniffReport(r){
+  const k=r.addr; const now=(Date.now()/1000);
+  if(!dev[k])dev[k]={count:0,first:now};
+  const d=dev[k]; d.count++; d.rssi=r.rssi; d.type=r.addr_type; d.pdu=r.pdu; d.last=now;
+  d.phy=r.phy||d.phy||'1M';
+  const ad=r.ad||{};
+  d.name=ad.name||d.name||'';
+  if(ad.mfg!=null){ d.mfg='0x'+ad.mfg.toString(16).padStart(4,'0'); d.mfgName=ad.mfg_name||d.mfgName; }
+  if(ad.svc_uuid!=null){ d.svc='0x'+ad.svc_uuid.toString(16).padStart(4,'0'); d.svcName=ad.svc_name||d.svcName; }
+  d.truncated=!!r.truncated;
+  renderSniff();
+}
+let renderPending=false;
+function renderSniff(){
+  if(renderPending)return; renderPending=true;
+  setTimeout(()=>{ renderPending=false;
+    const rows=Object.entries(dev).sort((a,b)=>((b[1].rssi??-999)-(a[1].rssi??-999)));
+    const now=Date.now()/1000;
+    document.getElementById('sn_body').innerHTML=rows.map(([a,d])=>{
+      const col=d.rssi==null?'var(--dim)':(d.rssi>-60?'var(--grn)':(d.rssi>-80?'var(--yel)':'var(--dim)'));
+      const rssi=d.rssi==null?'--':d.rssi;
+      let label=d.name
+        || (d.mfgName?(d.mfgName+' ('+d.mfg+')'):(d.mfg?('mfg '+d.mfg):''))
+        || (d.svcName?(d.svcName+' ('+d.svc+')'):(d.svc?('svc '+d.svc):''));
+      if(!label && d.truncated) label='<span style="color:var(--dim)">[truncated fragment]</span>';
+      else if(d.truncated) label+=' <span style="color:var(--dim)">[+truncated]</span>';
+      return `<tr><td class="rssi" style="color:${col}">${rssi}</td><td class="mono">${a}</td>`+
+             `<td>${d.type}</td><td>${d.pdu}</td><td>${d.phy||'1M'}</td><td>${label}</td><td>${d.count}</td><td>${(now-d.last).toFixed(1)}s</td></tr>`;
+    }).join('');
+    document.getElementById('sn_count').textContent=rows.length+' devices';
+  },200);
+}
+
+// ---- classic sniff table ----
+const devClassic={};
+function clearClassic(){for(const k in devClassic)delete devClassic[k];document.getElementById('cl_body').innerHTML='';document.getElementById('cl_count').textContent='0 devices';}
+function classicReport(r){
+  const k=r.addr; const now=(Date.now()/1000);
+  if(!devClassic[k])devClassic[k]={count:0,first:now};
+  const d=devClassic[k]; d.count++; d.rssi=r.rssi; d.event=r.pdu; d.last=now;
+  d.cod=r.cod_label||d.cod||'';
+  d.name=(r.ad&&r.ad.name)||d.name||'';
+  renderClassic();
+}
+let renderClassicPending=false;
+function renderClassic(){
+  if(renderClassicPending)return; renderClassicPending=true;
+  setTimeout(()=>{ renderClassicPending=false;
+    const rows=Object.entries(devClassic).sort((a,b)=>((b[1].rssi??-999)-(a[1].rssi??-999)));
+    const now=Date.now()/1000;
+    document.getElementById('cl_body').innerHTML=rows.map(([a,d])=>{
+      const col=d.rssi==null?'var(--dim)':(d.rssi>-60?'var(--grn)':(d.rssi>-80?'var(--yel)':'var(--dim)'));
+      const rssi=d.rssi==null?'--':d.rssi;
+      return `<tr><td class="rssi" style="color:${col}">${rssi}</td><td class="mono">${a}</td>`+
+             `<td>${d.cod}</td><td>${d.event}</td><td>${d.name}</td><td>${d.count}</td><td>${(now-d.last).toFixed(1)}s</td></tr>`;
+    }).join('');
+    document.getElementById('cl_count').textContent=rows.length+' devices';
+  },200);
+}
+
+// ---- SSE stream ----
+function connect(){
+  const es=new EventSource('/api/stream');
+  es.onmessage=e=>{
+    let m; try{m=JSON.parse(e.data)}catch(_){return;}
+    if(m.type==='status'){
+      if(m.status)setStatus(m.status);
+      if(m.event==='started'){document.getElementById('console').innerHTML='';setStatus({running:true,kind:m.kind,started:m.ts});logLine('[*] started: '+(m.argv||[]).join(' '));}
+      if(m.event==='finished'){setStatus({running:false});logLine('[*] job finished (exit '+m.code+')');}
+    }else if(m.type==='line'){
+      // sniff json reports go to the matching table (BLE vs Classic, by
+      // r.kind - only one mode's job ever runs at a time so this is
+      // unambiguous), everything else to console
+      let j=null; try{j=JSON.parse(m.text)}catch(_){}
+      if(j&&j.kind==='classic'){classicReport(j);}
+      else if(j&&j.addr){sniffReport(j);}
+      else {logLine(m.text);}
+    }
+  };
+  es.onerror=()=>{/* EventSource auto-reconnects */};
+}
+
+// ---- interfere mode field visibility ----
+function intMode(){
+  const m=document.getElementById('int_mode').value;
+  const show=(sel,on)=>document.querySelectorAll(sel).forEach(e=>e.classList.toggle('hidden',!on));
+  const dtm=m!=='adv-flood';
+  show('.m-dtm',dtm);
+  show('.m-wifi',m==='wifi');
+  show('.m-hop',dtm&&m!=='single');
+  show('.m-auto',m==='auto');
+  show('.m-flood',m==='adv-flood');
+  const needArg={wifi:'Wi-Fi channel (1-14)',single:'BLE channel (0-39)',sweep:'Range a-b (e.g. 0-39)',hop:'List (e.g. 0,12,24,39)'};
+  document.getElementById('int_argwrap').classList.toggle('hidden',!(m in needArg));
+  if(m in needArg)document.getElementById('int_arglabel').textContent=needArg[m];
+}
+
+// ---- gather params & start ----
+function v(id){return document.getElementById(id).value;}
+function n(id){const x=document.getElementById(id).value;return x===''?null:Number(x);}
+function chk(id){return document.getElementById(id).checked;}
+function advChannels(){return [ ['adv_c37','37'],['adv_c38','38'],['adv_c39','39'] ].filter(x=>chk(x[0])).map(x=>x[1]).join(',');}
+
+function paramsFor(tool){
+  if(tool==='adv')return{type:v('adv_type'),interval:n('adv_interval'),channels:advChannels(),
+    own:v('adv_own'),random_addr:v('adv_randaddr')||null,peer:v('adv_peer')||null,peer_type:v('adv_peertype'),
+    name:v('adv_name')||null,data:v('adv_data')||null,scan_resp:v('adv_scan')||null,
+    flags:v('adv_flags')||null,no_flags:chk('adv_noflags'),duration:n('adv_dur')};
+  if(tool==='interfere')return{mode:v('int_mode'),arg:v('int_arg')||null,bw:n('int_bw'),
+    payload:v('int_payload'),phy:v('int_phy'),len:n('int_len'),dwell:n('int_dwell'),
+    power:v('int_power')||null,scan_iface:v('int_scaniface')||null,retarget:n('int_retarget'),
+    interval:n('int_finterval'),adv_channels:v('int_fchannels'),duration:n('int_dur'),map:chk('int_map')};
+  if(tool==='coex')return{iface:v('cx_iface'),server:v('cx_server')||null,time:n('cx_time'),
+    bw:n('cx_bw'),reverse:chk('cx_reverse'),udp:chk('cx_udp'),dry_run:chk('cx_dry'),extra:v('cx_extra')||null};
+}
+async function start(tool){
+  const r=await fetch('/api/start',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({tool,params:paramsFor(tool)})});
+  const j=await r.json();
+  if(!j.ok)logLine('[x] '+(j.msg||j.error||'start failed'));
+}
+async function stopJob(){await fetch('/api/stop',{method:'POST'});}
+
+// ---- sniff = scan + capture, one action ----
+function fmtSize(b){ if(b==null)return '-'; if(b<1024)return b+' B'; if(b<1048576)return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
+async function sniffStart(){
+  clearSniff();
+  const params={mode:'le',active:chk('sn_active'),interval:100,window:100,
+    dedup:chk('sn_dedup'),filter:v('sn_filter')||null,duration:0};
+  let j;
+  try{
+    const r=await fetch('/api/capture/sniff/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({params})});
+    j=await r.json();
+  }catch(e){
+    const pill=document.getElementById('sniffState');
+    pill.textContent='✗ could not reach server: '+e; pill.className='pill no';
+    logLine('[x] BLE sniff: could not reach server - '+e); return;
+  }
+  if(!j.ok){
+    const pill=document.getElementById('sniffState');
+    pill.textContent='✗ '+(j.msg||'start failed'); pill.className='pill no';
+    logLine('[x] BLE sniff: '+(j.msg||'start failed'));
+  } else logLine('[*] BLE sniffing to '+j.file+' ...');
+  sniffCapStatus();
+}
+async function sniffStop(){
+  const r=await fetch('/api/capture/sniff/stop',{method:'POST'}); const j=await r.json();
+  if(j.ok)logLine('[+] saved: '+(j.info&&j.info.file)+' ('+fmtSize(j.info&&j.info.size)+', '+Object.keys(dev).length+' devices) - download below');
+  sniffCapStatus(); capRefresh();
+}
+async function sniffCapStatus(){
+  try{
+    const s=await (await fetch('/api/capture/status')).json();
+    const isBle=s.running && s.linked_job==='sniff' && s.cap_kind==='ble';
+    document.getElementById('sniffStartBtn').disabled=s.running;
+    document.getElementById('sniffStopBtn').disabled=!isBle;
+    const pill=document.getElementById('sniffState');
+    if(isBle){ const n=Object.keys(dev).length; pill.textContent='● recording '+s.file+'  '+fmtSize(s.size)+'  ('+(s.uptime|0)+'s, '+n+' devices)'; pill.className='pill no'; }
+    else if(s.running){ pill.textContent='(Classic Sniff is running - stop it first)'; pill.className='pill'; }
+    else { pill.textContent='idle'; pill.className='pill'; }
+    return s.running;
+  }catch(e){ return false; }
+}
+async function capRefresh(){
+  sniffCapStatus();
+  try{
+    const list=(await (await fetch('/api/capture/list')).json()).filter(c=>c.kind==='ble');
+    const body=document.getElementById('capBody');
+    if(!list.length){ body.innerHTML='<tr><td colspan="4" style="color:var(--dim)">none yet</td></tr>'; return; }
+    body.innerHTML=list.map(c=>{
+      const when=new Date(c.mtime*1000).toLocaleString();
+      return `<tr><td class="mono">${c.file}</td><td>${fmtSize(c.size)}</td><td>${when}</td>`+
+             `<td><a href="/api/capture/download?file=${encodeURIComponent(c.file)}" download>⬇ download</a>`+
+             ` &nbsp;<a href="#" onclick="showInsight('${c.file}');return false">⚡ insights</a></td></tr>`;
+    }).join('');
+  }catch(e){}
+}
+// keep the sniff pill/list live while the tab is open
+setInterval(()=>{ if(!document.getElementById('tab-sniff').classList.contains('hidden')) capRefresh(); },2000);
+
+// ---- classic sniff start/stop/status ----
+async function classicStart(){
+  clearClassic();
+  const params={mode:'classic',filter:v('cl_filter')||null,duration:0};
+  let j;
+  try{
+    const r=await fetch('/api/capture/sniff/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({params})});
+    j=await r.json();
+  }catch(e){
+    const pill=document.getElementById('clState');
+    pill.textContent='✗ could not reach server: '+e; pill.className='pill no';
+    logLine('[x] Classic sniff: could not reach server - '+e); return;
+  }
+  if(!j.ok){
+    const pill=document.getElementById('clState');
+    pill.textContent='✗ '+(j.msg||'start failed'); pill.className='pill no';
+    logLine('[x] Classic sniff: '+(j.msg||'start failed'));
+  } else logLine('[*] Classic sniffing to '+j.file+' ...');
+  classicCapStatus();
+}
+async function classicStop(){
+  const r=await fetch('/api/capture/sniff/stop',{method:'POST'}); const j=await r.json();
+  if(j.ok)logLine('[+] saved: '+(j.info&&j.info.file)+' ('+fmtSize(j.info&&j.info.size)+', '+Object.keys(devClassic).length+' devices) - download below');
+  classicCapStatus(); classicCapRefresh();
+}
+async function classicCapStatus(){
+  try{
+    const s=await (await fetch('/api/capture/status')).json();
+    const isClassic=s.running && s.linked_job==='sniff' && s.cap_kind==='classic';
+    document.getElementById('clStartBtn').disabled=s.running;
+    document.getElementById('clStopBtn').disabled=!isClassic;
+    const pill=document.getElementById('clState');
+    if(isClassic){ const n=Object.keys(devClassic).length; pill.textContent='● recording '+s.file+'  '+fmtSize(s.size)+'  ('+(s.uptime|0)+'s, '+n+' devices)'; pill.className='pill no'; }
+    else if(s.running){ pill.textContent='(BLE Sniff is running - stop it first)'; pill.className='pill'; }
+    else { pill.textContent='idle'; pill.className='pill'; }
+    return s.running;
+  }catch(e){ return false; }
+}
+async function classicCapRefresh(){
+  classicCapStatus();
+  try{
+    const list=(await (await fetch('/api/capture/list')).json()).filter(c=>c.kind==='classic');
+    const body=document.getElementById('clCapBody');
+    if(!list.length){ body.innerHTML='<tr><td colspan="4" style="color:var(--dim)">none yet</td></tr>'; return; }
+    body.innerHTML=list.map(c=>{
+      const when=new Date(c.mtime*1000).toLocaleString();
+      return `<tr><td class="mono">${c.file}</td><td>${fmtSize(c.size)}</td><td>${when}</td>`+
+             `<td><a href="/api/capture/download?file=${encodeURIComponent(c.file)}" download>⬇ download</a>`+
+             ` &nbsp;<a href="#" onclick="showInsight('${c.file}');return false">⚡ insights</a></td></tr>`;
+    }).join('');
+  }catch(e){}
+}
+// keep the classic pill/list live while the tab is open
+setInterval(()=>{ if(!document.getElementById('tab-classic').classList.contains('hidden')) classicCapRefresh(); },2000);
+
+
+// ---- insights (offline analysis engine: btinsight.py) ----
+function _esc(x){ return String(x==null?'':x).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function _card(title, lines, badge){
+  return `<div style="background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:12px">`+
+         `<div style="color:var(--acc);font-weight:600;font-size:13px;margin-bottom:8px">${title}`+
+         (badge?` <span class="pill">${_esc(badge)}</span>`:'')+`</div>${lines}</div>`;
+}
+async function showInsight(file){
+  const m=document.getElementById('insightModal');
+  document.getElementById('insightFile').textContent=file;
+  document.getElementById('insightBody').innerHTML='analysing…';
+  m.classList.remove('hidden');
+  let a;
+  try{
+    const r=await fetch('/api/insight?file='+encodeURIComponent(file));
+    a=await r.json();
+    if(a.error){ document.getElementById('insightBody').innerHTML=`<div class="hint">${_esc(a.error)}</div>`; return; }
+  }catch(e){ document.getElementById('insightBody').innerHTML=`<div class="hint">could not run analysis: ${_esc(e)}</div>`; return; }
+
+  if(!a.packets){ document.getElementById('insightBody').innerHTML=
+      `<div class="hint">${_esc((a.summary&&a.summary.note)||'No advertising reports in this capture.')}</div>`; return; }
+
+  let h=`<p class="note" style="margin-top:0">${a.packets} packets · ${a.device_count} devices · ${a.duration_s}s · ${a.packet_rate_pps} pkt/s</p>`;
+
+  const di=a.device_intelligence;
+  let dih=`<div style="font-size:12px;color:var(--dim);margin-bottom:6px">named ${di.devices_named} · vendor-identified ${di.devices_with_vendor} · beacons ${di.beacons_found}</div>`;
+  if(Object.keys(di.vendor_breakdown||{}).length)
+    dih+=`<div style="font-size:12px">vendors: `+Object.entries(di.vendor_breakdown).map(([k,v])=>`${_esc(k)} ×${v}`).join(', ')+`</div>`;
+  h+=_card('Device Intelligence', dih);
+
+  const pv=a.privacy_security;
+  let pvh=`<div style="font-size:12px;color:var(--dim);margin-bottom:8px">`+
+    Object.entries(pv.address_classes).map(([k,v])=>`${_esc(k)}=${v}`).join(' · ')+`</div>`;
+  pvh+=pv.findings.map(f=>`<div style="font-size:12.5px;margin:5px 0">• ${_esc(f)}</div>`).join('');
+  (pv.rotation_groups||[]).slice(0,6).forEach(g=>{
+    pvh+=`<div class="hint" style="margin-top:8px"><b>${g.count} addresses = 1 device</b><br>`+
+         `<span class="mono" style="font-size:11px">${g.addresses.slice(0,6).map(_esc).join(', ')}${g.count>6?' …':''}</span></div>`;
+  });
+  h+=_card('Privacy &amp; Security', pvh, pv.trackable_pct+'% trackable');
+
+  const rf=a.rf_coexistence;
+  let rfh=`<div style="font-size:12px;color:var(--dim)">PDU: `+Object.entries(rf.pdu_mix).map(([k,v])=>`${_esc(k)}=${v}`).join(' · ')+`</div>`;
+  rfh+=`<div style="font-size:12px;color:var(--dim);margin-bottom:8px">PHY: `+Object.entries(rf.phy_mix).map(([k,v])=>`${_esc(k)}=${v}`).join(' · ')+`</div>`;
+  rfh+=rf.findings.map(f=>`<div style="font-size:12.5px;margin:5px 0">• ${_esc(f)}</div>`).join('');
+  rfh+=`<div style="margin-top:10px;font-size:12px;color:var(--dim)">Top talkers</div><div class="tblwrap" style="margin-top:4px;max-height:none">`+
+    `<table><thead><tr><th>Address</th><th>Packets</th><th>Airtime</th><th>Interval</th><th>Name</th></tr></thead><tbody>`+
+    rf.noisiest_devices.map(d=>`<tr><td class="mono">${_esc(d.address)}</td><td>${d.packets}</td>`+
+      `<td>${d.airtime_share_pct}%</td><td>${d.adv_interval_ms==null?'-':d.adv_interval_ms+' ms'}</td><td>${_esc(d.name)}</td></tr>`).join('')+
+    `</tbody></table></div>`;
+  h+=_card('RF &amp; Coexistence Health', rfh);
+
+  h+=`<div style="color:var(--acc);font-weight:600;font-size:13px;margin:14px 0 6px">Devices</div><div class="tblwrap" style="max-height:300px">`+
+    `<table><thead><tr><th>RSSI</th><th>Address</th><th>Address class</th><th>Vendor</th><th>Name / hint</th><th>Proximity</th></tr></thead><tbody>`+
+    a.devices.map(d=>{
+      const hint=d.name||(d.device_hints&&d.device_hints[0])||(d.beacon&&d.beacon.format)||'';
+      const col=d.trackable?'var(--yel)':'var(--dim)';
+      return `<tr><td class="rssi">${d.rssi_avg==null?'--':d.rssi_avg}</td><td class="mono">${_esc(d.address)}</td>`+
+             `<td style="color:${col}">${_esc(d.address_class)}</td><td>${_esc(d.vendor||'-')}</td>`+
+             `<td>${_esc(hint)}</td><td style="color:var(--dim)">${_esc(d.proximity||'')}</td></tr>`;
+    }).join('')+`</tbody></table></div>`;
+
+  document.getElementById('insightBody').innerHTML=h;
+}
+
+// ---- init from caps ----
+async function init(){
+  logLine('[*] BluForge GUI loaded (build '+BUILD_ID+')');
+  connect();
+  sniffCapStatus(); capRefresh();
+  classicCapStatus(); classicCapRefresh();
+  try{
+    const caps=await (await fetch('/api/caps')).json();
+    const pl=caps.interfere?.payloads||['prbs9','prbs15','11110000','10101010','00001111','0x55','all1','all0'];
+    document.getElementById('int_payload').innerHTML=pl.map(x=>`<option>${x}</option>`).join('');
+    const phys=caps.interfere?.phys||['1M','2M','s8','s2'];
+    document.getElementById('int_phy').innerHTML=phys.map(x=>`<option>${x}</option>`).join('');
+    const ifs=caps.env?.wifi_ifaces||['wlan0'];
+    document.getElementById('int_scaniface').innerHTML=ifs.map(x=>`<option>${x}</option>`).join('');
+    document.getElementById('cx_iface').innerHTML=ifs.map(x=>`<option>${x}</option>`).join('');
+    const ps=caps.interfere?.power?.supported;
+    const pp=document.getElementById('powerpill');
+    pp.textContent=(ps===true?'settable':(ps===false?'default only':'?'));
+    pp.className='pill '+(ps===true?'ok':(ps===false?'no':''));
+  }catch(e){logLine('[!] caps load failed: '+e);}
+  try{setStatus(await (await fetch('/api/status')).json());}catch(e){}
+  intMode();
+  // toggle peer fields with adv type
+  const t=document.getElementById('adv_type');
+  const upd=()=>{const d=t.value.startsWith('direct');
+    document.getElementById('adv_peerwrap').style.opacity=d?1:.4;
+    document.getElementById('adv_peertypewrap').style.opacity=d?1:.4;};
+  t.addEventListener('change',upd);upd();
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+# ---- build artifacts and packages (the installer builds these: deploy/package-offline.sh)
+*.tar.gz
+*.tgz
+*.tar
+*.tar.bz2
+*.tar.xz
+*.zip
+*.rpm
+*.deb
+*.whl
+
+# ---- runtime output: test results, saved captures, logs (created by the running service)
+logs/
+*.log
+core
+core.*
+
+# ---- Bluetooth/Wi-Fi captures: they contain other people's devices and pairing material, never publish them
+*.pcap
+*.pcapng
+*.btsnoop
+*.cap
+captures/
+recon/raw/
+
+# ---- the lab machine's own inventory (package lists, processes, network): environment-specific, not source
+deps/
+
+# ---- Python and editor noise
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# ---- secrets, in case one is ever dropped into the tree
+.env
+*.pem
+*.key
+id_rsa*
+*.token

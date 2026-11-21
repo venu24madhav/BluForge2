@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BluForge</title>
+<link rel="icon" href="/assets/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="lf-titleband">
+  <img class="logo" src="/assets/CandelaLogo2-90dpi-200x90-trans.png" alt="Candela Technologies">
+  <span class="title">BluForge</span>
+  <span class="spacer"></span>
+  <span class="host" id="hostInfo">ct523c-ccb8</span>
+  <span><span class="lf-dot" id="connDot"></span><span id="connText">connecting...</span></span>
+</div>
+
+<div id="bluezBanner" class="lf-banner" style="display:none">
+  <div class="lf-banner-row">
+    <b>BlueZ is not installed.</b>
+    <span>BluForge needs the BlueZ Bluetooth stack, which is installed separately by you.</span>
+    <span class="spacer"></span>
+    <button class="lf-btn primary" id="bluezInstallBtn">Install BlueZ...</button>
+  </div>
+  <div class="lf-banner-note" id="bluezNotice"></div>
+  <div class="lf-console" id="bluezLog" style="display:none;max-height:120px;margin-top:6px"></div>
+</div>
+
+<div id="healthBanner" class="lf-banner" style="display:none;background:#fde8e8;border-bottom-color:#c0392b;color:#5b1a14">
+  <b>Attention:</b> <span id="healthText"></span>
+</div>
+
+<div class="lf-menubar">
+  <span>Control</span><span>Reporting</span><span>Windows</span><span>Info</span><span>Tests</span>
+</div>
+
+<div class="lf-actions">
+  <button class="lf-btn danger" id="stopAllBtn">Stop All</button>
+  <button class="lf-btn" id="refreshBtn">Refresh</button>
+  <button class="lf-btn" id="helpBtn">HELP</button>
+</div>
+
+<div class="lf-tabs" id="tabs">
+  <div class="lf-tab sel" data-tab="radios">Radios</div>
+  <div class="lf-tab" data-tab="interfere">Interference</div>
+  <div class="lf-tab" data-tab="advertise">Advertise</div>
+  <div class="lf-tab" data-tab="sniff">BLE Sniff</div>
+  <div class="lf-tab" data-tab="classic">Bluetooth Classic</div>
+</div>
+
+<div class="lf-pane">
+
+  <!-- RADIOS ------------------------------------------------------------->
+  <section class="lf-section show" id="tab-radios">
+    <div class="lf-tablewrap" id="unitsWrap" style="display:none;margin-bottom:12px">
+      <div class="cap">LANforge units in this cluster</div>
+      <table class="lf-table" id="unitsTable">
+        <thead><tr><th>Resource</th><th>Host</th><th>Address</th><th>State</th><th>Radios</th><th>Notes</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p class="note" id="unitsNote" style="padding:0 6px 4px"></p>
+    </div>
+    <div class="lf-tablewrap">
+      <div class="cap" id="radiosCap">Bluetooth controllers on this unit</div>
+      <table class="lf-table" id="radiosTable">
+        <thead><tr><th>Radio</th><th>State</th><th>Job</th><th>Kind</th><th>Uptime</th><th>Action</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">Each row is one physical Intel BE200 Bluetooth controller. A radio can run one job
+      (interference, advertise, or sniff) at a time; starting a second job on a busy radio is refused until
+      the first is stopped. Jobs run as independent processes - stopping or losing one never disturbs another
+      radio's job.</p>
+    <div class="lf-tablewrap" style="margin-top:12px">
+      <div class="cap">Recent job history</div>
+      <table class="lf-table" id="historyTable">
+        <thead><tr><th>Job</th><th>Radio</th><th>Kind</th><th>Started</th><th>Exit</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- INTERFERENCE --------------------------------------------------------->
+  <section class="lf-section" id="tab-interfere">
+    <fieldset class="lf-group" id="cl_group">
+      <legend>Bluetooth Classic Traffic</legend>
+      <div class="lf-row">
+        <div class="lf-field"><label>Classic radio (hci)</label>
+          <select class="lf-input" id="cl_dev"></select></div>
+        <div class="lf-field" style="min-width:320px"><label>Receiver (paired device, or this unit's other radio)</label>
+          <select class="lf-input" id="cl_addr"><option value="">(press "Reserve radio &amp; list devices")</option></select></div>
+        <div class="lf-field"><label>&nbsp;</label>
+          <button class="lf-btn" id="cl_refresh">Reserve radio &amp; list devices</button></div>
+      </div>
+      <div class="lf-row">
+        <div class="lf-field"><label>Traffic type</label>
+          <select class="lf-input" id="cl_kind">
+            <option value="audio">Audio stream (A2DP)</option>
+            <option value="file">File transfer (OBEX)</option>
+            <option value="video">Video download</option>
+            <option value="hid">Keyboard / mouse (HID)</option>
+          </select></div>
+        <div class="lf-field cl-t hidden" id="cl_fmb_f"><label>File size (MB)</label>
+          <input class="lf-input" id="cl_fmb" value="2" size="5"></div>
+        <div class="lf-field cl-t hidden" id="cl_vbr_f"><label>Video bitrate (kbit/s)</label>
+          <input class="lf-input" id="cl_vbr" value="1000" size="6"></div>
+        <div class="lf-field cl-a"><label>Audio source</label>
+          <select class="lf-input" id="cl_src">
+            <option value="noise">White noise (heaviest codec load)</option>
+            <option value="sweep">Sweep 100 Hz-8 kHz</option>
+            <option value="tone">Tone 440 Hz</option>
+            <option value="file">Audio file (real music, loops)</option>
+          </select></div>
+        <div class="lf-field hidden" id="cl_file_f"><label>Audio file path on this unit</label>
+          <input class="lf-input" id="cl_file" placeholder="/home/lanforge/music.mp3" size="30"></div>
+        <div class="lf-field cl-a"><label>Codec</label>
+          <select class="lf-input" id="cl_codec">
+            <option value="">Auto (best common)</option><option value="sbc">SBC</option>
+            <option value="sbc_xq">SBC-XQ</option><option value="aac">AAC</option>
+            <option value="ldac">LDAC</option><option value="aptx">aptX</option>
+            <option value="aptx_hd">aptX HD</option>
+          </select></div>
+        <div class="lf-field"><label>Duration (s, 0=until stopped)</label>
+          <input class="lf-input" id="cl_dur" value="0" size="7"></div>
+        <span class="spacer"></span>
+        <button class="lf-btn primary" id="cl_start">Start Realistic Classic Interference</button>
+      </div>
+      <div class="note" id="cl_msg"></div>
+      <div class="note" id="cl_live" style="color:#234;font-weight:700"></div>
+      <div class="note" id="cl_result"></div>
+    </fieldset>
+    <div class="lf-tablewrap">
+      <div class="cap">Realistic Classic interference jobs</div>
+      <table class="lf-table" id="clJobsTable">
+        <thead><tr><th>Job</th><th>Radio</th><th>Receiver</th><th>Uptime</th><th>Action</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <fieldset class="lf-group">
+      <legend>2.4 GHz BLE Interference Generator (Direct Test Mode = stress; adv-flood = realistic BLE)</legend>
+      <div class="lf-row">
+        <div class="lf-field" style="min-width:280px">
+          <label>Radios (hci) - select 1 or more to run together</label>
+          <div class="lf-radio-checks" id="if_dev_checks"></div>
+          <small>Each selected radio starts its own independent interference job with the plan below.</small>
+        </div>
+        <div class="lf-field"><label>Mode</label>
+          <select class="lf-input" id="if_mode">
+            <option value="single">single - one fixed BLE channel (0-39)</option>
+            <option value="sweep">sweep - hop a BLE channel range a-b</option>
+            <option value="hop">hop - hop an explicit channel list</option>
+            <option value="wifi">wifi - cover a Wi-Fi channel's BLE overlap (1-13)</option>
+            <option value="band">band - hop the full 40-channel band</option>
+            <option value="adv-flood">adv-flood - flood ADV_NONCONN_IND (realistic BLE traffic)</option>
+          </select></div>
+        <div class="lf-field" id="if_arg_field"><label id="if_arg_label">Channel (0-39)</label>
+          <input class="lf-input" id="if_arg" value="19"></div>
+      </div>
+      <div class="lf-row">
+        <div class="lf-field"><label>Payload pattern</label>
+          <select class="lf-input" id="if_payload"></select></div>
+        <div class="lf-field"><label>PHY</label>
+          <select class="lf-input" id="if_phy"><option>1M</option><option>2M</option></select></div>
+        <div class="lf-field"><label>Payload length (0-255)</label>
+          <input class="lf-input" id="if_len" value="37"></div>
+        <div class="lf-field"><label>Dwell per channel (ms)</label>
+          <input class="lf-input" id="if_dwell" value="800"></div>
+        <div class="lf-field"><label>TX power</label>
+          <select class="lf-input" id="if_power">
+            <option value="" selected>Default (controller's own, about +2 dBm)</option>
+            <option value="max">Max (controller limit, +8 dBm)</option>
+            <option value="8">+8 dBm</option>
+            <option value="6">+6 dBm</option>
+            <option value="4">+4 dBm</option>
+            <option value="2">+2 dBm</option>
+            <option value="0">0 dBm</option>
+            <option value="-4">-4 dBm</option>
+            <option value="-8">-8 dBm</option>
+            <option value="-12">-12 dBm</option>
+            <option value="-16">-16 dBm</option>
+            <option value="-20">-20 dBm</option>
+            <option value="-30">-30 dBm</option>
+            <option value="-40">-40 dBm</option>
+            <option value="min">Min (lowest the controller allows)</option>
+          </select></div>
+        <div class="lf-field"><label>Wi-Fi bandwidth (wifi mode)</label>
+          <select class="lf-input" id="if_bw"><option>20</option><option>40</option></select></div>
+        <div class="lf-field"><label>Duration (s, 0=until stopped)</label>
+          <input class="lf-input" id="if_duration" value="0"></div>
+      </div>
+      <div class="lf-row">
+        <label class="lf-check"><input type="checkbox" id="if_map"> plan only (no transmission)</label>
+        <span class="spacer"></span>
+        <button class="lf-btn primary" id="if_start">Start Interference on Selected Radios</button>
+      </div>
+    </fieldset>
+    <div class="lf-tablewrap">
+      <div class="cap">Interference jobs</div>
+      <table class="lf-table" id="ifJobsTable">
+        <thead><tr><th>Job</th><th>Radio</th><th>Plan</th><th>Uptime</th><th>Action</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="lf-console" id="if_console"></div>
+  </section>
+
+  <!-- ADVERTISE -------------------------------------------------------------->
+  <section class="lf-section" id="tab-advertise">
+    <fieldset class="lf-group">
+      <legend>BLE Advertisement Generator</legend>
+      <div class="lf-row">
+        <div class="lf-field" style="min-width:280px"><label>Radios (hci) - select 1 or more to run together</label>
+          <div class="lf-radio-checks" id="adv_dev_checks"></div>
+          <small>Each selected radio starts its own independent advertising job with the settings below.</small></div>
+        <div class="lf-field"><label>PDU type</label>
+          <select class="lf-input" id="adv_type">
+            <option value="ind">ADV_IND (connectable, scannable)</option>
+            <option value="scan">ADV_SCAN_IND (scannable)</option>
+            <option value="nonconn" selected>ADV_NONCONN_IND (beacon)</option>
+            <option value="direct">ADV_DIRECT_IND (directed, high duty)</option>
+            <option value="direct-l">ADV_DIRECT_IND (directed, low duty)</option>
+          </select></div>
+        <div class="lf-field"><label>Interval (ms)</label>
+          <input class="lf-input" id="adv_interval" value="100"></div>
+        <div class="lf-field" id="adv_peer_field"><label>Peer address (directed only)</label>
+          <input class="lf-input" id="adv_peer" placeholder="AA:BB:CC:DD:EE:FF"></div>
+      </div>
+      <div class="lf-row" id="adv_payload_row">
+        <div class="lf-field"><label>Beacon profile</label>
+          <select class="lf-input" id="adv_profile">
+            <option value="">(none - use name/flags below)</option>
+          </select></div>
+        <div class="lf-field"><label>Profile params (k=v,k=v)</label>
+          <input class="lf-input" id="adv_profile_cfg" placeholder="major=1,minor=1"></div>
+        <div class="lf-field"><label>Local name (no profile)</label>
+          <input class="lf-input" id="adv_name" value="BluForge"></div>
+        <div class="lf-field"><label>TX power</label>
+          <select class="lf-input" id="adv_power">
+            <option value="" selected>Default (controller's own, about +2 dBm)</option>
+            <option value="max">Max (controller limit, +8 dBm)</option>
+            <option value="8">+8 dBm</option>
+            <option value="6">+6 dBm</option>
+            <option value="4">+4 dBm</option>
+            <option value="2">+2 dBm</option>
+            <option value="0">0 dBm</option>
+            <option value="-4">-4 dBm</option>
+            <option value="-8">-8 dBm</option>
+            <option value="-12">-12 dBm</option>
+            <option value="-16">-16 dBm</option>
+            <option value="-20">-20 dBm</option>
+            <option value="-30">-30 dBm</option>
+            <option value="-40">-40 dBm</option>
+            <option value="min">Min (lowest the controller allows)</option>
+          </select></div>
+        <div class="lf-field"><label>Duration (s, 0=until stopped)</label>
+          <input class="lf-input" id="adv_duration" value="0"></div>
+      </div>
+      <div class="lf-row">
+        <span class="spacer"></span>
+        <button class="lf-btn primary" id="adv_start">Start Advertising on Selected Radios</button>
+      </div>
+    </fieldset>
+    <div class="lf-tablewrap">
+      <div class="cap">Advertising jobs</div>
+      <table class="lf-table" id="advJobsTable">
+        <thead><tr><th>Job</th><th>Radio</th><th>PDU</th><th>Uptime</th><th>Action</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="lf-console" id="adv_console"></div>
+  </section>
+
+  <!-- SNIFF ------------------------------------------------------------------>
+  <section class="lf-section" id="tab-sniff">
+    <fieldset class="lf-group">
+      <legend>Over-the-air BLE Advertising Survey</legend>
+      <div class="lf-row">
+        <div class="lf-field"><label>Radio (hci)</label>
+          <select class="lf-input" id="sn_dev"></select></div>
+        <label class="lf-check"><input type="checkbox" id="sn_active" checked> active scan (names / scan responses)</label>
+        <label class="lf-check"><input type="checkbox" id="sn_coded"> include LE Coded PHY (long range)</label>
+        <label class="lf-check" title="Saves every advertising report the radio hears (not only the filtered table) to a .pcap file you can open in Wireshark."><input type="checkbox" id="sn_pcap" checked> record packet capture (.pcap for Wireshark)</label>
+        <div class="lf-field"><label>Capture filter (addr/name contains)</label>
+          <input class="lf-input" id="sn_filter"></div>
+        <div class="lf-field"><label>Duration (s, 0=until stopped)</label>
+          <input class="lf-input" id="sn_duration" value="0"></div>
+        <span class="spacer"></span>
+        <button class="lf-btn primary" id="sn_start">Start Survey</button>
+      </div>
+      <div class="lf-row" style="margin-top:6px">
+        <div class="lf-field"><label>Classic (BR/EDR) inquiry - radio</label><select class="lf-input" id="sn_cl_dev"></select></div>
+        <div class="lf-field"><label>Seconds</label><input class="lf-input" id="sn_cl_secs" value="12" style="width:60px"></div>
+        <button class="lf-btn" id="sn_cl_btn">Classic inquiry</button>
+        <span id="sn_cl_status" class="note"></span>
+      </div>
+      <p class="note" style="margin:4px 0 0">Classic devices (headsets, speakers, phones, PCs) do not advertise over BLE, so the survey cannot see them.
+        The inquiry finds those that are discoverable (in pairing mode) plus devices this radio already knows; a device that is
+        already connected to another host will not answer.</p>
+    </fieldset>
+    <div class="lf-row" style="margin:8px 0">
+      <div class="lf-field"><label>Search</label><input class="lf-input" id="sn_search" placeholder="address, name, vendor, service..."></div>
+      <div class="lf-field"><label>Sort</label>
+        <select class="lf-input" id="sn_sort">
+          <option value="rssi">Strongest signal</option>
+          <option value="first">First seen</option>
+          <option value="last">Last seen</option>
+          <option value="count">Most active</option>
+          <option value="name">Name</option>
+        </select></div>
+      <label class="lf-check"><input type="checkbox" id="sn_hidestale"> hide not seen for 30 s</label>
+      <span class="spacer"></span>
+      <span id="sn_stats" class="note"></span>
+      <button class="lf-btn" id="sn_clear">Clear</button>
+      <button class="lf-btn" id="sn_exp_json">Export JSON</button>
+      <button class="lf-btn" id="sn_exp_csv">Export CSV</button>
+      <button class="lf-btn primary" id="sn_exp_pcap" title="Download the packet capture of the selected radio (the newest one) for Wireshark">Download capture (.pcap)</button>
+    </div>
+    <div class="lf-tablewrap">
+      <div class="cap">Devices seen (live) - click a row for the full decode</div>
+      <table class="lf-table" id="sniffTable">
+        <thead><tr><th>Address</th><th>Addr type</th><th>Name</th><th>Vendor / kind</th><th>RSSI</th>
+          <th>Pkts</th><th>Conn</th><th>Advertised services / data</th><th>Seen</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="lf-tablewrap" id="sn_detail" style="margin-top:12px;display:none">
+      <div class="cap" id="sn_detail_title">Device detail</div>
+      <div id="sn_detail_body" style="padding:8px 10px;font-size:12px;line-height:1.5"></div>
+      <div style="padding:6px 10px;border-top:1px solid var(--lf-border-soft)">
+        <div class="lf-row">
+          <div class="lf-field"><label>Interrogate using radio</label><select class="lf-input" id="sn_int_dev"></select></div>
+          <label class="lf-check"><input type="checkbox" id="sn_int_read" checked> read values</label>
+          <button class="lf-btn primary" id="sn_int_btn">Interrogate selected device</button>
+          <span id="sn_int_status" class="note"></span>
+        </div>
+        <p class="note" style="margin:4px 0">Connects to the device (read-only: nothing is written and no pairing is requested; a device that insists on security for a plain read could still make the system pair, which is reported and undone) and lists its
+          full GATT services/characteristics and Bluetooth Classic profiles. Uses a radio under BlueZ, so that radio is
+          reserved for Classic (release it on the Classic tab). Only interrogate devices you are authorised to test.</p>
+        <div id="sn_int_out" style="font-size:12px;line-height:1.5"></div>
+      </div>
+    </div>
+    <p class="note">This lists what each device <b>advertises</b>: name, vendor, services/profiles, beacon data. A device
+      can support more than it advertises; connectable devices can be interrogated for their full service table.</p>
+    <div class="lf-console" id="sn_console" style="max-height:110px;margin-top:12px"></div>
+    <div class="lf-tablewrap" style="margin-top:12px">
+      <div class="cap">Sniff jobs</div>
+      <table class="lf-table" id="snJobsTable">
+        <thead><tr><th>Job</th><th>Radio</th><th>Uptime</th><th>Action</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="lf-tablewrap" style="margin-top:12px">
+      <div class="cap">Saved packet captures (.pcap, open in Wireshark)</div>
+      <table class="lf-table" id="snCapsTable">
+        <thead><tr><th>File</th><th>Radio</th><th>Size</th><th>Saved</th><th>Action</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">A capture holds every advertisement the radio reported, in order, with the time each arrived (the table above is
+      one row per device; the capture keeps every packet). It also holds the scan commands the radio was given, so the capture shows
+      how it was set up. It is the radio's own report (Bluetooth HCI) and not the raw radio signal: Wireshark shows the advertiser's
+      address, RSSI and advertising data, but not the channel number or the CRC. A capture that is still recording can be
+      downloaded; it contains everything up to that moment. Captures stay on the unit until deleted.</p>
+  </section>
+
+
+  <!-- BLUETOOTH CLASSIC -------------------------------------------------->
+  <section class="lf-section" id="tab-classic">
+
+    <div class="c-banner hidden" id="c_pf_banner"></div>
+
+    <fieldset class="lf-group">
+      <legend>Classic radio (BR/EDR)</legend>
+      <div class="lf-row">
+        <div class="lf-field"><label>Radio (hci)</label>
+          <select class="lf-input" id="c_dev"></select></div>
+        <div class="lf-field"><label>State</label>
+          <div id="c_radio_state" class="c-readout">-</div></div>
+        <button class="lf-btn" id="c_reserve">Reserve for Classic</button>
+        <span class="spacer"></span>
+        <div class="lf-field"><label>Adapter</label>
+          <div id="c_adapter" class="c-readout">-</div></div>
+      </div>
+    </fieldset>
+
+    <fieldset class="lf-group" id="c_devices_group">
+      <legend>Devices</legend>
+      <div class="lf-row">
+        <div class="lf-field"><label>Inquiry (s)</label>
+          <input class="lf-input" id="c_scan_dur" value="12" size="4"></div>
+        <button class="lf-btn primary" id="c_scan">Scan</button>
+        <button class="lf-btn" id="c_list">Known devices</button>
+        <div class="lf-field"><label>Legacy PIN (if asked)</label>
+          <input class="lf-input" id="c_pin" value="0000" size="6"></div>
+        <span class="spacer"></span>
+        <div class="lf-field"><label>Selected DUT</label>
+          <input class="lf-input" id="c_addr" placeholder="AA:BB:CC:DD:EE:FF" size="20"></div>
+      </div>
+      <div class="lf-tablewrap">
+        <table class="lf-table" id="c_devTable">
+          <thead><tr><th>Name</th><th>Address</th><th>Class</th><th>RSSI</th><th>Paired</th><th>Connected</th><th>Profiles</th><th>Action</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </fieldset>
+
+    <fieldset class="lf-group">
+      <legend>Device under test</legend>
+      <div class="lf-row">
+        <button class="lf-btn" id="c_pair">Pair</button>
+        <button class="lf-btn primary" id="c_connect">Connect</button>
+        <button class="lf-btn" id="c_disconnect">Disconnect</button>
+        <button class="lf-btn danger" id="c_remove">Forget</button>
+        <button class="lf-btn" id="c_info">Refresh info</button>
+        <label class="lf-check"><input type="checkbox" id="c_autoinfo" checked> auto-refresh</label>
+      </div>
+      <div class="c-grid" id="c_dut">
+        <div><span>Link</span><b id="c_d_conn">-</b></div>
+        <div><span>A2DP transport</span><b id="c_d_state">-</b></div>
+        <div><span>Codec</span><b id="c_d_codec">-</b></div>
+        <div><span>RSSI</span><b id="c_d_rssi">-</b></div>
+        <div><span>Link quality</span><b id="c_d_lq">-</b></div>
+        <div><span>TX power</span><b id="c_d_txp">-</b></div>
+        <div><span>AVRCP volume</span><b id="c_d_vol">-</b></div>
+        <div><span>Battery</span><b id="c_d_bat">-</b></div>
+        <div><span>Audio profile</span><b id="c_d_prof">-</b></div>
+        <div><span>Profiles offered</span><b id="c_d_uuids">-</b></div>
+      </div>
+    </fieldset>
+
+    <fieldset class="lf-group">
+      <legend>A2DP stream test (host = source, DUT = sink)</legend>
+      <div class="lf-row">
+        <div class="lf-field"><label>Duration (s, 0 = until stopped)</label>
+          <input class="lf-input" id="c_a2_dur" value="60" size="6"></div>
+        <div class="lf-field"><label>Audio source</label>
+          <select class="lf-input" id="c_a2_src">
+            <option value="sweep">Sweep 100 Hz-8 kHz</option>
+            <option value="tone">Tone 440 Hz</option>
+            <option value="noise">White noise (worst-case for VBR codecs)</option>
+            <option value="file">Audio file (mp3, mpeg, wav, m4a, flac, ogg...)</option>
+          </select></div>
+        <div class="lf-field hidden" id="c_a2_file_f"><label>Audio file path on this unit (loops)</label>
+          <input class="lf-input" id="c_a2_file" placeholder="/home/lanforge/music.mp3" size="34"></div>
+        <div class="lf-field"><label>Codec</label>
+          <select class="lf-input" id="c_a2_codec">
+            <option value="">Auto (best common)</option><option value="sbc">SBC</option>
+            <option value="sbc_xq">SBC-XQ</option><option value="aac">AAC</option>
+            <option value="ldac">LDAC</option><option value="aptx">aptX</option>
+            <option value="aptx_hd">aptX HD</option>
+          </select></div>
+        <label class="lf-check"><input type="checkbox" id="c_a2_reconnect"> reconnect + resume if the DUT drops</label>
+      </div>
+      <div class="lf-row">
+        <div class="lf-field"><label>PASS if active &ge; (%)</label><input class="lf-input" id="c_a2_act" value="95" size="5"></div>
+        <div class="lf-field"><label>max xruns</label><input class="lf-input" id="c_a2_xr" value="5" size="5"></div>
+        <div class="lf-field"><label>max disconnects</label><input class="lf-input" id="c_a2_dc" value="0" size="5"></div>
+        <div class="lf-field"><label>min RSSI offset (dB, blank = off)</label><input class="lf-input" id="c_a2_rssi" size="6"></div>
+        <div class="lf-field"><label title="99th percentile of the time each audio packet needs to cross the link, as seen by this unit. Blank = reported, not judged.">max link delay p99 (ms, blank = off)</label><input class="lf-input" id="c_a2_dly" size="6"></div>
+        <div class="lf-field"><label title="Mean difference in delay between consecutive audio packets. Blank = reported, not judged.">max jitter (ms, blank = off)</label><input class="lf-input" id="c_a2_jit" size="6"></div>
+        <span class="spacer"></span>
+        <button class="lf-btn primary" id="c_a2_start">Start A2DP test</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="lf-group">
+      <legend>AVRCP</legend>
+      <div class="lf-row">
+        <div class="lf-field"><label>Absolute-volume steps (0-127)</label>
+          <input class="lf-input" id="c_vol_steps" value="0,32,64,96,127,64" size="22"></div>
+        <button class="lf-btn" id="c_vol_test">Run volume test</button>
+        <span class="spacer"></span>
+        <div class="lf-field"><label>DUT media player (phones)</label>
+          <div class="c-btns">
+            <button class="lf-btn mini" data-plr="status">Status</button>
+            <button class="lf-btn mini" data-plr="play">Play</button>
+            <button class="lf-btn mini" data-plr="pause">Pause</button>
+            <button class="lf-btn mini" data-plr="stop">Stop</button>
+            <button class="lf-btn mini" data-plr="previous">Prev</button>
+            <button class="lf-btn mini" data-plr="next">Next</button>
+          </div></div>
+      </div>
+      <div class="lf-row">
+        <div class="lf-field"><label>Button watch: press these on the DUT</label>
+          <div class="lf-radio-checks" id="c_keys">
+            <label><input type="checkbox" value="PLAYPAUSE" checked><span>Play/Pause</span></label>
+            <label><input type="checkbox" value="NEXT" checked><span>Next</span></label>
+            <label><input type="checkbox" value="PREVIOUS" checked><span>Previous</span></label>
+            <label><input type="checkbox" value="VOLUMEUP" checked><span>Vol +</span></label>
+            <label><input type="checkbox" value="VOLUMEDOWN" checked><span>Vol -</span></label>
+          </div></div>
+        <div class="lf-field"><label>Timeout (s)</label><input class="lf-input" id="c_w_dur" value="120" size="5"></div>
+        <button class="lf-btn primary" id="c_w_start">Start button watch</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="lf-group">
+      <legend>HFP hands-free call (host = Audio Gateway, DUT = Hands-Free)</legend>
+      <div class="lf-row">
+        <div class="lf-field"><label>Scenario</label>
+          <select class="lf-input" id="c_hf_scn">
+            <option value="call">Incoming call + SCO audio</option>
+            <option value="sco">Service link + SCO audio</option>
+            <option value="slc">Service-level connection only</option>
+          </select></div>
+        <div class="lf-field"><label>Audio duration (s)</label><input class="lf-input" id="c_hf_dur" value="20" size="5"></div>
+        <div class="lf-field"><label>Caller ID shown on DUT</label><input class="lf-input" id="c_hf_num" value="+15551234567" size="16"></div>
+        <div class="lf-field"><label>Ring timeout (s)</label><input class="lf-input" id="c_hf_ring" value="15" size="5"></div>
+        <span class="spacer"></span>
+        <button class="lf-btn primary" id="c_hf_start">Start HFP test</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="lf-group">
+      <legend>Connection reliability</legend>
+      <div class="lf-row">
+        <div class="lf-field"><label>Cycles</label><input class="lf-input" id="c_cy_n" value="10" size="5"></div>
+        <div class="lf-field"><label>Gap (s)</label><input class="lf-input" id="c_cy_gap" value="3" size="5"></div>
+        <div class="lf-field"><label>PASS if success &ge; (%)</label><input class="lf-input" id="c_cy_ok" value="100" size="5"></div>
+        <span class="spacer"></span>
+        <button class="lf-btn primary" id="c_cy_start">Start connect/disconnect cycling</button>
+      </div>
+    </fieldset>
+
+    <div class="c-result hidden" id="c_result"></div>
+
+    <fieldset class="lf-group">
+      <legend>Live metrics</legend>
+      <div class="c-grid" id="c_live">
+        <div><span>Job</span><b id="c_l_job">idle</b></div>
+        <div><span>Elapsed</span><b id="c_l_t">-</b></div>
+        <div><span>Transport</span><b id="c_l_state">-</b></div>
+        <div><span>RSSI</span><b id="c_l_rssi">-</b></div>
+        <div><span>Link quality</span><b id="c_l_lq">-</b></div>
+        <div><span>ACL TX rate</span><b id="c_l_kbps">-</b></div>
+        <div><span>Xruns</span><b id="c_l_xr">-</b></div>
+        <div title="Time one audio packet needs to cross the link: first fragment handed to the controller until the controller reports the last fragment completed. Not the audio latency a listener hears."><span>Link delay avg / p95 / max</span><b id="c_l_dly">-</b></div>
+        <div title="Mean difference in delay between consecutive audio packets in the last interval."><span>Link jitter</span><b id="c_l_jit">-</b></div>
+        <div id="c_l_lb_box" class="hidden" title="Internal receiver only: audio packets sent but never received by the other radio."><span>Packets lost (loopback)</span><b id="c_l_lb">-</b></div>
+        <div><span>Active</span><b id="c_l_act">-</b></div>
+        <div><span>Disconnects</span><b id="c_l_dc">0</b></div>
+        <div><span>AVRCP keys</span><b id="c_l_keys">0</b></div>
+      </div>
+      <div class="c-charts">
+        <div><div class="cap">RSSI offset (dB; 0 = inside the golden receive range)</div><canvas id="c_ch_rssi" width="520" height="130"></canvas></div>
+        <div><div class="cap" id="c_ch_kbps_cap">ACL throughput, exact (kbit/s) - TX sent / controller-completed / RX</div><canvas id="c_ch_kbps" width="520" height="130"></canvas></div>
+        <div><div class="cap">Link delay per interval (ms) - average / 95th percentile / maximum; jitter below</div><canvas id="c_ch_dly" width="520" height="130"></canvas></div>
+        <div><div class="cap">Link jitter per interval (ms) - mean delay difference between consecutive audio packets</div><canvas id="c_ch_jit" width="520" height="130"></canvas></div>
+      </div>
+    </fieldset>
+
+    <div class="lf-tablewrap">
+      <div class="cap">Classic jobs</div>
+      <table class="lf-table" id="c_jobsTable">
+        <thead><tr><th>Job</th><th>Radio</th><th>Test</th><th>Uptime</th><th>Action</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="lf-tablewrap" style="margin-top:12px">
+      <div class="cap">Saved results (on this unit, under logs/classic/)</div>
+      <table class="lf-table" id="c_resTable">
+        <thead><tr><th>When</th><th>Test</th><th>DUT</th><th>Radio</th><th>Result</th><th>Duration</th><th>Detail</th><th>Download</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="lf-console" id="c_console"></div>
+  </section>
+
+</div>
+
+<div class="lf-status">
+  <span>Unit: <b id="statusHost">this unit</b></span>
+  <span id="statusJobs">0 jobs running</span>
+  <span class="spacer"></span>
+  <span>BE200 BLE Lab v1</span>
+</div>
+
+<script src="/app.js"></script>
+<script src="/classic.js"></script>
+</body>
+</html>

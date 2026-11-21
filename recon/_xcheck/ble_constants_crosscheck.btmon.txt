@@ -1,0 +1,465 @@
+Bluetooth monitor ver 5.77
+= New Index: 00:00:00:00:00:00 (Primary,USB,hci0)               [hci0] 0.000000
+< HCI Command: Reset (0x03|0x0003) plen 0                    #1 [hci0] 0.001000
+< HCI Command: Set Event Mask (0x03|0x0001) plen 8           #2 [hci0] 0.002000
+        Mask: 0x00001fffffffffff
+          Inquiry Complete
+          Inquiry Result
+          Connection Complete
+          Connection Request
+          Disconnection Complete
+          Authentication Complete
+          Remote Name Request Complete
+          Encryption Change
+          Change Connection Link Key Complete
+          Link Key Type Changed
+          Read Remote Supported Features Complete
+          Read Remote Version Information Complete
+          QoS Setup Complete
+          Command Complete
+          Command Status
+          Hardware Error
+          Flush Occurred
+          Role Change
+          Number of Completed Packets
+          Mode Change
+          Return Link Keys
+          PIN Code Request
+          Link Key Request
+          Link Key Notification
+          Loopback Command
+          Data Buffer Overflow
+          Max Slots Change
+          Read Clock Offset Complete
+          Connection Packet Type Changed
+          QoS Violation
+          Page Scan Mode Change
+          Page Scan Repetition Mode Change
+          Flow Specification Complete
+          Inquiry Result with RSSI
+          Read Remote Extended Features Complete
+          Synchronous Connection Complete
+          Synchronous Connection Changed
+          Unknown mask (0x000007f800000000)
+< HCI Command: LE Set Event Mask (0x08|0x0001) plen 8        #3 [hci0] 0.003000
+        Mask: 0x000000000000001f
+          LE Connection Complete
+          LE Advertising Report
+          LE Connection Update Complete
+          LE Read Remote Used Features Complete
+          LE Long Term Key Request
+< HCI Command: LE Set Random Address (0x08|0x0005) plen 6    #4 [hci0] 0.004000
+        Address: C0:11:22:33:44:55 (Static)
+< HCI Command: LE Set Advertising P.. (0x08|0x0006) plen 15  #5 [hci0] 0.005000
+        Min advertising interval: 1280.000 msec (0x0800)
+        Max advertising interval: 1280.000 msec (0x0800)
+        Type: Connectable undirected - ADV_IND (0x00)
+        Own address type: Public (0x00)
+        Direct address type: Public (0x00)
+        Direct address: 00:00:00:00:00:00 (OUI 00-00-00)
+        Channel map: 37, 38, 39 (0x07)
+        Filter policy: Allow Scan Request from Any, Allow Connect Request from Any (0x00)
+< HCI Command: LE Set Advertising D.. (0x08|0x0008) plen 32  #6 [hci0] 0.006000
+        Length: 3
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+< HCI Command: LE Set Advertise Enable (0x08|0x000a) plen 1  #7 [hci0] 0.007000
+        Advertising: Enabled (0x01)
+< HCI Command: LE Set Scan Parameters (0x08|0x000b) plen 7   #8 [hci0] 0.008000
+        Type: Passive (0x00)
+        Interval: 10.000 msec (0x0010)
+        Window: 10.000 msec (0x0010)
+        Own address type: Public (0x00)
+        Filter policy: Accept all advertisement (0x00)
+< HCI Command: LE Set Scan Enable (0x08|0x000c) plen 2       #9 [hci0] 0.009000
+        Scanning: Enabled (0x01)
+        Filter duplicates: Disabled (0x00)
+< HCI Command: LE Transmitter Test (0x08|0x001e) plen 3     #10 [hci0] 0.010000
+        TX frequency: 2440 MHz (0x13)
+        Test data length: 37 bytes
+        Packet payload: 0x00
+< HCI Command: LE Enhanced Transmit.. (0x08|0x0034) plen 4  #11 [hci0] 0.011000
+        TX channel frequency: 2402 MHz (0x00)
+        Test data length: 255 bytes
+        Packet payload: 0x04
+        PHY: LE 2M (0x02)
+< HCI Command: Unknown (0x08|0x007b) plen 8                 #12 [hci0] 0.012000
+        0c 25 00 01 00 00 00 f6                          .%......        
+< HCI Command: LE Receiver Test (0x08|0x001d) plen 1        #13 [hci0] 0.013000
+        RX frequency: 2480 MHz (0x27)
+< HCI Command: LE Enhanced Receiver.. (0x08|0x0033) plen 3  #14 [hci0] 0.014000
+        RX channel frequency: 2426 MHz (0x0c)
+        PHY: LE 1M (0x01)
+        Modulation index: Standard (0x00)
+< HCI Command: LE Test End (0x08|0x001f) plen 0             #15 [hci0] 0.015000
+< HCI Command: LE Set Extended Adv.. (0x08|0x0036) plen 25  #16 [hci0] 0.016000
+        Handle: 0x00
+        Properties: 0x0013
+          Connectable
+          Scannable
+          Use legacy advertising PDUs: ADV_IND
+        Min advertising interval: 30.000 msec (0x0030)
+        Max advertising interval: 30.000 msec (0x0030)
+        Channel map: 37, 38, 39 (0x07)
+        Own address type: Public (0x00)
+        Peer address type: Public (0x00)
+        Peer address: 00:00:00:00:00:00 (OUI 00-00-00)
+        Filter policy: Allow Scan Request from Any, Allow Connect Request from Any (0x00)
+        TX power: Host has no preference (0x7f)
+        Primary PHY: LE 1M (0x01)
+        Secondary max skip: 0x00
+        Secondary PHY: LE 1M (0x01)
+        SID: 0x00
+        Scan request notifications: Disabled (0x00)
+< HCI Command: LE Set Extended Adve.. (0x08|0x0037) plen 7  #17 [hci0] 0.017000
+        Handle: 0x00
+        Operation: Complete extended advertising data (0x03)
+        Fragment preference: Minimize fragmentation (0x01)
+        Data length: 0x03
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+< HCI Command: LE Set Extended Adve.. (0x08|0x0039) plen 6  #18 [hci0] 0.018000
+        Extended advertising: Enabled (0x01)
+        Number of sets: 1 (0x01)
+        Entry 0
+          Handle: 0x00
+          Duration: 0 ms (0x00)
+          Max ext adv events: 0
+< HCI Command: LE Set Advertising S.. (0x08|0x0035) plen 7  #19 [hci0] 0.019000
+        Advertising handle: 0x00
+        Advertising random address: C0:11:22:33:44:55 (Static)
+< HCI Command: LE Set Extended Scan.. (0x08|0x0041) plen 8  #20 [hci0] 0.020000
+        Own address type: Public (0x00)
+        Filter policy: Accept all advertisement (0x00)
+        PHYs: 0x01
+        Entry 0: LE 1M
+          Type: Passive (0x00)
+          Interval: 10.000 msec (0x0010)
+          Window: 10.000 msec (0x0010)
+< HCI Command: LE Set Extended Scan.. (0x08|0x0042) plen 6  #21 [hci0] 0.021000
+        Extended scan: Enabled (0x01)
+        Filter duplicates: Disabled (0x00)
+        Duration: 0 msec (0x0000)
+        Period: 0.00 sec (0x0000)
+< HCI Command: LE Set Periodic Adve.. (0x08|0x003e) plen 7  #22 [hci0] 0.022000
+        Handle: 0
+        Min interval: 7.50 msec (0x0006)
+        Max interval: 20.00 msec (0x0010)
+        Properties: 0x0000
+< HCI Command: LE Set Periodic Adve.. (0x08|0x003f) plen 6  #23 [hci0] 0.023000
+        Handle: 0
+        Operation: Complete ext advertising data (0x03)
+        Data length: 0x03
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+< HCI Command: LE Set Periodic Adve.. (0x08|0x0040) plen 2  #24 [hci0] 0.024000
+        Periodic advertising: Enabled (0x01)
+        Handle: 0
+< HCI Command: LE Read Local Suppor.. (0x08|0x0003) plen 0  #25 [hci0] 0.025000
+< HCI Command: LE Receiver Test com.. (0x08|0x004f) plen 7  #26 [hci0] 0.026000
+        RX Channel: 2440 MHz (0x13)
+        PHY: LE 1M (0x01)
+        Modulation Index: standard (0x00)
+        Expected CTE Length: 0 us (0x00)
+        Expected CTE Type: 0 us slots (0x00)
+        Slot Duration: 1 us (0x01)
+        Number of Antenna IDs: 0
+< HCI Command: LE Transmitter Test... (0x08|0x0050) plen 7  #27 [hci0] 0.027000
+        too short packet
+        13 25 00 01 00 00 00                             .%.....         
+< HCI Command: LE Remove Advertisin.. (0x08|0x003c) plen 1  #28 [hci0] 0.028000
+        Handle: 0
+< HCI Command: LE Clear Advertising.. (0x08|0x003d) plen 0  #29 [hci0] 0.029000
+< HCI Command: LE Read Maximum Adve.. (0x08|0x003a) plen 0  #30 [hci0] 0.030000
+< HCI Command: LE Read Number of Su.. (0x08|0x003b) plen 0  #31 [hci0] 0.031000
+< HCI Command: LE Read Transmit Power (0x08|0x004b) plen 0  #32 [hci0] 0.032000
+< HCI Command: Read Local Supported.. (0x04|0x0002) plen 0  #33 [hci0] 0.033000
+< HCI Command: LE Read Supported St.. (0x08|0x001c) plen 0  #34 [hci0] 0.034000
+< HCI Command: Set Event Mask (0x03|0x0001) plen 8          #35 [hci0] 0.035000
+        Mask: 0x20001fffffffffff
+          Inquiry Complete
+          Inquiry Result
+          Connection Complete
+          Connection Request
+          Disconnection Complete
+          Authentication Complete
+          Remote Name Request Complete
+          Encryption Change
+          Change Connection Link Key Complete
+          Link Key Type Changed
+          Read Remote Supported Features Complete
+          Read Remote Version Information Complete
+          QoS Setup Complete
+          Command Complete
+          Command Status
+          Hardware Error
+          Flush Occurred
+          Role Change
+          Number of Completed Packets
+          Mode Change
+          Return Link Keys
+          PIN Code Request
+          Link Key Request
+          Link Key Notification
+          Loopback Command
+          Data Buffer Overflow
+          Max Slots Change
+          Read Clock Offset Complete
+          Connection Packet Type Changed
+          QoS Violation
+          Page Scan Mode Change
+          Page Scan Repetition Mode Change
+          Flow Specification Complete
+          Inquiry Result with RSSI
+          Read Remote Extended Features Complete
+          Synchronous Connection Complete
+          Synchronous Connection Changed
+          LE Meta
+          Unknown mask (0x000007f800000000)
+< HCI Command: LE Set Extended Scan.. (0x08|0x0038) plen 7  #36 [hci0] 0.036000
+        Handle: 0x00
+        Operation: Complete scan response data (0x03)
+        Fragment preference: Minimize fragmentation (0x01)
+        Data length: 0x03
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+< HCI Command: LE Set Scan Respons.. (0x08|0x0009) plen 32  #37 [hci0] 0.037000
+        Length: 10
+        Name (complete): BluForge
+> HCI Event: LE Meta Event (0x3e) plen 21                   #38 [hci0] 0.038000
+      LE Advertising Report (0x02)
+        Num reports: 1
+        Event type: Non connectable undirected - ADV_NONCONN_IND (0x03)
+        Address type: Random (0x01)
+        Address: C0:11:22:33:44:55 (Static)
+        Data length: 9
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+        Name (complete): Demo
+        RSSI: -61 dBm (0xc3)
+> HCI Event: LE Meta Event (0x3e) plen 29                   #39 [hci0] 0.039000
+      LE Extended Advertising Report (0x0d)
+        Num reports: 1
+        Entry 0
+          Event type: 0x0013
+            Props: 0x0013
+              Connectable
+              Scannable
+              Use legacy advertising PDUs
+            Data status: [0;32mComplete[0m
+          Legacy PDU Type: ADV_IND (0x0013)
+          Address type: Random (0x01)
+          Address: C0:11:22:33:44:55 (Static)
+          Primary PHY: LE 1M
+          Secondary PHY: No packets
+          SID: no ADI field (0xff)
+          TX power: 127 dBm
+          RSSI: -55 dBm (0xc9)
+          Periodic advertising interval: 0.00 msec (0x0000)
+          Direct address type: Public (0x00)
+          Direct address: 00:00:00:00:00:00 (OUI 00-00-00)
+          Data length: 0x03
+        02 01 06                                         ...             
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+> HCI Event: Command Complete (0x0e) plen 4                 #40 [hci0] 0.040000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Command Disallowed (0x0c)
+> HCI Event: Command Complete (0x0e) plen 6                 #41 [hci0] 0.041000
+      LE Test End (0x08|0x001f) ncmd 1
+        Status: Success (0x00)
+        Number of packets: 1234
+> HCI Event: Command Complete (0x0e) plen 4                 #42 [hci0] 0.042000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Success (0x00)
+> HCI Event: Command Complete (0x0e) plen 4                 #43 [hci0] 0.043000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Unknown HCI Command (0x01)
+> HCI Event: Command Complete (0x0e) plen 4                 #44 [hci0] 0.044000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Memory Capacity Exceeded (0x07)
+> HCI Event: Command Complete (0x0e) plen 4                 #45 [hci0] 0.045000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Command Disallowed (0x0c)
+> HCI Event: Command Complete (0x0e) plen 4                 #46 [hci0] 0.046000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Unsupported Feature or Parameter Value (0x11)
+> HCI Event: Command Complete (0x0e) plen 4                 #47 [hci0] 0.047000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Invalid HCI Command Parameters (0x12)
+> HCI Event: Command Complete (0x0e) plen 4                 #48 [hci0] 0.048000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Controller Busy (0x3a)
+> HCI Event: Command Complete (0x0e) plen 4                 #49 [hci0] 0.049000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Advertising Timeout (0x3c)
+> HCI Event: Command Complete (0x0e) plen 4                 #50 [hci0] 0.050000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Unknown Advertising Identifier (0x42)
+> HCI Event: Command Complete (0x0e) plen 4                 #51 [hci0] 0.051000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Limit Reached (0x43)
+> HCI Event: Command Complete (0x0e) plen 4                 #52 [hci0] 0.052000
+      LE Set Advertise Enable (0x08|0x000a) ncmd 1
+        Status: Packet Too Long (0x45)
+> HCI Event: LE Meta Event (0x3e) plen 41                   #53 [hci0] 0.053000
+      LE Connection Complete (0x01)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #54 [hci0] 0.054000
+      LE Advertising Report (0x02)
+        Num reports: 0
+        Event type: Connectable undirected - ADV_IND (0x00)
+        Address type: Public (0x00)
+        Address: 00:00:00:00:00:00 (OUI 00-00-00)
+        Data length: 0
+        RSSI: 0 dBm (0x00)
+        Event type: Connectable undirected - ADV_IND (0x00)
+        Address type: Public (0x00)
+        Address: 00:00:00:00:00:00 (OUI 00-00-00)
+        Data length: 0
+        RSSI: 0 dBm (0x00)
+        Event type: Connectable undirected - ADV_IND (0x00)
+        Address type: Public (0x00)
+        Address: 00:00:00:00:00:00 (OUI 00-00-00)
+        Data length: 0
+        RSSI: 0 dBm (0x00)
+        Event type: Connectable undirected - ADV_IND (0x00)
+        Address type: Public (0x00)
+        Address: 00:00:00:00:00:00 (OUI 00-00-00)
+        Data length: 0
+        RSSI: 111 dBm (0x6f)
+> HCI Event: LE Meta Event (0x3e) plen 41                   #55 [hci0] 0.055000
+      LE Connection Update Complete (0x03)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #56 [hci0] 0.056000
+      LE Read Remote Used Features (0x04)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #57 [hci0] 0.057000
+      LE Long Term Key Request (0x05)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #58 [hci0] 0.058000
+      LE Remote Connection Parameter Request (0x06)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #59 [hci0] 0.059000
+      LE Data Length Change (0x07)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #60 [hci0] 0.060000
+      LE Read Local P-256 Public Key Complete (0x08)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #61 [hci0] 0.061000
+      LE Generate DHKey Complete (0x09)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #62 [hci0] 0.062000
+      LE Enhanced Connection Complete (0x0a)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #63 [hci0] 0.063000
+      LE Direct Advertising Report (0x0b)
+        Num reports: 0
+        Event type: Connectable undirected - ADV_IND (0x00)
+        Address type: Public (0x00)
+        Address: 00:00:00:00:00:00 (OUI 00-00-00)
+        Direct address type: Public (0x00)
+        Direct address: 00:00:00:00:00:00 (OUI 00-00-00)
+        RSSI: 0 dBm (0x00)
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00                             .......         
+> HCI Event: LE Meta Event (0x3e) plen 41                   #64 [hci0] 0.064000
+      LE PHY Update Complete (0x0c)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #65 [hci0] 0.065000
+      LE Extended Advertising Report (0x0d)
+        Num reports: 0
+> HCI Event: LE Meta Event (0x3e) plen 41                   #66 [hci0] 0.066000
+      LE Periodic Advertising Sync Established (0x0e)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #67 [hci0] 0.067000
+      LE Periodic Advertising Report (0x0f)
+        Sync handle: 0
+        TX power: 0 dbm (0x00)
+        RSSI: 0 dBm (0x00)
+        CTE Type: AoA Constant Tone Extension (0x 0)
+        Data status: [0;32mComplete[0m
+        Data length: 0x00
+> HCI Event: LE Meta Event (0x3e) plen 41                   #68 [hci0] 0.068000
+      LE Periodic Advertising Sync Lost (0x10)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #69 [hci0] 0.069000
+      LE Scan Timeout (0x11)
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #70 [hci0] 0.070000
+      LE Advertising Set Terminated (0x12)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #71 [hci0] 0.071000
+      LE Scan Request Received (0x13)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+> HCI Event: LE Meta Event (0x3e) plen 41                   #72 [hci0] 0.072000
+      LE Channel Selection Algorithm (0x14)
+        invalid packet size
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+        00 00 00 00 00 00 00 00                          ........        
+< HCI Command: LE Set Event Mask (0x08|0x0001) plen 8       #73 [hci0] 0.073000
+        Mask: 0x0000000000000002
+          LE Advertising Report
+< HCI Command: LE Set Event Mask (0x08|0x0001) plen 8       #74 [hci0] 0.074000
+        Mask: 0x0000000000001000
+          LE Extended Advertising Report
+< HCI Command: LE Set Event Mask (0x08|0x0001) plen 8       #75 [hci0] 0.075000
+        Mask: 0x0000000000020000
+          LE Extended Advertising Set Terminated
+< HCI Command: LE Set Event Mask (0x08|0x0001) plen 8       #76 [hci0] 0.076000
+        Mask: 0x0000000000040000
+          LE Scan Request Received
+< HCI Command: LE Set Event Mask (0x08|0x0001) plen 8       #77 [hci0] 0.077000
+        Mask: 0x0000000000080000
+          LE Channel Selection Algorithm
