@@ -860,8 +860,8 @@ Callers are from a search of `src/static/*.js`, `index.html`, `style.css` and `d
 | `/api/caps` (`?refresh=1` re-runs it) | 726 | BLE capabilities JSON (cached) | `app.js:130` on page load. Nothing uses `refresh=1`. |
 | `/api/status` | 729 | `Jobs.snapshot()`: running/finished jobs, radios, reservations, hostname, BlueZ info | `app.js:365` (page load, every 5 s, after each status event); `desktop/start-and-open.sh` uses it to test whether the server is up |
 | `/api/classic/preflight` | 731 | Runs the Classic dependency check | `classic.js:615` |
-| `/api/classic/results` | 733 | List of the 40 newest saved Classic results | `classic.js:326` |
-| `/api/classic/result/<file>` | 735 | Downloads one result `.json`/`.csv` (name must match `SAFE_FILE`) | `classic.js:353` (download links) |
+| `/api/classic/results` | 733 | List of the 40 newest saved Classic results | **no caller in the GUI** since the "Saved results" table was removed (22 Nov 2026); kept for scripts and automation |
+| `/api/classic/result/<file>` | 735 | Downloads one result `.json`/`.csv` (name must match `SAFE_FILE`) | **no caller in the GUI** (it served the table's download links); kept for scripts and automation |
 | `/api/bluez/status` | 748 | `bluez_info()` plus the last 50 install log lines and exit code | I found **no caller** in the GUI code (BlueZ info already arrives inside `/api/status`); probably for debugging/scripts |
 | `/api/sniff/devices` | 750 | `{"sniffs": Jobs.sniff_snapshot(), "now": <server time>}` | `app.js:421` (`snResync`, run every time the live feed connects, to rebuild the device table) |
 | `/api/stream` | 752 | The SSE live feed (`_stream`) | `app.js:790` (`new EventSource("/api/stream")`) |

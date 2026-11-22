@@ -36,7 +36,6 @@ The tab has these panels, top to bottom (HTML line numbers in brackets):
 | Result box | PASS/FAIL panel for the last finished test (hidden until there is one) | `428` |
 | Live metrics | Numbers and two charts that update while a test runs | `430-448` |
 | Classic jobs | Table of running tests, with Stop buttons | `450-456` |
-| Saved results | Table of past results with download links | `458-464` |
 | Console | Scrolling text log | `466` |
 
 ### The two kinds of work the tab can ask the server to do
@@ -183,7 +182,6 @@ Row 2: PASS thresholds `c_a2_act` active % (95), `c_a2_xr` max xruns (5), `c_a2_
   A canvas is a rectangle the JS paints pixels into. The CSS overrides the size to 100 % width and 110 px height
   (`style.css:228`), and `drawChart` measures the real size at draw time (section 4.13).
 - `c_jobsTable` (452): columns Job, Radio, Test, Uptime, Action.
-- `c_resTable` (460): columns When, Test, DUT, Radio, Result, Duration, Detail, Download.
 - `c_console` (466): `<div class="lf-console">` that receives text lines.
 
 ---
@@ -474,25 +472,18 @@ fail_reasons: []}`, calls `showResult` to get the heading, then appends one bull
 the test proves BlueZ accepted the volume command and the transport's `Volume` property read back, not that the DUT
 audibly changed.
 
-### 3.11 Saved results table (`classic.js:323-359`)
+### 3.11 Saved results table (removed)
 
-**`loadResults()`** (324-359), async. Called when the tab is clicked and when a job finishes. It is **not** called at
-page load.
+The "Saved results (on this unit, under `logs/classic/`)" table (`loadResults()`, the `c_resTable` element and its json/csv
+download links) was **removed from the page on 22 Nov 2026**. Nothing else changed about the results themselves:
 
-1. `GET /api/classic/results`. On failure, returns silently and leaves the old table. The server (`classic_results`,
-   `server.py:633`) lists the newest 40 `*.json` files in `logs/classic/` and returns for each: `file`, `csv`
-   (name of the matching `.csv` if it exists), `mtime`, and fields lifted from the summary inside the file
-   (`test`, `addr`, `hci`, `pass`, `duration_s`, `fail_reasons`, `summary`).
-2. Clear the table body. If there are none: one row "No saved Classic results yet." (8 columns).
-3. For each result make a row with class `pass` or `fail` (green/red row background, `style.css:229-230`). Cells:
-   when (`mtime * 1000` -> `toLocaleString()`; the server gives seconds, JS wants milliseconds), test, DUT address,
-   radio (`hciN` or `-`), PASS/FAIL, duration, detail.
-4. Detail (340-348): the joined `fail_reasons` if any; otherwise a one-line digest per test: a2dp
-   `codec, active N %, xruns N`; cycle `ok/cycles cycles`; hfp `SLC up|failed, SCO N ms`; avrcp-watch `keys A,B`.
-5. Download cell (349-355): up to two links, "json" and "csv", `href="/api/classic/result/" + encodeURIComponent(file)`.
-   The server only serves names matching `[A-Za-z0-9_.-]+\.(json|csv)` and sends them as attachments
-   (`server.py:735-747`). The CSV only exists if the test recorded samples (the AVRCP watch records none).
-   The `.json` holds `summary`, `events` and `samples`.
+- Every run of the four jobs still writes `logs/classic/<time>_<test>_<addr>.json` (and `.csv` when the test recorded
+  samples; the AVRCP watch records none), exactly as before, and the result box still names the file (`saved: <name>.json / .csv`).
+- The server still lists and serves the files for scripts and automation: `GET /api/classic/results` (the newest 40, with
+  `file`, `csv`, `mtime`, `test`, `addr`, `hci`, `pass`, `duration_s`, `fail_reasons`, `summary`) and
+  `GET /api/classic/result/<file>` (only names matching `[A-Za-z0-9_.-]+\.(json|csv)`, sent as attachments). The GUI no
+  longer calls either; see section 03.
+- Nothing deletes result files for you; remove them from the folder when they are no longer needed.
 
 The volume test and the other one-shot actions are **not** saved; only the four jobs write files.
 
@@ -627,7 +618,7 @@ Draws both charts:
    - `started`: hide the result box and call `resetLive("A2DP stream (job3)")`. Because the server broadcasts to
      every open browser, every browser tab resets, not only the one that clicked Start.
    - `finished`: console `[*] A2DP stream job3 finished (exit N)`; set the Job box to `idle (last: job3)`; call
-     `loadResults()` (so the new saved file appears) and `refreshInfo(true)`. Exit code 0 = PASS, 2 = FAIL verdict
+     `refreshInfo(true)`. Exit code 0 = PASS, 2 = FAIL verdict
      (`verdict()` returns those, `bluforge_classic.py:1305`); anything else suggests a crash or kill.
    - Return either way.
    (A "reservation" status event has no `job`, so it matches neither branch and falls through to the next
@@ -642,7 +633,7 @@ Draws both charts:
 
 Reading the whole thing as a story for an A2DP run: Start click -> `startJob` -> server starts helper -> SSE
 `started` -> `resetLive` -> each second a `sample` line -> `onSample` -> charts move -> helper prints `summary` ->
-`showResult` -> helper exits -> SSE `finished` -> `loadResults` + `refreshInfo`.
+`showResult` -> helper exits -> SSE `finished` -> `refreshInfo`.
 
 ### 3.15 `wire()` - every event handler (`classic.js:511-611`)
 
@@ -722,7 +713,7 @@ errors, so their `catch` just returns)
 - `c_cy_start` (602-604): `startJob("c_cycle", { count, gap, min_success })` from `c_cy_n`, `c_cy_gap`, `c_cy_ok`.
 
 **Tab click and resize**
-- (606-609) `document.querySelector('.lf-tab[data-tab="classic"]')` click: `loadPreflight(); loadResults(); drawAll();` and, if the
+- (606-609) `document.querySelector('.lf-tab[data-tab="classic"]')` click: `loadPreflight(); drawAll();` and, if the
   selected radio is reserved, `loadDevices(false); refreshInfo(true)`. app.js registered its own tab-click handler
   earlier (it loads first), so by the time this runs the Classic section is already visible; that matters because
   `drawChart` reads the canvas's real size and a hidden canvas reports zero.
@@ -774,7 +765,7 @@ server starts the helper -> SSE `status started` -> hook: hide result box, `rese
 disables Start/Scan/Pair/... -> each second: JSON `sample` line -> `onSample` -> numbers and charts update; `event`
 lines -> `onEvent` -> console + counters -> at the end: `summary` line -> `showResult` shows the green/red box ->
 helper writes `logs/classic/<time>_a2dp_<addr>.json/.csv`, exits -> SSE `status finished` -> console line,
-`loadResults()` adds the row, `refreshInfo(true)`.
+`refreshInfo(true)`.
 Pressing Stop (`classic.js:383`) sends Ctrl-C to the helper; it ends early but still prints the summary and saves.
 
 ---

@@ -365,7 +365,7 @@
     const cl = STATE.cluster || {};
     $("unitsNote").textContent = cl.manager_ok === false
       ? "The LANforge manager's resource list could not be read (" + (cl.manager_error || "no answer") + "), so only this unit is shown."
-      : "Resources come from the LANforge manager's own list. Anything you start on a resource radio runs on that resource.";
+      : "Resources come from the LANforge manager's own list; only LANforge units are shown (phones and other interop devices in that list are left out). Anything you start on a resource radio runs on that resource.";
   }
 
   function render() {

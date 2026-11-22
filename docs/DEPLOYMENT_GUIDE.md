@@ -333,7 +333,8 @@ file, package, or system service, so nothing else needs reverting.
 The Classic tab's **preflight banner** lists anything missing. Rules of use:
 1. Pick a radio on the Classic tab and press **Reserve for Classic** (a 1-radio unit loses BLE jobs while reserved).
 2. Put the DUT in pairing mode, **Scan**, **Select**, **Pair**, **Connect**.
-3. Run A2DP / AVRCP / HFP / cycling tests; every run is saved to `<install>/logs/classic/*.json|csv` and downloadable from the tab.
+3. Run A2DP / AVRCP / HFP / cycling tests; every run is saved to `<install>/logs/classic/*.json|csv` (the result box names the file;
+   copy it off the unit, or fetch it with `GET /api/classic/results` and `GET /api/classic/result/<file>`).
 
 **Roles:** host = A2DP source, AVRCP target, HFP Audio Gateway; DUT = headset/speaker/car-kit. HFP uses CVSD only (no mSBC).
 **Validation status:** see the 2026-10-22 entry in `docs/INSTALL_LOG.md` - validate each profile once against the customer's real DUT before relying on results.

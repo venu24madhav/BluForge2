@@ -20,13 +20,18 @@ advertisement, an interference job, a survey or a Classic test on a resource rad
 2. Open `http://<manager-ip>:5480/`. Within about ten seconds the resources that run BluForge appear. Nothing to configure.
 3. A resource listed in grey as *no BluForge* either does not run it yet or cannot be reached on that port. On the resource
    check `systemctl status ericsson-bluforge`, that it listens on all interfaces (the default), and the firewall
-   (`sudo firewall-cmd --state`; the manager must be able to reach port 5480). Resources that are PCs (no LANforge kernel,
-   no Bluetooth radios) stay grey for good and are asked about only once a minute.
+   (`sudo firewall-cmd --state`; the manager must be able to reach port 5480). A LANforge unit that never runs BluForge
+   stays grey for good and is asked about only once a minute. Resources that are not LANforge units are not shown at all:
+   the manager's list also holds phones and other interop devices, and only a resource whose hardware version (`hw version`
+   in the list) starts with `Linux` counts.
 
 ## How it works
 - The BluForge on the manager asks the LANforge JSON API (`http://127.0.0.1:8080/resource/all`, the same list the LANforge
   GUI shows) which resources exist and their control addresses, and asks each one whether BluForge answers on port 5480.
   It recognises itself (by address, host name, or an instance id in `/api/health`) and never lists itself twice.
+  Only LANforge units count: the list also holds phones and other interop devices (and phantom resources), and a resource
+  whose `hw version` does not start with `Linux` is skipped, never listed and never probed. One whose record carries no
+  `hw version` at all is kept, so a unit that cannot be classified does not silently vanish.
 - Each resource keeps working on its own and keeps its own page. The manager only forwards: a request for a resource radio
   goes to that resource's BluForge with the resource's own radio number, and what comes back is renumbered for the page.
   A resource's console output and job events reach the manager over a live connection to the resource's `/api/stream`.

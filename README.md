@@ -18,7 +18,7 @@ It talks to the controllers directly over raw HCI (one process per radio per job
 | Path | Contents |
 |---|---|
 | `src/` | The service: `server.py` (web server and job control), `bluforge_cli.py` (BLE jobs), `bluforge_classic.py` (Classic tests), `hci_raw.py` (radio access), `acl_meter.py` and `delay_stats.py` (throughput, delay, jitter), `cluster.py`, `pcap_writer.py`, `static/` (the web page) |
-| `tests/` | 348 automated tests that need no hardware (`./run_tests.sh`), plus hardware checks (`hw_*.py`) and two real capture fixtures in `tests/data/` |
+| `tests/` | 352 automated tests that need no hardware (`./run_tests.sh`), plus hardware checks (`hw_*.py`) and two real capture fixtures in `tests/data/` |
 | `docs/` | Guides and reports (see below) |
 | `deploy/` | Installer, systemd unit and the offline packager |
 | `desktop/` | Desktop launcher |

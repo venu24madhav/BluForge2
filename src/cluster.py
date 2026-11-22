@@ -1,7 +1,8 @@
 """cluster.py - one BluForge page for a whole LANforge cluster.
 
 A LANforge *manager* knows every resource clustered with it (resource 1.1 is the manager itself, 1.2 is the next
-unit, and so on) through its JSON API. BluForge on the manager asks that API which resources exist, finds the BluForge
+unit, and so on) through its JSON API. That list also holds phones and other interop devices; only LANforge (Linux) units
+are used here, see is_lanforge_unit. BluForge on the manager asks that API which resources exist, finds the BluForge
 service running on each of them (the same server.py, same port) and merges their Bluetooth radios into its own lists:
 
     1.1.hci0 ... 1.1.hci7   radios of the manager itself
@@ -32,6 +33,7 @@ import time
 UNIT_STEP = 100                       # radios of unit N are base + hci index; an hci index is always below this
 LOCAL_HEADER = "X-BluForge-Local"     # set on every request one BluForge sends to another: "answer for yourself only"
 DEFAULT_MANAGER_API = "http://127.0.0.1:8080"
+RESOURCE_QUERY = "/resource/all?fields=eid,hostname,ctrl-ip,phantom,hw%20version"   # 'hw version' tells a LANforge Linux unit from a phone
 FILE_PREFIX = re.compile(r"^(\d+)__(.+)$")   # a result file of a resource is listed as "<base>__<name>"
 
 # how long each kind of forwarded request may take (Classic actions can legitimately run for minutes)
@@ -62,8 +64,20 @@ def local_ips():
     return ips
 
 
+def is_lanforge_unit(rec):
+    """True when a manager resource record is a LANforge unit, that is a Linux machine that could run BluForge.
+
+    The manager also lists phones and other interop devices as resources (on the lab manager, resource 1.11 is a phone: hardware
+    version 'Nothing AIN065 r16 sdk: 36', no kernel, CLI port 0). They have no BluForge and no Bluetooth controller BluForge could
+    drive, so they are not part of the cluster and are not listed. A LANforge Linux unit reports a hardware version such as
+    'Linux/x86-64'. A record with no hardware version at all (an older manager, a trimmed answer) is kept: a unit that cannot be
+    classified must not silently disappear from the page."""
+    hw = str(rec.get("hw version") or "").strip()
+    return not hw or hw.lower().startswith("linux")
+
+
 def parse_resources(data):
-    """The manager's /resource/all answer -> [{"eid", "host", "ip"}] for every real (non-phantom) resource."""
+    """The manager's /resource/all answer -> [{"eid", "host", "ip"}] for every real (non-phantom) LANforge unit."""
     if not isinstance(data, dict):
         return []
     items = data.get("resources")
@@ -78,7 +92,7 @@ def parse_resources(data):
         recs = [it] if "eid" in it else [v for v in it.values() if isinstance(v, dict)]     # {"1.2": {...}} or the record itself
         for r in recs:
             eid = str(r.get("eid") or "").strip()
-            if not eid or r.get("phantom") in (True, "true", "TRUE"):
+            if not eid or r.get("phantom") in (True, "true", "TRUE") or not is_lanforge_unit(r):
                 continue
             out.append({"eid": eid, "host": str(r.get("hostname") or ""), "ip": str(r.get("ctrl-ip") or "").strip()})
     return out
@@ -200,7 +214,7 @@ class Cluster:
             host, _, port = u.partition("/")[0].partition(":")
             c = http.client.HTTPConnection(host, int(port or 80), timeout=3.0)
             # the LANforge JSON API answers HTTP 500 to a request that has no Accept header
-            c.request("GET", "/resource/all?fields=eid,hostname,ctrl-ip,phantom", headers={"Accept": "application/json"})
+            c.request("GET", RESOURCE_QUERY, headers={"Accept": "application/json"})
             r = c.getresponse()
             raw = r.read()
             c.close()

@@ -294,7 +294,7 @@ All ids start with `c_`. `app.js` never touches them; `classic.js` does. Layout,
 | Connection reliability | `c_cy_*` fields, `c_cy_start` |
 | (result box) `c_result` | PASS/FAIL summary |
 | Live metrics | `c_l_*` readouts, two `<canvas>` charts `c_ch_rssi`, `c_ch_kbps` |
-| tables | `c_jobsTable` (Classic jobs), `c_resTable` (Saved results), console `c_console` |
+| tables | `c_jobsTable` (Classic jobs), console `c_console` (the "Saved results" table that used to sit between them was removed on 22 Nov 2026) |
 
 ### 2.8 Status bar (`index.html:471-476`)
 
@@ -835,7 +835,7 @@ The hooks do **not** see `sniff` or `bluez` events, nor the "hello" status. A Cl
 | `/api/classic/reserve` | POST | `:613`, `:712` | `{dev, on:true}` | |
 | `/api/classic/action` | POST | `:618`, `:717` | `{dev, action, params}` | Synchronous; `scan` and `interrogate` can take up to 150 s |
 
-Routes on the server that `app.js` does not call: `/api/bluez/status` (no caller in `app.js`, `classic.js` or `index.html`), `/api/classic/preflight` (called by `classic.js:615`), `/api/classic/results` and `/api/classic/result/<file>` (presumably also `classic.js`; I did not check).
+Routes on the server that `app.js` does not call: `/api/bluez/status` (no caller in `app.js`, `classic.js` or `index.html`), `/api/classic/preflight` (called by `classic.js:615`), `/api/classic/results` and `/api/classic/result/<file>` (no caller in the GUI since the "Saved results" table was removed on 22 Nov 2026; kept for scripts).
 
 ### 6.2 Module-level names in `app.js`
 

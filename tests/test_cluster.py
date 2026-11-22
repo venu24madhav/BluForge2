@@ -9,6 +9,7 @@ import time
 import unittest
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from unittest import mock
+from urllib.parse import parse_qs, urlsplit
 
 import _path  # noqa: F401
 import cluster
@@ -26,7 +27,8 @@ def free_port():
 
 
 class FakeManagerApi:
-    """The LANforge JSON API's /resource/all, with a list the test can change."""
+    """The LANforge JSON API's /resource/all, with a list the test can change. Like the real one it answers only the fields
+    that the request names (fields=a,b,c), so a field BluForge forgets to ask for is missing from the answer here too."""
     def __init__(self):
         self.resources = []
         self.closed = False
@@ -47,7 +49,9 @@ class FakeManagerApi:
                     self.send_response(500)
                     self.end_headers()
                     return
-                body = json.dumps({"handler": "x", "resources": [{r["eid"]: r} for r in outer.resources]}).encode()
+                want = [f for f in parse_qs(urlsplit(self.path).query).get("fields", [""])[0].split(",") if f]
+                recs = [{k: v for k, v in r.items() if not want or k in want} for r in outer.resources]
+                body = json.dumps({"handler": "x", "resources": [{r["eid"]: r} for r in recs]}).encode()
                 self.send_response(200)
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
@@ -401,6 +405,43 @@ class Offline(ClusterTestCase):
         self.assertFalse(s["cluster"]["manager_ok"])
 
 
+class OnlyLanforgeUnits(unittest.TestCase):
+    """The manager's resource list also holds phones (1.11 and 1.12 on the lab manager are Android phones, interop devices). They are
+    not LANforge units: BluForge neither lists them nor looks for a service on them. A LANforge unit that merely has no BluForge yet
+    stays on the page, with the note to install it."""
+    def setUp(self):
+        self.port = free_port()
+        self.p12 = FakePeer("127.0.0.2", self.port, "ct523c-ab1a", [0, 1])
+
+        def rec(eid, host, ip, hw):
+            return {"eid": eid, "hostname": host, "ctrl-ip": ip, "phantom": False, "hw version": hw}
+        self.hub = Hub([rec("1.1", "hubhost", LOCAL_IP, "Linux/x86-64"), rec("1.2", "ct523c-ab1a", "127.0.0.2", "Linux/x86-64"),
+                        rec("1.3", "ct523c-cd02", "127.0.0.3", "Linux/x86-64"),
+                        rec("1.11", "NTSV-J900XHX2", "127.0.0.4", "Nothing AIN065 r16 sdk: 36"),
+                        rec("1.12", "kvm-slave-build-s-system-106341", "127.0.0.5", "OPPO CPH2219 r13 sdk: 33")], self.port)
+        self.hub.cluster.scan_once()
+
+    def tearDown(self):
+        self.hub.close()
+        self.p12.close()
+
+    def test_phones_are_not_listed_and_never_probed(self):
+        st, d = self.hub.get("/api/units")
+        self.assertEqual([u["eid"] for u in d["units"]], ["1.1", "1.2"])
+        self.assertEqual([o["eid"] for o in d["other_resources"]], ["1.3"])        # a LANforge unit without BluForge is still shown
+        self.assertEqual(sorted(self.hub.cluster.units), ["1.2", "1.3"])           # the phones are no unit at all, so nothing probes them
+
+    def test_the_request_really_asks_the_manager_for_the_hardware_version(self):
+        # the fake manager answers only the fields that were asked for, like the real one: had BluForge not asked for "hw version",
+        # the phones would arrive without it, count as "cannot be classified" and be listed
+        self.hub.api.resources[3].pop("hw version")
+        self.hub.cluster.scan_once()
+        self.assertIn("1.11", self.hub.cluster.units)                               # without the field a record is kept...
+        self.hub.api.resources[3]["hw version"] = "Nothing AIN065 r16 sdk: 36"
+        self.hub.cluster.scan_once()
+        self.assertNotIn("1.11", self.hub.cluster.units)                            # ...and with it the phone goes again
+
+
 class MergedViews(ClusterTestCase):
     def test_classic_preflight_and_results_cover_the_cluster(self):
         st, pf = self.hub.get("/api/classic/preflight")
@@ -498,6 +539,26 @@ class Plumbing(unittest.TestCase):
         self.assertEqual(cluster.parse_resources({"resources": {"1.1": {"eid": "1.1", "ctrl-ip": "1.1.1.1"}}})[0]["eid"], "1.1")
         self.assertEqual(cluster.parse_resources("junk"), [])
         self.assertEqual(cluster.parse_resources({}), [])
+
+    def test_phones_and_interop_devices_are_not_cluster_resources(self):
+        """The lab manager's real list: two LANforge units, a phantom and two Android phones (interop devices)."""
+        def rec(eid, host, ip, hw, phantom=False):
+            return {eid: {"eid": eid, "hostname": host, "ctrl-ip": ip, "hw version": hw, "phantom": phantom}}
+        answer = {"resources": [rec("1.1", "ct523c-VenuMadhav-PM-b821", "192.168.206.99", "Linux/x86-64"),
+                                rec("1.2", "ct523c-ab1a", "192.168.204.24", "Linux/x86-64"),
+                                rec("1.6", "", "0.0.0.0", "", phantom=True),
+                                rec("1.11", "NTSV-J900XHX2", "192.168.4.55", "Nothing AIN065 r16 sdk: 36"),
+                                rec("1.12", "kvm-slave-build-s-system-106341", "192.168.4.60", "OPPO CPH2219 r13 sdk: 33")]}
+        self.assertEqual([r["eid"] for r in cluster.parse_resources(answer)], ["1.1", "1.2"])
+
+    def test_which_hardware_versions_count_as_a_lanforge_unit(self):
+        for hw in ("Linux/x86-64", "linux/x86-64", "  Linux/x86-64 "):
+            self.assertTrue(cluster.is_lanforge_unit({"hw version": hw}), hw)
+        for hw in ("Nothing AIN065 r16 sdk: 36", "OPPO CPH2219 r13 sdk: 33", "Windows 11"):
+            self.assertFalse(cluster.is_lanforge_unit({"hw version": hw}), hw)
+        # a record that does not say what it is (an older manager, a trimmed answer) is kept, never silently dropped
+        for rec in ({}, {"hw version": ""}, {"hw version": None}, {"hostname": "x"}):
+            self.assertTrue(cluster.is_lanforge_unit(rec), rec)
 
     def test_names_and_numbers(self):
         local = cluster.Unit("1.1", 0, local=True)

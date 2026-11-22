@@ -386,48 +386,6 @@
     ul.appendChild(el("li", null, "Command path only: BlueZ does not expose a DUT-side confirmation - verify the level change on the DUT."));
   }
 
-  // ---------------------------------------------------------------- saved results table
-  async function loadResults() {
-    let r;
-    try { r = await get("/api/classic/results"); } catch (e) { return; }
-    const tb = document.querySelector("#c_resTable tbody");
-    tb.innerHTML = "";
-    if (!r.results.length) {
-      const tr = el("tr"); const td = el("td", null, "No saved Classic results yet."); td.colSpan = 8; tr.appendChild(td); tb.appendChild(tr); return;
-    }
-    r.results.forEach(function (x) {
-      const tr = el("tr", x.pass ? "pass" : "fail");
-      tr.appendChild(el("td", null, new Date(x.mtime * 1000).toLocaleString()));
-      tr.appendChild(el("td", null, x.test || "-"));
-      tr.appendChild(el("td", null, x.addr || "-"));
-      tr.appendChild(el("td", null, x.hci === null || x.hci === undefined ? "-" : BF.label(x.hci)));
-      tr.appendChild(el("td", null, x.pass ? "PASS" : "FAIL"));
-      tr.appendChild(el("td", "num", x.duration_s != null ? x.duration_s + " s" : "-"));
-      const sm = x.summary || {};
-      let detail = (x.fail_reasons || []).join("; ");
-      if (!detail) {
-        if (sm.test === "a2dp") detail = (sm.codec || "?") + ", active " + sm.active_pct + " %, xruns " + sm.xruns +
-          (sm.link_delay && sm.link_delay.available ? ", link delay p50/p99 " + sm.link_delay.delay_ms.p50 + "/" + sm.link_delay.delay_ms.p99 + " ms" +
-            (sm.link_delay.jitter_ms ? ", jitter " + sm.link_delay.jitter_ms.avg + " ms" : "") : "");
-        else if (sm.test === "load") detail = "interference stream: " + (sm.codec || "?") + ", streaming " + sm.active_pct + " %, avg " + (sm.tx_kbps ? sm.tx_kbps.avg : "?") + " kbit/s";
-        else if (sm.test === "traffic") detail = (sm.kind_label || sm.kind) + ", links up " + sm.active_pct + " %, avg " + (sm.app_kbps ? sm.app_kbps.avg : "?") + " kbit/s delivered";
-        else if (sm.test === "cycle") detail = sm.ok + "/" + sm.cycles + " cycles";
-        else if (sm.test === "hfp") detail = "SLC " + (sm.slc_ok ? "up" : "failed") + (sm.sco_ms != null ? ", SCO " + sm.sco_ms + " ms" : "");
-        else if (sm.test === "avrcp-watch") detail = "keys " + Object.keys(sm.keys || {}).join(",");
-      }
-      tr.appendChild(el("td", "wrap", detail));
-      const td = el("td");
-      [["json", x.file], ["csv", x.csv]].forEach(function (p) {
-        if (!p[1]) return;
-        const a = el("a", "lf-link", p[0]);
-        a.href = "/api/classic/result/" + encodeURIComponent(p[1]);
-        td.appendChild(a); td.appendChild(document.createTextNode(" "));
-      });
-      tr.appendChild(td);
-      tb.appendChild(tr);
-    });
-  }
-
   // ---------------------------------------------------------------- jobs table
   let jobsSig = "";
   function renderJobs() {
@@ -607,7 +565,6 @@
       if (evt.event === "finished") {
         consoleLine("[*] " + JOB_LABEL[evt.job.kind] + " " + evt.job.id + " finished (exit " + evt.job.exit_code + ")", evt.job.dev);
         setText("c_l_job", "idle (last: " + evt.job.id + ")");
-        loadResults();
         refreshInfo(true);
       }
       return;
@@ -722,7 +679,7 @@
     });
 
     document.querySelector('.lf-tab[data-tab="classic"]').addEventListener("click", function () {
-      loadPreflight(); loadResults(); drawAll();
+      loadPreflight(); drawAll();
       if (dev() !== null && isReserved(dev())) { loadDevices(false); refreshInfo(true); }
     });
     window.addEventListener("resize", drawAll);
